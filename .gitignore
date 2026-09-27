@@ -22,4 +22,7 @@ android/local.properties
 .gradle/
 scratch/
 screenshots/
-*.keystore
+*.keystore# deck-build toolchain (heavy, reproducible)
+shots/
+image-search/
+scripts/__pycache__/
