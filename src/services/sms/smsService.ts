@@ -103,8 +103,12 @@ export const smsService = {
       body = `[EMERGENCY SOS · OraMet NDRF Alert]\nLocation: ${targetOrCoords}\nTime: ${timestamp}`;
     } else {
       const storeLoc = useRiskStore.getState().userLocation;
-      const coords = storeLoc ? { latitude: storeLoc.latitude, longitude: storeLoc.longitude } : { latitude: 30.5564, longitude: 79.5630 };
-      body = smsService.createEmergencyPayload(coords, timestamp);
+      if (storeLoc && !storeLoc.isApproximate) {
+        const coords = { latitude: storeLoc.latitude, longitude: storeLoc.longitude };
+        body = smsService.createEmergencyPayload(coords, timestamp);
+      } else {
+        body = `[EMERGENCY SOS · OraMet]\nLocation unavailable. Please contact me and ask for my current location.\nTime: ${timestamp}`;
+      }
     }
 
     // Always queue in offline store to guarantee no data loss
@@ -115,9 +119,11 @@ export const smsService = {
 
     try {
       await Linking.openURL(url);
+      // This only opens a prefilled draft. The user must tap Send in the SMS app.
       return true;
     } catch {
-      return true; // Queued offline successfully
+      // The message remains queued locally, but has not been dispatched.
+      return false;
     }
   },
 
@@ -149,14 +155,18 @@ export const smsService = {
       if (storeLoc?.city) city = storeLoc.city;
     }
 
-    const activeCoords = coords || (storeLoc ? { latitude: storeLoc.latitude, longitude: storeLoc.longitude } : { latitude: 30.5564, longitude: 79.5630 });
-    const mapsLink = `\nGPS: https://maps.google.com/?q=${activeCoords.latitude.toFixed(5)},${activeCoords.longitude.toFixed(5)}`;
+    const activeCoords = coords || (storeLoc && !storeLoc.isApproximate
+      ? { latitude: storeLoc.latitude, longitude: storeLoc.longitude }
+      : undefined);
+    const mapsLink = activeCoords
+      ? `\nGPS: https://maps.google.com/?q=${activeCoords.latitude.toFixed(5)},${activeCoords.longitude.toFixed(5)}`
+      : '\nGPS: unavailable (no precise fix)';
 
     const body =
       `[OraMet Emergency Alert · ${timestamp}]\n` +
       `URGENT ALERT FOR: ${city.toUpperCase()}\n` +
       `Hazard: ${details}${mapsLink}\n` +
-      `Advisory: Move uphill immediately to designated municipal shelter.`;
+      `Advisory: Follow local emergency-service instructions. Avoid floodwater and closed roads.`;
 
     await smsService.queueOfflineSMS(targetNumber, body);
 
@@ -165,9 +175,10 @@ export const smsService = {
 
     try {
       await Linking.openURL(url);
+      // Opening the SMS app does not mean the message was sent.
       return true;
     } catch {
-      return true; // Saved offline in queue
+      return false; // Saved locally, but not dispatched.
     }
   },
 };

@@ -74,22 +74,15 @@ export const GoogleSignInSheet: React.FC<GoogleSignInSheetProps> = ({
   const [otpCountdown, setOtpCountdown] = useState(30);
   const [otpError, setOtpError] = useState('');
 
-  const googleAccounts = [
-    {
-      name: 'Nandheesaprasad',
-      email: 'nandhish3004@gmail.com',
-      avatarChar: 'N',
-      avatarBg: '#8C5338',
-      roleSubtitle: 'Primary Google Account · Verified Citizen',
-    },
-    {
-      name: 'Disaster Volunteer (Uttarakhand)',
-      email: 'nandheesaprasad@gmail.com',
-      avatarChar: 'D',
-      avatarBg: '#1F1A17',
-      roleSubtitle: 'Disaster Safety Network Participant',
-    },
-  ];
+  // Real Google OAuth accounts should come from the configured identity SDK;
+  // never ship sample or personal accounts as if they were verified identities.
+  const googleAccounts: Array<{
+    name: string;
+    email: string;
+    avatarChar: string;
+    avatarBg: string;
+    roleSubtitle: string;
+  }> = [];
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -107,10 +100,13 @@ export const GoogleSignInSheet: React.FC<GoogleSignInSheetProps> = ({
       await new Promise((r) => setTimeout(r, 550));
       const ok = await loginWithGoogle(account.email, account.name);
       if (ok) {
-        setIsAuthenticating(false);
         onSuccess();
+      } else {
+        setGoogleEmailError('Google OAuth is not configured. Use email sign-in or Emergency Guest mode.');
       }
     } catch {
+      setGoogleEmailError('Google sign-in failed. Please try again.');
+    } finally {
       setIsAuthenticating(false);
     }
   };
@@ -143,18 +139,11 @@ export const GoogleSignInSheet: React.FC<GoogleSignInSheetProps> = ({
   };
 
   const handleSendOtp = () => {
-    if (phoneNumber.trim().length < 10) {
+    if (!/^\d{10}$/.test(phoneNumber.trim())) {
       setOtpError(strings.validPhoneError || 'Please enter a valid 10-digit mobile number');
       return;
     }
-    setOtpError('');
-    setIsAuthenticating(true);
-    setTimeout(() => {
-      setIsAuthenticating(false);
-      setOtpSent(true);
-      setOtpCountdown(30);
-      setOtpCode('528914');
-    }, 600);
+    setOtpError('SMS delivery is not configured. No OTP was sent. Use email sign-in or Emergency Guest mode.');
   };
 
   const handleVerifyOtp = async () => {
@@ -263,13 +252,18 @@ export const GoogleSignInSheet: React.FC<GoogleSignInSheetProps> = ({
                       {strings.signInWithGoogleTitle || 'Sign In with Google'}
                     </Text>
                     <Text style={styles.sheetSubtitle}>
-                      Choose an account or sign in with your Google email
+                      Google account authentication is not configured
                     </Text>
                   </View>
                 </View>
 
                 {/* Pre-Loaded Quick Accounts */}
                 <View style={styles.accountsList}>
+                  {googleAccounts.length === 0 ? (
+                    <Text style={styles.errorText}>
+                      Google OAuth is not configured. Continue with email sign-in or Emergency Guest mode.
+                    </Text>
+                  ) : null}
                   {googleAccounts.map((account) => {
                     const isSelected = selectedEmail === account.email && isAuthenticating;
                     return (
@@ -375,7 +369,7 @@ export const GoogleSignInSheet: React.FC<GoogleSignInSheetProps> = ({
                       {strings.citizenMobileLoginTitle || 'Citizen Mobile OTP'}
                     </Text>
                     <Text style={styles.sheetSubtitle}>
-                      Official SMS OTP verification for hill citizens
+                      SMS verification is currently unavailable
                     </Text>
                   </View>
                 </View>
@@ -440,7 +434,7 @@ export const GoogleSignInSheet: React.FC<GoogleSignInSheetProps> = ({
                     <Text style={styles.inputLabel}>Enter 6-Digit Verification Code</Text>
                     <TextInput
                       style={styles.otpInput}
-                      placeholder="528914"
+                      placeholder="Enter code received by SMS"
                       placeholderTextColor="#9CA3AF"
                       keyboardType="number-pad"
                       maxLength={6}

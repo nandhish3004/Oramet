@@ -26,7 +26,6 @@ export const LoginScreen: React.FC = () => {
   const {
     login,
     loginWithGoogle,
-    loginWithPhoneOtp,
     loginAsEmergencyGuest,
     loginWithStationId,
     isLoading,
@@ -43,15 +42,10 @@ export const LoginScreen: React.FC = () => {
 
   // Phone OTP state
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [otp, setOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
 
   // Station ID state
   const [stationId, setStationId] = useState('');
   const [badgeCode, setBadgeCode] = useState('');
-
-  const [userNameInput, setUserNameInput] = useState('Nandheesaprasad');
-  const [userEmailInput, setUserEmailInput] = useState('nandheesaprasad@gmail.com');
 
   const handleEmailLogin = async () => {
     if (!email.trim() || !password.trim()) return;
@@ -60,7 +54,7 @@ export const LoginScreen: React.FC = () => {
 
   const handleGoogleLogin = async () => {
     clearError();
-    await loginWithGoogle(userEmailInput.trim() || 'nandheesaprasad@gmail.com', userNameInput.trim() || 'Nandheesaprasad');
+    await loginWithGoogle();
   };
 
   const handleSendOtp = () => {
@@ -68,17 +62,11 @@ export const LoginScreen: React.FC = () => {
       Alert.alert('Invalid Number', 'Please enter a valid 10-digit Indian mobile number.');
       return;
     }
-    setOtpSent(true);
-    setOtp('4092'); // Auto-fill for convenience
+    clearError();
     Alert.alert(
-      'OTP Dispatched via SMS',
-      `A 4-digit verification code has been transmitted to +91-${phoneNumber.slice(-4)}.\nCode: 4092`
+      'Phone sign-in unavailable',
+      'SMS delivery and OTP verification are not configured in this app yet. Use email sign-in or Emergency Guest mode.'
     );
-  };
-
-  const handleVerifyPhoneOtp = async () => {
-    if (!phoneNumber || !otp) return;
-    await loginWithPhoneOtp(phoneNumber, otp);
   };
 
   const handleStationLogin = async () => {
@@ -170,7 +158,7 @@ export const LoginScreen: React.FC = () => {
               onPress={() => { setActiveTab('phone'); clearError(); }}
             >
               <Text style={[styles.tabText, activeTab === 'phone' && styles.tabTextActive]}>
-                Phone OTP
+                Phone
               </Text>
             </TouchableOpacity>
 
@@ -217,35 +205,12 @@ export const LoginScreen: React.FC = () => {
                       keyboardType="phone-pad"
                       maxLength={10}
                     />
-                    {!otpSent ? (
-                      <TouchableOpacity style={styles.sendOtpBtn} onPress={handleSendOtp}>
-                        <Text style={styles.sendOtpText}>Send OTP</Text>
-                      </TouchableOpacity>
-                    ) : null}
                   </View>
                 </View>
 
-                {otpSent && (
-                  <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Enter 4-Digit OTP</Text>
-                    <View style={styles.inputWrapper}>
-                      <WeatherIcon name="check" size={16} color={Colors.text.tertiary} />
-                      <TextInput
-                        style={styles.input}
-                        value={otp}
-                        onChangeText={(t) => { setOtp(t); clearError(); }}
-                        placeholder="e.g. 4092"
-                        placeholderTextColor={Colors.text.muted}
-                        keyboardType="number-pad"
-                        maxLength={6}
-                      />
-                    </View>
-                  </View>
-                )}
-
                 <GradientButton
-                  title={otpSent ? 'Verify OTP & Enter' : 'Request OTP Code'}
-                  onPress={otpSent ? handleVerifyPhoneOtp : handleSendOtp}
+                  title="Phone sign-in unavailable"
+                  onPress={handleSendOtp}
                   loading={isLoading}
                   disabled={!phoneNumber.trim()}
                   size="large"

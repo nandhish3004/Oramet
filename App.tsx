@@ -18,7 +18,7 @@ export default function App() {
     // Load existing session from DB on app startup
     loadSession();
 
-    // Initialize background watchdog for notifications even when app is minimized
+    // Track foreground state for the vibration demo. Native background/push notifications are not configured.
     emergencyNotificationService.initialize();
 
     // Monitor network connectivity

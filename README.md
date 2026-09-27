@@ -1,54 +1,53 @@
-# OraMet (NDRF Early Warning & Evacuation System)
+# OraMet
 
-> **Smart India Hackathon (SIH 2026) — Problem Statement #26192**  
-> **Title**: *Flash Flood Prediction System for Hilly Regions using Multi-Source Data Theme*  
-> **Organization**: *Ministry of Home Affairs*  
-> **Department**: *National Disaster Response Force (NDRF), DM Division*  
-> **Theme**: *Disaster Management*
+> **Prototype for Smart India Hackathon (SIH 2026), Problem Statement #26192.** This repository is not an official NDRF, NDMA, IMD, CWC, GSI, ISRO, or government application.
 
----
+## Safety and production status
 
-## Overview
+**Do not use this prototype as the sole source for emergency, evacuation, or route decisions. It is not an operational early-warning or dispatch service.** It does not have an authorized government telemetry backend, verified shelter directory, emergency-service dispatch integration, or production identity provider configured.
 
-**OraMet** is an autonomous, hyper-local disaster intelligence mobile application engineered to predict flash floods and landslides across hilly regions in India with actionable lead times.
+The app currently has working prototype flows for local navigation, device location permission requests, weather lookups through Open-Meteo when reachable, local SQLite email accounts/alerts, and opening a prefilled SMS draft. Opening an SMS draft is not sending it: the user must review and tap **Send**. Emergency Guest access is available without an account.
 
-Unlike traditional district-wide forecasts, OraMet fuses multi-source environmental telemetry (IMD, NASA, ISRO, GSI, NHAI, CWC), runs a hydrological lag-time runoff model, and routes affected residents along flood-safe high-ground walking paths via Google Maps.
+Unsupported agency readings and lead-time estimates are now withheld rather than simulated in the app’s active risk flow. The CWC integration reports unavailable until an approved feed is configured. The manual SOS prompt and vibration controls are demos only; neither detects a shake automatically nor contacts emergency services.
 
----
+## Product vision (not yet delivered)
 
-## Key Capabilities & Data Ingest
+OraMet is intended to help residents understand local weather hazards and find evacuation support. Production use would require approved and validated integrations for:
 
-1. **Live 1-Minute IMD Portal Telemetry**:
-   - Ingests real-time district and station precipitation data directly from the official **India Meteorological Department (IMD) Rainfall Information Portal** (`mausam.imd.gov.in`).
-   - Computes actual rainfall, normal baseline, and percentage departures every 60 seconds.
+- Official IMD, CWC, GSI, NHAI, and other data feeds, including freshness, location coverage, fallback, and quality metadata.
+- An authenticated backend and agency-authorized responder workflows.
+- A maintained directory of authority-verified shelters and routes; mapped places alone are not proof that a site is safe or open.
+- A compliant emergency notification and communications provider. An SMS composer, local queue, or test notification is not emergency dispatch.
+- Field validation, security/privacy review, accessibility testing, and operational approval from the relevant authorities.
 
-2. **Government IoT Integration**:
-   - **Automatic Weather Stations (AWS) & Automatic Rain Gauges (ARGs)**: Panchayat-level temperature, humidity, pressure, wind velocity, and rainfall intensity.
-   - **NHAI Road Weather Information Systems (RWIS)**: Real-time road friction index ($\mu$), water film depth, and debris blockages along mountain highways (e.g. NH-58, NH-34).
-   - **High Wind Speed Recorders (HWSR)** & Port boundary-layer tracking.
+No API keys, provider credentials, or agency approvals are included in this repository. Do not add secrets to source control or chat.
 
-3. **Satellite Soil Moisture (NASA SMAP / ISRO MOSDAC)**:
-   - Tracks surface and root-zone soil saturation percentages to identify when runoff absorption capacity is exhausted.
+## Run and build the Android prototype
 
-4. **Slope Stability & Landslide Inventory (GSI DEM)**:
-   - Analyzes Digital Elevation Model slope angles ($>30^\circ$) and calculates the geotechnical Factor of Safety ($F_s$).
+1. Install Node.js and npm, Android Studio, the Android SDK and NDK versions requested by `android/build.gradle`, and JDK 17.
+2. Install dependencies: `npm ci`.
+3. Start Metro with `npm start`, then run the app on a connected Android device/emulator from another terminal with `npm run android`.
 
-5. **Actionable Evacuation Lead-Time & Safe Navigation**:
-   - Real-time time-to-peak runoff calculator estimating minutes until maximum flood crest.
-   - One-tap direct walking navigation via **Google Maps** to certified high-ground NDRF relief shelters.
+To create a bundled APK for device demos, run `npm run build:apk`. It builds the `staging` variant at `android/app/build/outputs/apk/staging/app-staging.apk`. This APK is signed with the development key and uses a separate `.staging` application ID; it is for testing only, not Play Store or public production distribution. `npm run build:debug` creates the Metro-dependent debug APK.
 
-6. **Novel Resilience Triggers**:
-   - **Shake-to-SOS**: Shake detection for emergency dispatch when touchscreens are wet or cold.
-   - **Take & Report**: Citizen crowdsourced field observations (water depth, road washouts) to calibrate the AI model.
-   - **Acoustic Rescue Siren / Whistle**: Emits a 3.5 kHz audio pulse pattern for search dogs and NDRF search parties.
-   - **Dual-Channel Dispatch**: Transmits high-accuracy GPS coordinates via API when online, with automatic native SMS fallback to **Emergency 112**.
+A distributable release requires your own secure Android signing key. Set `ORAMET_RELEASE_STORE_FILE` (absolute path), `ORAMET_RELEASE_STORE_PASSWORD`, `ORAMET_RELEASE_KEY_ALIAS`, and `ORAMET_RELEASE_KEY_PASSWORD` in the build environment, then run `npm run build:release-apk`. Do not commit the keystore or credentials. Release builds intentionally fail when signing is not configured.
 
----
+Android builds require a working JDK and Android SDK/NDK installation; local SDK paths are machine-specific and are not committed. The app still requires an Android device/emulator for native location, SQLite, and SMS-composer behavior. An installable APK is not equivalent to a production-ready emergency app: the authorized telemetry, responder, shelter, authentication, and background notification integrations above are not configured.
 
-## Technical Stack
+## Checks
 
-- **Framework**: React Native 0.74.1 with TypeScript
-- **Design System**: Light Theme Slate/Oceanic Cerulean high-contrast tokens
-- **Local Storage**: `react-native-sqlite-storage` (relational database for offline alerts, settings, users) & `@react-native-async-storage/async-storage`
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Geolocation & Network**: `@react-native-community/geolocation`, `@react-native-community/netinfo`
+- TypeScript: `npx tsc --noEmit`
+- Tests: `npm test -- --runInBand`
+- Lint: `npm run lint`
+
+## SIH submission artifacts
+
+For an accurate description of this checkout, use `SIH_SUBMISSION_BRIEF.md`, `OraMet_SIH2026_Submission_Presentation.pdf`, and `OraMet_SIH2026_Submission_Dossier.pdf`. The older HydroSentinel-named PDF aliases have been regenerated with the current prototype description, but their filenames/branding may not match your registered SIH project name. Confirm the title and fill registered team details from the SIH portal before uploading.
+
+## Technical stack
+
+- React Native 0.74.x with TypeScript
+- Zustand state management
+- SQLite and AsyncStorage local persistence
+- React Navigation
+- Open-Meteo public weather API where network access is available

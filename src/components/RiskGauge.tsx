@@ -18,6 +18,7 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({ score, severity, size = 18
 
   const getColor = (band: SeverityBand) => {
     switch (band) {
+      case 'UNKNOWN': return '#94A3B8';
       case 'CRITICAL': return Colors.severity.critical.accent;
       case 'HIGH': return Colors.severity.high.accent;
       case 'MODERATE': return Colors.severity.moderate.accent;
@@ -70,8 +71,8 @@ export const RiskGauge: React.FC<RiskGaugeProps> = ({ score, severity, size = 18
         />
       </Svg>
       <View style={styles.labelContainer}>
-        <Text style={[styles.scoreText, { color: gaugeColor }]}>{score}</Text>
-        <Text style={styles.subText}>INDEX / 100</Text>
+        <Text style={[styles.scoreText, { color: gaugeColor }]}>{severity === 'UNKNOWN' ? '—' : score}</Text>
+        <Text style={styles.subText}>{severity === 'UNKNOWN' ? 'NO DATA' : 'INDEX / 100'}</Text>
       </View>
     </View>
   );

@@ -110,59 +110,22 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  loginWithGoogle: async (email?: string, name?: string) => {
-    set({ isLoading: true, error: null });
-    try {
-      const googleEmail = email || 'nandheesaprasad@gmail.com';
-      const googleName = name || 'Nandheesaprasad';
-      const mockToken = 'g_token_' + Date.now().toString(36);
-      const googleUser: UserProfile = {
-        id: 'usr_google_' + Date.now().toString(36),
-        name: googleName,
-        email: googleEmail,
-        role: 'resident',
-        homeZoneId: 'zone_live_residence',
-        homeZoneName: 'Registered Safe Haven Zone',
-        avatarColor: '#4285F4',
-      };
-      set({
-        user: googleUser,
-        token: mockToken,
-        isAuthenticated: true,
-        isLoading: false,
-        error: null,
-      });
-      return true;
-    } catch {
-      set({ isLoading: false, error: 'Google Sign-In failed.' });
-      return false;
-    }
+  // These identity providers are not configured in this repository. Never
+  // create an authenticated user based only on a supplied email or OTP string.
+  loginWithGoogle: async () => {
+    set({
+      isLoading: false,
+      error: 'Google sign-in is not configured yet. Use email sign-in or Emergency Guest mode.',
+    });
+    return false;
   },
 
-  loginWithPhoneOtp: async (phone: string, otp: string) => {
-    set({ isLoading: true, error: null });
-    if (!otp || otp.length < 4) {
-      set({ isLoading: false, error: 'Please enter a valid OTP code.' });
-      return false;
-    }
-    const token = 'otp_token_' + Date.now().toString(36);
-    const otpUser: UserProfile = {
-      id: 'usr_otp_' + Date.now().toString(36),
-      name: `User (+91-${phone.slice(-4)})`,
-      email: `${phone}@mobile.citizen`,
-      role: 'resident',
-      homeZoneId: 'zone_live_residence',
-      homeZoneName: 'Local Verified Sector',
-      avatarColor: '#006A61',
-    };
+  loginWithPhoneOtp: async () => {
     set({
-      user: otpUser,
-      token,
-      isAuthenticated: true,
       isLoading: false,
-      error: null,
+      error: 'Phone verification is not configured yet. Use email sign-in or Emergency Guest mode.',
     });
-    return true;
+    return false;
   },
 
   loginAsEmergencyGuest: async () => {
@@ -186,33 +149,23 @@ export const useAuthStore = create<AuthState>((set) => ({
     return true;
   },
 
-  loginWithStationId: async (stationId: string, badgeCode: string) => {
-    set({ isLoading: true, error: null });
-    const officerUser: UserProfile = {
-      id: 'officer_' + stationId,
-      name: `NDRF Responder (${stationId})`,
-      email: `${stationId.toLowerCase()}@ndrf.gov.in`,
-      role: 'resident',
-      homeZoneId: 'zone_chamoli_ward_3',
-      homeZoneName: 'NDRF Base Command',
-      avatarColor: '#005BBF',
-    };
+  loginWithStationId: async () => {
     set({
-      user: officerUser,
-      token: 'station_token_' + Date.now().toString(36),
-      isAuthenticated: true,
       isLoading: false,
-      error: null,
+      error: 'Responder verification is not configured. Do not enter real credentials; use Emergency Guest mode for public safety information.',
     });
-    return true;
+    return false;
   },
 
   logout: async () => {
-    const currentUser = useAuthStore.getState().user;
-    if (currentUser) {
-      await databaseService.logout(currentUser.id);
+    try {
+      if (useAuthStore.getState().user) {
+        await databaseService.logout();
+      }
+    } finally {
+      // Clear in-memory credentials even when local storage is unavailable.
+      set({ user: null, token: null, isAuthenticated: false, error: null });
     }
-    set({ user: null, token: null, isAuthenticated: false, error: null });
   },
 
   loadSession: async () => {

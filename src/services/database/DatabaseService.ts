@@ -6,15 +6,30 @@ const DB_NAME = 'weatherguard.db';
 
 class DatabaseService {
   private db: SQLiteDatabase | null = null;
+  private opening: Promise<SQLiteDatabase> | null = null;
 
   async open(): Promise<SQLiteDatabase> {
     if (this.db) return this.db;
-    this.db = await SQLite.openDatabase({
-      name: DB_NAME,
-      location: 'default',
-    });
-    await this.createTables();
-    return this.db;
+    if (this.opening) return this.opening;
+
+    this.opening = (async () => {
+      const db = await SQLite.openDatabase({
+        name: DB_NAME,
+        location: 'default',
+      });
+      this.db = db;
+      await this.createTables();
+      return db;
+    })();
+
+    try {
+      return await this.opening;
+    } catch (error) {
+      this.db = null;
+      throw error;
+    } finally {
+      this.opening = null;
+    }
   }
 
   private async createTables(): Promise<void> {
@@ -67,11 +82,11 @@ class DatabaseService {
       );
     `);
 
-    // Seed default alerts if empty
-    const [alertCountResult] = await db.executeSql('SELECT COUNT(*) as count FROM alerts');
-    if (alertCountResult.rows.item(0).count === 0) {
-      await this.seedAlerts();
-    }
+    // Remove known prototype fixture alerts from existing local databases.
+    // Real alerts must come from a configured source or an explicit user action.
+    await db.executeSql(
+      "DELETE FROM alerts WHERE id IN ('alert_001', 'alert_002', 'alert_003', 'alert_004', 'alert_005', 'alert_006')"
+    );
   }
 
   // ─── Simple hash (djb2 variant) ────────────────────────────
@@ -116,6 +131,10 @@ class DatabaseService {
       [userId, name, email.toLowerCase(), passwordHash]
     );
 
+    // This app supports one active local session per device. Clear any older
+    // session before saving the new account so a later launch cannot restore
+    // a different user's stale session.
+    await db.executeSql('DELETE FROM sessions');
     await db.executeSql(
       `INSERT INTO sessions (user_id, token) VALUES (?, ?)`,
       [userId, token]
@@ -143,8 +162,8 @@ class DatabaseService {
     const userId = result.rows.item(0).id;
     const token = this.generateToken();
 
-    // Clear old sessions and create new one
-    await db.executeSql('DELETE FROM sessions WHERE user_id = ?', [userId]);
+    // Keep only the session for the account currently signing in.
+    await db.executeSql('DELETE FROM sessions');
     await db.executeSql(
       'INSERT INTO sessions (user_id, token) VALUES (?, ?)',
       [userId, token]
@@ -163,16 +182,18 @@ class DatabaseService {
   async getActiveSession(): Promise<{ userId: string; token: string } | null> {
     const db = await this.open();
     const [result] = await db.executeSql(
-      'SELECT user_id, token FROM sessions ORDER BY created_at DESC LIMIT 1'
+      'SELECT user_id, token FROM sessions ORDER BY id DESC LIMIT 1'
     );
     if (result.rows.length === 0) return null;
     const row = result.rows.item(0);
     return { userId: row.user_id, token: row.token };
   }
 
-  async logout(userId: string): Promise<void> {
+  async logout(): Promise<void> {
     const db = await this.open();
-    await db.executeSql('DELETE FROM sessions WHERE user_id = ?', [userId]);
+    // A single-device session is used; deleting only by user can leave an old
+    // account's session behind and silently sign it back in after this logout.
+    await db.executeSql('DELETE FROM sessions');
   }
 
   async updateUser(userId: string, updates: { name?: string; email?: string; home_zone_id?: string; home_zone_name?: string; avatar_color?: string }): Promise<void> {
@@ -180,11 +201,11 @@ class DatabaseService {
     const fields: string[] = [];
     const values: any[] = [];
 
-    if (updates.name) { fields.push('name = ?'); values.push(updates.name); }
-    if (updates.email) { fields.push('email = ?'); values.push(updates.email.toLowerCase()); }
-    if (updates.home_zone_id) { fields.push('home_zone_id = ?'); values.push(updates.home_zone_id); }
-    if (updates.home_zone_name) { fields.push('home_zone_name = ?'); values.push(updates.home_zone_name); }
-    if (updates.avatar_color) { fields.push('avatar_color = ?'); values.push(updates.avatar_color); }
+    if (updates.name !== undefined) { fields.push('name = ?'); values.push(updates.name); }
+    if (updates.email !== undefined) { fields.push('email = ?'); values.push(updates.email.toLowerCase()); }
+    if (updates.home_zone_id !== undefined) { fields.push('home_zone_id = ?'); values.push(updates.home_zone_id); }
+    if (updates.home_zone_name !== undefined) { fields.push('home_zone_name = ?'); values.push(updates.home_zone_name); }
+    if (updates.avatar_color !== undefined) { fields.push('avatar_color = ?'); values.push(updates.avatar_color); }
 
     if (fields.length === 0) return;
 
@@ -259,25 +280,6 @@ class DatabaseService {
     await db.executeSql(`UPDATE settings SET ${fields.join(', ')} WHERE user_id = ?`, values);
   }
 
-  // ─── Seed Data ─────────────────────────────────────────────
-  private async seedAlerts(): Promise<void> {
-    const db = this.db!;
-    const alerts = [
-      { id: 'alert_001', zone_id: 'zone_village_a_ward_3', severity: 'CRITICAL', title: 'Flash Flood Warning', description: 'Heavy rainfall upstream has triggered a flash flood warning for Ward 3. Water levels are expected to rise rapidly in the next 2-4 hours. Move to higher ground immediately if you are in low-lying areas.' },
-      { id: 'alert_002', zone_id: 'zone_village_a_ward_3', severity: 'HIGH', title: 'Severe Thunderstorm Alert', description: 'A severe thunderstorm cell is approaching from the southwest. Expect intense rainfall (50-70mm/hr), frequent lightning, and wind gusts exceeding 80 km/h. Secure loose outdoor items and stay indoors.' },
-      { id: 'alert_003', zone_id: 'zone_village_a_ward_3', severity: 'MODERATE', title: 'Soil Saturation Advisory', description: 'Ground soil moisture levels have reached 78% saturation. Increased risk of landslides on slopes exceeding 30 degrees. Avoid steep terrain and monitor for ground movement near hillsides.' },
-      { id: 'alert_004', zone_id: 'zone_village_a_ward_3', severity: 'LOW', title: 'River Level Update', description: 'The Kosi River gauge at Station B7 is reading 2.1m, which is within normal operating range. Conditions are stable but monitoring continues. No immediate action required.' },
-      { id: 'alert_005', zone_id: 'zone_village_a_ward_3', severity: 'HIGH', title: 'Evacuation Route Change', description: 'Due to road damage on NH-34, the primary evacuation route via Bridge Point has been redirected. Use the alternate route through Market Road to reach the relief center at Community Hall B.' },
-      { id: 'alert_006', zone_id: 'zone_village_a_ward_3', severity: 'MODERATE', title: 'Wind Speed Elevation', description: 'Sustained wind speeds have increased to 55 km/h with gusts up to 72 km/h. Loose structures, temporary shelters, and signage may be affected. Reinforce temporary covers and stay away from trees.' },
-    ];
-
-    for (const alert of alerts) {
-      await db.executeSql(
-        'INSERT OR IGNORE INTO alerts (id, zone_id, severity, title, description) VALUES (?, ?, ?, ?, ?)',
-        [alert.id, alert.zone_id, alert.severity, alert.title, alert.description]
-      );
-    }
-  }
 }
 
 export const databaseService = new DatabaseService();

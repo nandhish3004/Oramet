@@ -1,40 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Colors, FontSize, Spacing } from '../theme/colors';
 
-export const OfflineBanner: React.FC = () => {
-  return (
-    <View style={styles.banner}>
-      <View style={styles.indicator} />
-      <Text style={styles.text}>
-        Operating Offline · Using last synced cache & SMS emergency dispatch
-      </Text>
-    </View>
-  );
-};
+/** Informational banner; local drafts are not transmitted automatically. */
+export const OfflineBanner: React.FC = () => (
+  <View style={styles.container}>
+    <Text style={styles.text}>
+      Offline · live weather and remote alerts are unavailable. SMS drafts require review and manual sending.
+    </Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
-  banner: {
-    backgroundColor: 'rgba(245, 158, 11, 0.15)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(245, 158, 11, 0.2)',
-    paddingVertical: 6,
-    paddingHorizontal: Spacing.md,
-    flexDirection: 'row',
+  container: {
+    backgroundColor: '#FEF3C7',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  indicator: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: Colors.status.offline,
-    marginRight: Spacing.sm,
-  },
-  text: {
-    color: Colors.accent.amber,
-    fontSize: FontSize.xs,
-    fontWeight: '600',
-    letterSpacing: 0.2,
-  },
+  text: { color: '#92400E', fontSize: 11, fontWeight: '700', textAlign: 'center' },
 });

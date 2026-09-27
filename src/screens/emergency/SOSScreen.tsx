@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Geolocation from '@react-native-community/geolocation';
-import { apiClient } from '../../services/api/apiClient';
 import { smsService } from '../../services/sms/smsService';
-import { evacuationService, DESIGNATED_SHELTERS, SafeShelter } from '../../services/evacuation/evacuationService';
-import { shakeService } from '../../services/emergency/shakeService';
-import { useAuthStore } from '../../state/useAuthStore';
+import { evacuationService, SafeShelter } from '../../services/evacuation/evacuationService';
+import { useNearbyShelters } from '../../hooks/useNearbyShelters';
 import { useRiskStore } from '../../state/useRiskStore';
 import { WeatherIcon } from '../../components/WeatherIcon';
 import { GlassCard } from '../../components/GlassCard';
@@ -16,24 +14,21 @@ import { Colors, FontSize, Spacing, BorderRadius } from '../../theme/colors';
 export const SOSScreen: React.FC = () => {
   const [isDispatching, setIsDispatching] = useState(false);
   const [whistleVisible, setWhistleVisible] = useState(false);
-  const [shakeEnabled, setShakeEnabled] = useState(true);
-  const user = useAuthStore((state) => state.user);
   const isConnected = useRiskStore((state) => state.isConnected);
   const userLoc = useRiskStore((state) => state.userLocation);
-  const isLiveGpsMode = useRiskStore((state) => state.isLiveGpsMode);
-
-  const shelters =
-    isLiveGpsMode && userLoc
-      ? evacuationService.getDynamicNearbyShelters(userLoc.latitude, userLoc.longitude, userLoc.city)
-      : DESIGNATED_SHELTERS;
+  const lat = userLoc?.latitude;
+  const lng = userLoc?.longitude;
+  const hasPreciseLocation = Boolean(userLoc && !userLoc.isApproximate);
+  const { shelters, isLoading: isLoadingShelters, error: shelterError } =
+    useNearbyShelters(lat, lng, hasPreciseLocation);
 
   const triggerSOS = () => {
     Alert.alert(
-      'Confirm Emergency Broadcast',
-      'This action will transmit your precise GPS coordinates to NDRF rescue teams and dispatch an emergency SMS to 112.',
+      'Prepare Emergency SMS',
+      'This opens your SMS app with your location and an emergency message addressed to 112. You must review and tap Send. For immediate help, call 112 directly.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'SEND SOS NOW', style: 'destructive', onPress: executeEmergencySequence },
+        { text: 'OPEN SMS APP', style: 'destructive', onPress: executeEmergencySequence },
       ]
     );
   };
@@ -42,29 +37,42 @@ export const SOSScreen: React.FC = () => {
     setIsDispatching(true);
 
     const storeLoc = useRiskStore.getState().userLocation;
-    const defaultLat = storeLoc?.latitude ?? 28.6139;
-    const defaultLng = storeLoc?.longitude ?? 77.2090;
-
     Geolocation.getCurrentPosition(
       async (pos) => {
         const { latitude, longitude } = pos.coords;
         await fallbackToSMS(latitude, longitude);
       },
       async () => {
-        await fallbackToSMS(defaultLat, defaultLng);
+        if (storeLoc && !storeLoc.isApproximate) {
+          await fallbackToSMS(storeLoc.latitude, storeLoc.longitude);
+          return;
+        }
+        setIsDispatching(false);
+        Alert.alert(
+          'Location unavailable',
+          'OraMet could not get a GPS fix and has no saved location. No location was added to the SMS. Call 112 directly and share your location manually.'
+        );
       },
       { enableHighAccuracy: true, timeout: 2500, maximumAge: 5000 }
     );
   };
 
   const fallbackToSMS = async (lat: number, lng: number) => {
-    const sent = await smsService.sendEmergencySMS({ latitude: lat, longitude: lng });
-    setIsDispatching(false);
-    if (!sent) {
+    try {
+      const opened = await smsService.sendEmergencySMS({ latitude: lat, longitude: lng });
+      if (!opened) {
+        Alert.alert(
+          'SMS app unavailable',
+          'The emergency message was saved only on this device and will not be sent automatically. Call 112 directly and share your location.'
+        );
+      }
+    } catch {
       Alert.alert(
-        'Manual Action Required',
-        'Could not initialize SMS dispatcher. Dial 112 or contact local rescue services directly.'
+        'Unable to prepare SMS',
+        'Call 112 directly and share your location. OraMet could not prepare the emergency message.'
       );
+    } finally {
+      setIsDispatching(false);
     }
   };
 
@@ -76,12 +84,12 @@ export const SOSScreen: React.FC = () => {
           <WeatherIcon name="sos" size={26} color={Colors.severity.critical.accent} />
           <View>
             <Text style={styles.headerTitle}>Emergency SOS</Text>
-            <Text style={styles.headerSub}>Immediate Rescue & Family Alert</Text>
+            <Text style={styles.headerSub}>Call emergency services · share your GPS pin</Text>
           </View>
         </View>
 
         <Text style={styles.description}>
-          Dispatches your exact GPS coordinates and Google Maps pin to national emergency services (112) and your saved emergency contacts via SMS.
+          Opens your SMS app with a prefilled message addressed to 112. You must tap Send yourself. If SMS is unavailable, call 112 directly and share your location.
         </Text>
 
         {/* Connection & Shake Status */}
@@ -90,24 +98,15 @@ export const SOSScreen: React.FC = () => {
             <View style={styles.statusRow}>
               <View style={[styles.statusDot, { backgroundColor: isConnected ? Colors.status.online : Colors.status.offline }]} />
               <Text style={styles.statusText}>
-                {isConnected ? 'Online: Dual API + SMS' : 'Offline: SMS 112 Fallback Ready'}
+                {isConnected ? 'Connected · SMS app required to send' : 'Offline · SMS app or phone call required'}
               </Text>
             </View>
           </GlassCard>
 
-          <TouchableOpacity
-            style={[styles.shakeToggle, shakeEnabled && styles.shakeToggleActive]}
-            onPress={() => {
-              setShakeEnabled(!shakeEnabled);
-              if (!shakeEnabled) shakeService.startListening();
-              else shakeService.stopListening();
-            }}
-          >
-            <WeatherIcon name="alert" size={14} color={shakeEnabled ? Colors.accent.cyan : Colors.text.muted} />
-            <Text style={[styles.shakeText, shakeEnabled && styles.shakeTextActive]}>
-              {shakeEnabled ? 'Shake-to-SOS Active' : 'Shake-to-SOS Off'}
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.shakeToggle}>
+            <WeatherIcon name="alert" size={14} color={Colors.text.muted} />
+            <Text style={styles.shakeText}>Automatic shake detection is not configured</Text>
+          </View>
         </View>
 
         {/* Big SOS Button */}
@@ -125,10 +124,10 @@ export const SOSScreen: React.FC = () => {
                 style={styles.sosGradient}
               >
                 <Text style={styles.sosButtonText}>
-                  {isDispatching ? 'TRANSMITTING' : 'SOS'}
+                  {isDispatching ? 'PREPARING' : 'SOS'}
                 </Text>
                 {!isDispatching && (
-                  <Text style={styles.sosSub}>Tap to Broadcast</Text>
+                  <Text style={styles.sosSub}>Prepare emergency SMS</Text>
                 )}
               </LinearGradient>
             </TouchableOpacity>
@@ -145,23 +144,36 @@ export const SOSScreen: React.FC = () => {
           <WeatherIcon name="arrow-right" size={16} color={Colors.text.tertiary} />
         </TouchableOpacity>
 
-        {/* Safe High Ground Evacuation Shelters */}
-        <Text style={styles.shelterSectionTitle}>
-          {isLiveGpsMode && userLoc
-            ? `Designated Safe Shelters near ${userLoc.city}`
-            : 'Designated High-Ground Safe Shelters'}
+        <Text style={styles.shelterSectionTitle}>Nearby mapped places</Text>
+        <Text style={styles.shelterSectionSub}>
+          OpenStreetMap places are not authority-verified safe sites. Routes may pass through hazards; follow local official guidance.
         </Text>
-        <Text style={styles.shelterSectionSub}>Tap any shelter to open direct walking routes avoiding flooded roads:</Text>
+        {isLoadingShelters ? <Text style={styles.shelterSectionSub}>Searching nearby mapped places…</Text> : null}
+        {shelterError ? <Text style={styles.shelterSectionSub}>{shelterError}</Text> : null}
+        {!isLoadingShelters && !shelterError && shelters.length === 0 ? (
+          <GlassCard style={styles.shelterCard}>
+            <Text style={styles.shelterSectionSub}>
+              No mapped places found, or precise location is unavailable. Call 112 for immediate help; do not wait for this list.
+            </Text>
+          </GlassCard>
+        ) : null}
         {shelters.map((shelter: SafeShelter) => (
           <GlassCard key={shelter.id} style={styles.shelterCard}>
             <View style={styles.shelterTop}>
               <View style={styles.shelterInfo}>
                 <Text style={styles.shelterName}>{shelter.name}</Text>
-                <Text style={styles.shelterElevation}>Elevation: {shelter.elevationMeters}m (Safe Ridge)</Text>
+                <Text style={styles.shelterElevation}>
+                  {shelter.distanceKm.toFixed(1)} km away · {shelter.placeType.replace(/_/g, ' ')}
+                </Text>
+                <Text style={styles.shelterElevation}>
+                  {shelter.elevationMeters === undefined ? 'Elevation not mapped' : `${shelter.elevationMeters} m elevation (map data)`}
+                </Text>
               </View>
-              <View style={styles.capacityBadge}>
-                <Text style={styles.capacityText}>{shelter.capacity} Cap</Text>
-              </View>
+              {shelter.capacity !== undefined ? (
+                <View style={styles.capacityBadge}>
+                  <Text style={styles.capacityText}>{shelter.capacity} capacity (map data)</Text>
+                </View>
+              ) : null}
             </View>
 
             <View style={styles.facilitiesRow}>

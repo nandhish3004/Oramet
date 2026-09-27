@@ -18,10 +18,6 @@ export interface VillageWardItem {
   state: string;
   lat: number;
   lng: number;
-  elevationMeters: number;
-  slopeDeg: number;
-  hazardHistory: string;
-  isHighRiskZone: boolean;
 }
 
 export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
@@ -32,10 +28,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Uttarakhand',
     lat: 30.556,
     lng: 79.567,
-    elevationMeters: 1890,
-    slopeDeg: 34.8,
-    hazardHistory: 'Subsidence & Alaknanda flash flood corridor',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Ward 7 - Ravigram / Marwari',
@@ -44,10 +36,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Uttarakhand',
     lat: 30.562,
     lng: 79.574,
-    elevationMeters: 1720,
-    slopeDeg: 32.5,
-    hazardHistory: 'Alaknanda & Dhauliganga confluence runout',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Dharali Panchayat',
@@ -56,10 +44,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Uttarakhand',
     lat: 31.036,
     lng: 78.784,
-    elevationMeters: 2680,
-    slopeDeg: 36.2,
-    hazardHistory: 'Bhagirathi cloudburst & glacial stream surge',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Chooralmala Ward',
@@ -68,10 +52,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Kerala',
     lat: 11.517,
     lng: 76.168,
-    elevationMeters: 850,
-    slopeDeg: 28.0,
-    hazardHistory: 'Severe debris flow & river channel surge',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Mundakkai Ward',
@@ -80,10 +60,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Kerala',
     lat: 11.528,
     lng: 76.175,
-    elevationMeters: 920,
-    slopeDeg: 31.5,
-    hazardHistory: 'Western Ghats high-gradient landslide corridor',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Old Manali - Ward 2',
@@ -92,10 +68,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Himachal Pradesh',
     lat: 32.253,
     lng: 77.175,
-    elevationMeters: 2050,
-    slopeDeg: 29.0,
-    hazardHistory: 'Beas River flash flood and boulder wash',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Singtam - Ward 3',
@@ -104,10 +76,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Sikkim',
     lat: 27.234,
     lng: 88.498,
-    elevationMeters: 380,
-    slopeDeg: 24.5,
-    hazardHistory: 'Teesta River GLOF and glacial flash runoff',
-    isHighRiskZone: true,
   },
   {
     villageOrWard: 'Pipalkoti Panchayat',
@@ -116,10 +84,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Uttarakhand',
     lat: 30.432,
     lng: 79.431,
-    elevationMeters: 1330,
-    slopeDeg: 26.0,
-    hazardHistory: 'Alaknanda NH-58 mountain pass choke point',
-    isHighRiskZone: false,
   },
   {
     villageOrWard: 'Kasol Village',
@@ -128,10 +92,6 @@ export const HILLY_VILLAGE_WARD_CATALOG: VillageWardItem[] = [
     state: 'Himachal Pradesh',
     lat: 32.010,
     lng: 77.315,
-    elevationMeters: 1580,
-    slopeDeg: 27.5,
-    hazardHistory: 'Parvati River seasonal cloudburst surge',
-    isHighRiskZone: false,
   },
 ];
 
@@ -216,7 +176,7 @@ export const VillageWardPickerModal: React.FC<VillageWardPickerModalProps> = ({
             </View>
           </TouchableOpacity>
 
-          <Text style={styles.sectionHeader}>Vulnerable Hilly Panchayats & Wards</Text>
+          <Text style={styles.sectionHeader}>Choose a map search area</Text>
 
           {/* List of Villages / Wards */}
           <ScrollView style={styles.list} showsVerticalScrollIndicator={false}>
@@ -235,32 +195,11 @@ export const VillageWardPickerModal: React.FC<VillageWardPickerModalProps> = ({
                     <Text style={styles.itemPanchayat}>
                       {item.panchayatOrTown}, {item.district}, {item.state}
                     </Text>
-                  </View>
-                  {item.isHighRiskZone && (
-                    <View style={styles.riskBadge}>
-                      <Text style={styles.riskBadgeText}>HIGH RISK ZONE</Text>
-                    </View>
-                  )}
-                </View>
-
-                <View style={styles.itemMetaRow}>
-                  <View style={styles.metaChip}>
-                    <Text style={styles.metaChipLabel}>ELEV:</Text>
-                    <Text style={styles.metaChipVal}>{item.elevationMeters}m</Text>
-                  </View>
-                  <View style={styles.metaChip}>
-                    <Text style={styles.metaChipLabel}>SLOPE:</Text>
-                    <Text style={styles.metaChipVal}>{item.slopeDeg}°</Text>
-                  </View>
-                  <View style={styles.metaChip}>
-                    <Text style={styles.metaChipLabel}>BASIN:</Text>
-                    <Text style={styles.metaChipVal}>GSI NLSM</Text>
+                    <Text style={styles.hazardHistoryText}>
+                      Approximate map point only · not a hazard classification or safe-area designation.
+                    </Text>
                   </View>
                 </View>
-
-                <Text style={styles.hazardHistoryText}>
-                  Historical: {item.hazardHistory}
-                </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>

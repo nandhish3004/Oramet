@@ -7,12 +7,6 @@ import { RiskGauge } from '../../components/RiskGauge';
 import { RiskBadge } from '../../components/RiskBadge';
 import { GlassCard } from '../../components/GlassCard';
 import { WeatherIcon } from '../../components/WeatherIcon';
-import {
-  NasaLogoSvg,
-  ImdLogoSvg,
-  IsroLogoSvg,
-  OpenMeteoLogoSvg,
-} from '../../components/ScientificDataAttribution';
 import { Colors, FontSize, Spacing, BorderRadius } from '../../theme/colors';
 
 const SEVERITY_ICON: Record<string, 'sun' | 'wind' | 'storm' | 'alert'> = {
@@ -23,7 +17,7 @@ const SEVERITY_ICON: Record<string, 'sun' | 'wind' | 'storm' | 'alert'> = {
 };
 
 export const RiskScoreScreen: React.FC = () => {
-  const { currentRisk, multiSource, imdData, activeDistrict, activeState, isLiveGpsMode, userLocation } = useRiskStore();
+  const { currentRisk, activeDistrict, activeState, isLiveGpsMode, userLocation } = useRiskStore();
 
   if (!currentRisk) {
     return (
@@ -35,8 +29,6 @@ export const RiskScoreScreen: React.FC = () => {
       </LinearGradient>
     );
   }
-
-  const lead = multiSource.leadTime;
 
   return (
     <LinearGradient colors={Colors.gradient.primary} style={styles.container}>
@@ -51,9 +43,9 @@ export const RiskScoreScreen: React.FC = () => {
                 : `${activeDistrict}, ${activeState}`}
             </Text>
           </View>
-          <View style={[styles.modeBadge, { backgroundColor: isLiveGpsMode ? '#DCFCE7' : '#EFF6FF' }]}>
-            <Text style={[styles.modeBadgeText, { color: isLiveGpsMode ? '#16A34A' : '#1D4ED8' }]}>
-              {isLiveGpsMode ? '● LIVE GPS' : 'SIMULATION'}
+          <View style={[styles.modeBadge, { backgroundColor: isLiveGpsMode && userLocation?.isLiveGps && !userLocation.isApproximate ? '#DCFCE7' : '#EFF6FF' }]}>
+            <Text style={[styles.modeBadgeText, { color: isLiveGpsMode && userLocation?.isLiveGps && !userLocation.isApproximate ? '#16A34A' : '#1D4ED8' }]}>
+              {isLiveGpsMode ? (userLocation?.isApproximate ? 'APPROXIMATE LOCATION' : 'DEVICE LOCATION') : 'SELECTED LOCATION'}
             </Text>
           </View>
         </View>
@@ -64,34 +56,42 @@ export const RiskScoreScreen: React.FC = () => {
           <View style={styles.badgeWrapper}>
             <RiskBadge severity={currentRisk.severityLabel} size="large" />
           </View>
+          {currentRisk.severityLabel !== 'UNKNOWN' && (
+            <Text style={styles.leadActionText}>
+              App-only precipitation threshold · not a certified flood or landslide risk score
+            </Text>
+          )}
         </View>
 
-        {/* Actionable Evacuation Lead Time Section */}
         <GlassCard style={styles.leadCard}>
           <View style={styles.cardTitleRow}>
             <WeatherIcon name="alert" size={18} color={Colors.severity.critical.accent} />
-            <Text style={styles.cardHeader}>Actionable Evacuation Lead Time</Text>
+            <Text style={styles.cardHeader}>Lead-time forecast unavailable</Text>
           </View>
-          <View style={styles.leadBox}>
-            <Text style={styles.leadHighlight}>~{lead.minutesRemaining} Minutes</Text>
-            <Text style={styles.leadSub}>Until Watershed Peak Concentration ({lead.estimatedPeakTime} hrs)</Text>
-          </View>
-          <Text style={styles.leadActionText}>{lead.recommendedAction}</Text>
+          <Text style={styles.leadActionText}>
+            This prototype has no authorized, validated river-gauge and catchment forecast feed. It cannot predict time to a flood crest or recommend a safe evacuation route.
+          </Text>
           <TouchableOpacity
             style={styles.shelterBtn}
-            onPress={() => evacuationService.navigateToSafeShelter()}
+            onPress={() => evacuationService.navigateToSafeShelter(
+              userLocation?.isApproximate ? undefined : userLocation?.latitude,
+              userLocation?.isApproximate ? undefined : userLocation?.longitude
+            )}
           >
             <WeatherIcon name="compass" size={16} color="#FFFFFF" />
-            <Text style={styles.shelterBtnText}>Safe Walking Route via Google Maps</Text>
+            <Text style={styles.shelterBtnText}>Search nearby map places</Text>
           </TouchableOpacity>
         </GlassCard>
 
-        {/* Multi-Source Sensor Fusion Weights */}
+        {/* Weather observations only; not an authority warning */}
         <GlassCard style={styles.card}>
           <View style={styles.cardTitleRow}>
-            <WeatherIcon name="shield" size={18} color={Colors.accent.cyan} />
-            <Text style={styles.cardHeader}>Multi-Source IoT & Satellite Telemetry</Text>
+            <WeatherIcon name="cloud" size={18} color={Colors.accent.cyan} />
+            <Text style={styles.cardHeader}>Weather signal · not an official warning</Text>
           </View>
+          {currentRisk.factors.length === 0 && (
+            <Text style={styles.leadActionText}>No live weather observations are available for risk scoring.</Text>
+          )}
           {currentRisk.factors.map((factor) => {
             const icon = SEVERITY_ICON[factor.severity] || 'cloud';
             return (
@@ -118,43 +118,26 @@ export const RiskScoreScreen: React.FC = () => {
           })}
         </GlassCard>
 
-        {/* Detailed Physical Parameters */}
         <GlassCard style={styles.card}>
           <View style={styles.cardTitleRow}>
             <WeatherIcon name="settings" size={18} color={Colors.accent.amber} />
-            <Text style={styles.cardHeader}>Slope & Highway Microclimate</Text>
+            <Text style={styles.cardHeader}>Official data connections</Text>
           </View>
-          <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Terrain Elevation & Slope:</Text>
-            <Text style={styles.metricVal}>{multiSource.slope.demElevationMeters}m ({multiSource.slope.demSlopeAngleDeg}° gradient)</Text>
-          </View>
-          <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Factor of Safety (Fs):</Text>
-            <Text style={styles.metricVal}>{multiSource.slope.factorOfSafety} ({multiSource.slope.landslideVulnerabilityBand})</Text>
-          </View>
-          <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>NASA/ISRO Soil Moisture:</Text>
-            <Text style={styles.metricVal}>{multiSource.soil.surfaceSaturationPercent}% ({multiSource.soil.runoffAbsorptionCapacity})</Text>
-          </View>
-          <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Highway Corridor:</Text>
-            <Text style={styles.metricVal} numberOfLines={1}>{multiSource.rwis.highwayId}</Text>
-          </View>
-          <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Road Surface Status:</Text>
-            <Text style={styles.metricVal}>{multiSource.rwis.roadSurfaceCondition} (Friction μ: {multiSource.rwis.surfaceFrictionIndex})</Text>
-          </View>
-          <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>IMD Radar Grid:</Text>
-            <Text style={styles.metricVal}>{multiSource.awsArg.stationId}</Text>
-          </View>
+          <Text style={styles.leadActionText}>
+            CWC river gauges, IMD station/radar observations, GSI landslide monitoring, NHAI road telemetry, and authority-verified shelter data are not connected. Their readings are not estimated or shown as safe.
+          </Text>
+          <Text style={styles.leadActionText}>
+            {currentRisk.severityLabel === 'UNKNOWN'
+              ? 'Current risk status: unavailable. No live weather observation was received.'
+              : 'The displayed precipitation thresholds are a non-authoritative weather signal only; this is not a flood-risk forecast.'}
+          </Text>
         </GlassCard>
 
         {/* AI & NCMRWF Explanation */}
         <GlassCard style={styles.card}>
           <View style={styles.cardTitleRow}>
             <WeatherIcon name="storm" size={18} color={Colors.accent.amber} />
-            <Text style={styles.cardHeader}>AI Model Explanation</Text>
+            <Text style={styles.cardHeader}>Data status</Text>
           </View>
           {currentRisk.explanation.map((item, idx) => (
             <View key={idx} style={styles.bulletRow}>
@@ -164,28 +147,7 @@ export const RiskScoreScreen: React.FC = () => {
           ))}
         </GlassCard>
 
-        {/* Scientific Agency Attribution Bar */}
-        <GlassCard style={styles.agencyCard}>
-          <Text style={styles.agencyHeader}>VERIFIED SCIENTIFIC DATA SOURCES</Text>
-          <View style={styles.agencyLogosRow}>
-            <View style={styles.agencyItem}>
-              <NasaLogoSvg size={38} />
-              <Text style={styles.agencyLabel}>NASA SMAP</Text>
-            </View>
-            <View style={styles.agencyItem}>
-              <ImdLogoSvg size={38} />
-              <Text style={styles.agencyLabel}>IMD Mausam</Text>
-            </View>
-            <View style={styles.agencyItem}>
-              <IsroLogoSvg size={38} />
-              <Text style={styles.agencyLabel}>ISRO MOSDAC</Text>
-            </View>
-            <View style={styles.agencyItem}>
-              <OpenMeteoLogoSvg size={38} />
-              <Text style={styles.agencyLabel}>Open-Meteo</Text>
-            </View>
-          </View>
-        </GlassCard>
+
       </ScrollView>
     </LinearGradient>
   );

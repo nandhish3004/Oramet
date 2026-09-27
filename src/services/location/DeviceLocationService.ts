@@ -10,12 +10,16 @@ export interface DeviceLocation {
   country: string;
   formattedAddress: string;
   isLiveGps: boolean;
+  /** True when coordinates are only a rough network/IP fallback. */
+  isApproximate?: boolean;
 }
 
 export interface LiveWeatherData {
+  /** True only when the Open-Meteo response was successfully parsed. */
+  isLive: boolean;
   temperature: number;
-  tempHigh: number;
-  tempLow: number;
+  tempHigh: number | null;
+  tempLow: number | null;
   humidity: number;
   precipitationMm: number;
   windSpeedKmh: number;
@@ -25,9 +29,9 @@ export interface LiveWeatherData {
   forecast: Array<{
     day: string;
     condition: 'sun' | 'rain' | 'storm' | 'cloud' | 'wind';
-    tempHigh: number;
-    tempLow: number;
-    precipitation: number;
+    tempHigh: number | null;
+    tempLow: number | null;
+    precipitation: number | null;
   }>;
 }
 
@@ -38,7 +42,15 @@ class DeviceLocationService {
    * Request native runtime location permission on Android
    */
   async requestPermission(): Promise<boolean> {
-    if (Platform.OS !== 'android') return true;
+    if (Platform.OS === 'ios') {
+      return new Promise((resolve) => {
+        Geolocation.requestAuthorization(
+          () => resolve(true),
+          () => resolve(false)
+        );
+      });
+    }
+    if (Platform.OS !== 'android') return false;
     try {
       const granted = await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -177,7 +189,7 @@ class DeviceLocationService {
       const res = await fetch('https://freeipapi.com/api/json');
       if (res.ok) {
         const data = await res.json();
-        if (data.latitude && data.longitude) {
+        if (Number.isFinite(Number(data.latitude)) && Number.isFinite(Number(data.longitude))) {
           const city = data.cityName || 'Local City';
           const state = data.regionName || 'India';
           return {
@@ -188,7 +200,8 @@ class DeviceLocationService {
             state,
             country: data.countryName || 'India',
             formattedAddress: `${city}, ${state}`,
-            isLiveGps: true,
+            isLiveGps: false,
+            isApproximate: true,
           };
         }
       }
@@ -198,7 +211,7 @@ class DeviceLocationService {
         const res2 = await fetch('https://ipwho.is/');
         if (res2.ok) {
           const data2 = await res2.json();
-          if (data2.latitude && data2.longitude) {
+          if (Number.isFinite(Number(data2.latitude)) && Number.isFinite(Number(data2.longitude))) {
             const city = data2.city || 'Local City';
             const state = data2.region || 'India';
             return {
@@ -209,7 +222,8 @@ class DeviceLocationService {
               state,
               country: data2.country || 'India',
               formattedAddress: `${city}, ${state}`,
-              isLiveGps: true,
+              isLiveGps: false,
+              isApproximate: true,
             };
           }
         }
@@ -226,6 +240,7 @@ class DeviceLocationService {
       country: 'India',
       formattedAddress: 'New Delhi, India',
       isLiveGps: false,
+      isApproximate: true,
     };
   }
 
@@ -240,44 +255,49 @@ class DeviceLocationService {
         const data = await res.json();
         const current = data.current || {};
         const daily = data.daily || {};
-
-        const temp = Math.round(current.temperature_2m ?? 24);
-        const humidity = Math.round(current.relative_humidity_2m ?? 55);
-        const precip = Number((current.precipitation ?? 0).toFixed(1));
-        const wind = Math.round(current.wind_speed_10m ?? 10);
-        const code = current.weather_code ?? 0;
-        const pressure = Math.round(current.surface_pressure ?? 1012);
+        const requiredCurrent = [
+          current.temperature_2m,
+          current.relative_humidity_2m,
+          current.precipitation,
+          current.wind_speed_10m,
+          current.weather_code,
+          current.surface_pressure,
+        ];
+        if (!requiredCurrent.every((value) => Number.isFinite(value))) {
+          throw new Error('Weather response is missing required current conditions');
+        }
+        const temp = Math.round(current.temperature_2m);
+        const humidity = Math.round(current.relative_humidity_2m);
+        const precip = Number(current.precipitation.toFixed(1));
+        const wind = Math.round(current.wind_speed_10m);
+        const code = current.weather_code;
+        const pressure = Math.round(current.surface_pressure);
 
         const condition = this.mapWmoToCondition(code);
         const description = this.mapWmoToDescription(code);
 
-        const days = ['Today', 'Tue', 'Wed', 'Thu', 'Fri'];
-        const forecast = (daily.time || []).slice(0, 5).map((t: string, idx: number) => {
-          const dateObj = new Date(t);
-          const dayName = idx === 0 ? 'Today' : dateObj.toLocaleDateString('en-US', { weekday: 'short' });
-          const dayCode = daily.weather_code?.[idx] ?? 0;
-          return {
-            day: dayName,
-            condition: this.mapWmoToCondition(dayCode),
-            tempHigh: Math.round(daily.temperature_2m_max?.[idx] ?? temp + 2),
-            tempLow: Math.round(daily.temperature_2m_min?.[idx] ?? temp - 4),
-            precipitation: Math.round(daily.precipitation_probability_max?.[idx] ?? (daily.precipitation_sum?.[idx] > 0 ? 60 : 10)),
-          };
-        });
+        const forecast = Array.isArray(daily.time)
+          ? daily.time.slice(0, 5).map((date: string, idx: number) => ({
+              day: idx === 0 ? 'Today' : new Date(date).toLocaleDateString('en-US', { weekday: 'short' }),
+              condition: this.mapWmoToCondition(daily.weather_code?.[idx] ?? current.weather_code),
+              tempHigh: Number.isFinite(daily.temperature_2m_max?.[idx]) ? Math.round(daily.temperature_2m_max[idx]) : null,
+              tempLow: Number.isFinite(daily.temperature_2m_min?.[idx]) ? Math.round(daily.temperature_2m_min[idx]) : null,
+              precipitation: Number.isFinite(daily.precipitation_probability_max?.[idx]) ? Math.round(daily.precipitation_probability_max[idx]) : null,
+            }))
+          : [];
 
         return {
+          isLive: true,
           temperature: temp,
-          tempHigh: Math.round(daily.temperature_2m_max?.[0] ?? temp + 2),
-          tempLow: Math.round(daily.temperature_2m_min?.[0] ?? temp - 3),
+          tempHigh: Number.isFinite(daily.temperature_2m_max?.[0]) ? Math.round(daily.temperature_2m_max[0]) : null,
+          tempLow: Number.isFinite(daily.temperature_2m_min?.[0]) ? Math.round(daily.temperature_2m_min[0]) : null,
           humidity,
           precipitationMm: precip,
           windSpeedKmh: wind,
           weatherCondition: condition,
           weatherDescription: description,
           surfacePressureHpa: pressure,
-          forecast: forecast.length > 0 ? forecast : [
-            { day: 'Today', condition, tempHigh: temp + 2, tempLow: temp - 3, precipitation: precip > 0 ? 80 : 15 },
-          ],
+          forecast,
         };
       }
     } catch {
@@ -285,6 +305,7 @@ class DeviceLocationService {
     }
 
     return {
+      isLive: false,
       temperature: 26,
       tempHigh: 28,
       tempLow: 21,
@@ -292,15 +313,9 @@ class DeviceLocationService {
       precipitationMm: 0,
       windSpeedKmh: 12,
       weatherCondition: 'sun',
-      weatherDescription: 'Clear Sky · Nominal Weather',
+      weatherDescription: 'Live weather unavailable',
       surfacePressureHpa: 1013,
-      forecast: [
-        { day: 'Today', condition: 'sun', tempHigh: 28, tempLow: 21, precipitation: 10 },
-        { day: 'Tue', condition: 'cloud', tempHigh: 27, tempLow: 20, precipitation: 20 },
-        { day: 'Wed', condition: 'rain', tempHigh: 26, tempLow: 20, precipitation: 45 },
-        { day: 'Thu', condition: 'sun', tempHigh: 29, tempLow: 22, precipitation: 10 },
-        { day: 'Fri', condition: 'sun', tempHigh: 30, tempLow: 23, precipitation: 5 },
-      ],
+      forecast: [],
     };
   }
 
@@ -322,7 +337,7 @@ class DeviceLocationService {
     if (code >= 61 && code <= 65) return 'Moderate Rain';
     if (code >= 80 && code <= 82) return 'Heavy Rain Showers';
     if (code >= 95) return 'Severe Thunderstorm & Lightning';
-    return 'Moderate Conditions';
+    return 'Weather condition unavailable';
   }
 
   /**

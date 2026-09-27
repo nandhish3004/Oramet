@@ -62,7 +62,7 @@ export const RescueWhistleModal: React.FC<RescueWhistleModalProps> = ({ visible,
           <View style={styles.header}>
             <View style={styles.titleRow}>
               <WeatherIcon name="whistle" size={24} color={Colors.severity.critical.accent} />
-              <Text style={styles.title}>Emergency SOS Siren</Text>
+              <Text style={styles.title}>SOS vibration demo</Text>
             </View>
             <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
               <Text style={styles.closeText}>X</Text>
@@ -70,7 +70,7 @@ export const RescueWhistleModal: React.FC<RescueWhistleModalProps> = ({ visible,
           </View>
 
           <Text style={styles.desc}>
-            Vibrates your phone in an emergency SOS pattern to alert nearby rescue personnel or volunteers if you are trapped or in distress.
+            This only vibrates this device. It does not sound an audible siren, send an SOS, or share your location. Call 112 or contact someone directly for help.
           </Text>
 
           {/* Pulsing Visual Beacon */}
@@ -89,7 +89,7 @@ export const RescueWhistleModal: React.FC<RescueWhistleModalProps> = ({ visible,
               />
             </Animated.View>
             <Text style={styles.statusText}>
-              {isActive ? '● SOS VIBRATION ACTIVE' : 'Siren Paused'}
+              {isActive ? '● DEVICE VIBRATION ACTIVE' : 'Vibration paused'}
             </Text>
           </View>
 
@@ -99,7 +99,7 @@ export const RescueWhistleModal: React.FC<RescueWhistleModalProps> = ({ visible,
             onPress={() => setIsActive(!isActive)}
           >
             <Text style={styles.toggleBtnText}>
-              {isActive ? 'PAUSE SIREN' : 'RESUME SIREN'}
+              {isActive ? 'STOP VIBRATION' : 'START VIBRATION'}
             </Text>
           </TouchableOpacity>
 

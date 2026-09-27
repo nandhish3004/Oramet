@@ -21,9 +21,7 @@ import { AppLogo } from '../../components/AppLogo';
 import { CitizenReportModal } from '../../components/CitizenReportModal';
 import { RescueWhistleModal } from '../../components/RescueWhistleModal';
 import { LocationPickerModal } from '../../components/LocationPickerModal';
-import { ScientificDataAttribution } from '../../components/ScientificDataAttribution';
 import { WeatherMetricModal, MetricDetailData } from '../../components/WeatherMetricModal';
-import { TelemetryLogos } from '../../components/TelemetryLogos';
 import { GoogleSignInSheet } from '../../components/GoogleSignInSheet';
 import { LanguagePickerModal } from '../../components/LanguagePickerModal';
 import { useLanguageStore } from '../../state/useLanguageStore';
@@ -87,35 +85,14 @@ export const DashboardScreen: React.FC = () => {
 
     let speechText = '';
     if (isUrgent) {
-      speechText = `सावधान! ${city} में भारी बारिश और बाढ़ की चेतावनी जारी की गई है। कृपया तुरंत अपने परिवार के साथ ऊंचे सुरक्षित स्थान की ओर जाएं। 112 डायल करें।`;
+      speechText = `${city} में OraMet ने मौसम डेटा से ऊँचा जोखिम अनुमानित किया है। यह आधिकारिक चेतावनी नहीं है। स्थानीय प्रशासन के निर्देशों का पालन करें। तत्काल खतरे में 112 पर कॉल करें।`;
     } else {
-      speechText = `${city} में नदियाँ और जलस्तर शांत हैं। वर्तमान में कोई बाढ़ का खतरा नहीं है। आप पूरी तरह सुरक्षित हैं।`;
+      speechText = `${city} के लिए OraMet में इस समय कोई सत्यापित आधिकारिक चेतावनी उपलब्ध नहीं है। इसे सुरक्षित होने की पुष्टि न मानें। कृपया आधिकारिक मौसम सूचनाएँ देखें और आपातकाल में 112 पर कॉल करें।`;
     }
 
     voiceSpeakerRef.current?.speak(speechText, currentLanguage);
     setIsSpeaking(true);
     setTimeout(() => setIsSpeaking(false), 9000);
-  };
-
-  // Second-by-second live countdown timer until peak flood surge
-  const [countdownSeconds, setCountdownSeconds] = useState(multiSource.leadTime.minutesRemaining * 60);
-
-  useEffect(() => {
-    setCountdownSeconds(multiSource.leadTime.minutesRemaining * 60);
-  }, [multiSource.leadTime.minutesRemaining]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdownSeconds((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatCountdown = (totalSec: number) => {
-    const hrs = Math.floor(totalSec / 3600);
-    const mins = Math.floor((totalSec % 3600) / 60);
-    const secs = totalSec % 60;
-    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const handleCall112 = () => {
@@ -138,13 +115,21 @@ export const DashboardScreen: React.FC = () => {
         {
           text: strings.openSmsBtn,
           onPress: async () => {
-            await smsService.sendDisasterAlertSMS(
+            const opened = await smsService.sendDisasterAlertSMS(
               '112',
               activeDistrict,
-              userLocation ? { latitude: userLocation.latitude, longitude: userLocation.longitude } : undefined,
-              liveWeather?.precipitationMm && liveWeather.precipitationMm > 20
-                ? `Heavy Rain Alert (${liveWeather.precipitationMm} mm)`
+              userLocation && !userLocation.isApproximate
+                ? { latitude: userLocation.latitude, longitude: userLocation.longitude }
+                : undefined,
+              liveWeather?.isLive && liveWeather.precipitationMm > 20
+                ? `Weather model reports ${liveWeather.precipitationMm} mm precipitation`
                 : 'Emergency Assistance Request'
+            );
+            Alert.alert(
+              opened ? 'SMS draft opened' : 'SMS not sent',
+              opened
+                ? 'Review the message and tap Send in your SMS app. OraMet cannot confirm delivery.'
+                : 'The SMS app did not open. Any locally queued copy will not be sent automatically. Call 112 directly if you need immediate help.'
             );
           },
         },
@@ -178,26 +163,26 @@ export const DashboardScreen: React.FC = () => {
     fetchAlerts();
   };
 
-  const isCritical = currentRisk?.severityLabel === 'CRITICAL' || currentRisk?.severityLabel === 'HIGH';
-  const isModerate = currentRisk?.severityLabel === 'MODERATE';
-
-  const precip = liveWeather?.precipitationMm ?? 0.0;
-  const temp = liveWeather?.temperature ?? 29;
-  const weatherDesc = liveWeather?.weatherDescription ?? 'Clear Sky';
-  const humidity = liveWeather?.humidity ?? 65;
-  const wind = liveWeather?.windSpeedKmh ?? 18;
-  const pressure = liveWeather?.surfacePressureHpa ?? 1008;
+  const weatherAvailable = liveWeather?.isLive === true;
+  const precip = weatherAvailable ? liveWeather!.precipitationMm : 0;
+  const humidity = weatherAvailable ? liveWeather!.humidity : 0;
+  const wind = weatherAvailable ? liveWeather!.windSpeedKmh : 0;
+  const pressure = weatherAvailable ? liveWeather!.surfacePressureHpa : 0;
 
   // Handlers for metric clicks
   const handleOpenPrecipDetail = () => {
     setSelectedMetric({
       title: 'Precipitation Accumulation',
-      value: `${precip} mm/hr`,
-      status: precip >= 25 ? 'Heavy Rainfall' : precip >= 5 ? 'Moderate Rain' : 'Light / Dry',
-      source: 'NASA GPM & Open-Meteo Doppler Grid',
-      description: `Live precipitation recorded for ${activeDistrict}. Multi-source correlation confirms current rate is ${precip} mm per hour.`,
-      scientificContext: 'IMD Official Scale:\n• 0.1 - 2.4 mm: Very Light Rain\n• 2.5 - 15.5 mm: Moderate Rain\n• 15.6 - 64.4 mm: Heavy Rain (Watch Issued)\n• > 64.5 mm: Very Heavy Rain (Flood Hazard)',
-      safetyAdvisory: precip > 20 ? 'Avoid underpasses, flooded culverts, and low-lying river paths.' : 'Standard outdoor conditions. Drainage systems operating within normal parameters.',
+      value: weatherAvailable ? `${precip} mm` : 'Unavailable',
+      status: weatherAvailable ? (precip >= 25 ? 'High app threshold' : precip >= 5 ? 'Moderate app threshold' : 'Below app threshold') : 'No live observation',
+      source: 'Open-Meteo public weather model',
+      description: weatherAvailable
+        ? `Open-Meteo current precipitation estimate for ${activeDistrict}. It is not a river gauge or an official warning.`
+        : 'The weather request did not return live data. No rainfall reading or risk assessment is available.',
+      scientificContext: 'Precipitation thresholds shown here are app heuristics only. They do not represent an IMD warning, river level, or flood forecast.',
+      safetyAdvisory: weatherAvailable && precip > 20
+        ? 'Avoid floodwater and follow local authority advice.'
+        : 'A low precipitation estimate is not an all-clear; follow official local advisories.',
       icon: 'rain',
     });
   };
@@ -205,11 +190,13 @@ export const DashboardScreen: React.FC = () => {
   const handleOpenHumidityDetail = () => {
     setSelectedMetric({
       title: 'Relative Humidity',
-      value: `${humidity}%`,
-      status: humidity > 80 ? 'High Moisture Saturation' : humidity > 50 ? 'Comfortable' : 'Dry',
-      source: 'IMD Automatic Weather Station (AWS)',
-      description: `Relative atmospheric moisture content in ${activeDistrict} air column.`,
-      scientificContext: 'Relative humidity indicates moisture saturation relative to maximum temperature capacity. Levels exceeding 85% paired with rising heat trigger convective thunderstorm activity and localized downpours.',
+      value: weatherAvailable ? `${humidity}%` : 'Unavailable',
+      status: weatherAvailable ? 'Weather observation' : 'No live observation',
+      source: 'Open-Meteo public weather model',
+      description: weatherAvailable
+        ? `Open-Meteo relative humidity estimate for ${activeDistrict}.`
+        : 'Live weather data is unavailable for this location.',
+      scientificContext: 'Relative humidity describes water vapour in the air relative to saturation. It is not a standalone severe-weather or flood indicator.',
       safetyAdvisory: 'Stay hydrated. High humidity reduces sweat evaporation rate.',
       icon: 'cloud',
     });
@@ -218,12 +205,16 @@ export const DashboardScreen: React.FC = () => {
   const handleOpenWindDetail = () => {
     setSelectedMetric({
       title: 'Wind Velocity & Gusts',
-      value: `${wind} km/h`,
-      status: wind > 40 ? 'Gale / Strong Wind' : wind > 20 ? 'Moderate Breeze' : 'Gentle Breeze',
-      source: 'Doppler Anemometer & ECMWF Atmospheric Model',
-      description: `Sustained horizontal surface wind velocity at 10-meter elevation.`,
-      scientificContext: 'Beaufort Scale Index:\n• 12-19 km/h: Gentle Breeze\n• 20-28 km/h: Moderate Breeze\n• 29-38 km/h: Fresh Breeze\n• 39-49 km/h: Strong Wind (Loose objects hazardous)\n• > 50 km/h: Gale Warning',
-      safetyAdvisory: wind > 35 ? 'Secure loose tin roofing, construction sheets, and stay away from weak trees.' : 'Winds are within standard safe operational thresholds.',
+      value: weatherAvailable ? `${wind} km/h` : 'Unavailable',
+      status: weatherAvailable ? 'Weather observation' : 'No live observation',
+      source: 'Open-Meteo public weather model',
+      description: weatherAvailable
+        ? `Open-Meteo wind speed estimate for ${activeDistrict}; it is not a local sensor reading.`
+        : 'Live weather data is unavailable for this location.',
+      scientificContext: 'Wind speed alone cannot determine local impacts. Models may differ from measurements at your location; check official weather notices.',
+      safetyAdvisory: weatherAvailable && wind > 35
+        ? 'Consider securing loose items and follow local weather authority advice.'
+        : 'Do not interpret this weather estimate as an all-clear.',
       icon: 'wind',
     });
   };
@@ -231,12 +222,14 @@ export const DashboardScreen: React.FC = () => {
   const handleOpenPressureDetail = () => {
     setSelectedMetric({
       title: 'Surface Barometric Pressure',
-      value: `${pressure} hPa`,
-      status: pressure < 1000 ? 'Low Pressure (Depression)' : 'Normal Atmospheric Range',
-      source: 'Barometric Sensor & NASA Earthdata Models',
-      description: `Atmospheric pressure exerted by the weight of air at current ground elevation.`,
+      value: weatherAvailable ? `${pressure} hPa` : 'Unavailable',
+      status: weatherAvailable ? 'Weather observation' : 'No live observation',
+      source: 'Open-Meteo public weather model',
+      description: weatherAvailable
+        ? `Open-Meteo surface pressure estimate for ${activeDistrict}; it is not a local barometer reading.`
+        : 'Live weather data is unavailable for this location.',
       scientificContext: 'Standard sea-level pressure is 1013.25 hPa. A rapid pressure decline of >3 hPa within 3 hours indicates cyclonic development, monsoon depressions, or active thunderstorm squall lines.',
-      safetyAdvisory: pressure < 1000 ? 'Low pressure depression detected. Monitor official IMD storm advisories.' : 'Atmospheric pressure is stable. No severe pressure depression active.',
+      safetyAdvisory: 'Pressure alone does not confirm or rule out severe weather. Check official local advisories.',
       icon: 'compass',
     });
   };
@@ -248,8 +241,10 @@ export const DashboardScreen: React.FC = () => {
       status: `${f.precipitation}% Chance of Rain`,
       source: 'Open-Meteo High-Resolution 5-Day Numerical Model',
       description: `Projected meteorological conditions for ${f.day} in ${activeDistrict}.`,
-      scientificContext: `High temperature expected to reach ${f.tempHigh}°C, overnight low around ${f.tempLow}°C. Precipitation probability calculated across 24-hour simulation grid.`,
-      safetyAdvisory: f.precipitation >= 50 ? 'Precipitation probable. Keep umbrella and emergency supplies handy.' : 'Pleasant weather anticipated. Regular activities can proceed.',
+      scientificContext: `Open-Meteo forecast estimate: high ${f.tempHigh}°C, low ${f.tempLow}°C, precipitation probability ${f.precipitation}%. Forecasts can be inaccurate and are not official warnings.`,
+      safetyAdvisory: f.precipitation >= 50
+        ? 'Rain is forecast; check local authority advisories and avoid floodwater.'
+        : 'This forecast is not an all-clear or a flood-safety assessment.',
       icon: f.condition === 'rain' ? 'rain' : f.condition === 'storm' ? 'alert' : f.condition === 'wind' ? 'wind' : 'sun',
     });
   };
@@ -268,6 +263,11 @@ export const DashboardScreen: React.FC = () => {
         }
         showsVerticalScrollIndicator={false}
       >
+        <View style={{ margin: 16, marginBottom: 8, padding: 12, borderRadius: 10, backgroundColor: '#FFF4E5', borderWidth: 1, borderColor: '#F5C27A' }}>
+          <Text style={{ color: '#7A3E00', fontSize: 12, fontWeight: '700' }}>
+            Prototype only — official hazard feeds, shelters, and evacuation routes are not verified. Do not rely on this app as an emergency warning; call 112 for immediate help.
+          </Text>
+        </View>
         {/* Designer Top Bar: Square Grid Button + User Profile Avatar (Ref: Screen 1) */}
         <View style={styles.designerTopBar}>
           <TouchableOpacity
@@ -317,13 +317,15 @@ export const DashboardScreen: React.FC = () => {
 
         {/* Main Dynamic Location & Catchment Headline */}
         <Text style={styles.designerMainHeadline} numberOfLines={2}>
-          {isLiveGpsMode && userLocation?.city ? `Live Flood Watch: ${userLocation.city}` : strings.liveWatchHeader}
+          {userLocation?.city ? `Weather status · ${userLocation.city}` : 'Weather & safety status'}
         </Text>
         <Text style={styles.designerSubHeadline} numberOfLines={1}>
-          {userLocation ? `${userLocation.city}, ${userLocation.state} · ${userLocation.latitude.toFixed(3)}°N, ${userLocation.longitude.toFixed(3)}°E` : `${activeVillageWard || activeDistrict} · Active Basin`}
+          {userLocation
+            ? `${userLocation.city}, ${userLocation.state}${userLocation.isApproximate ? ' · approximate location' : ` · ${userLocation.latitude.toFixed(3)}°, ${userLocation.longitude.toFixed(3)}°`}`
+            : `${activeVillageWard || activeDistrict} · selected area`}
         </Text>
 
-        {/* REAL-TIME LIVE GPS & BASIN DETECTOR */}
+        {/* Location status and location picker */}
         <TouchableOpacity
           style={styles.autoGpsCapsule}
           onPress={() => {
@@ -334,11 +336,13 @@ export const DashboardScreen: React.FC = () => {
         >
           <View style={[styles.autoGpsDot, { backgroundColor: isLiveGpsMode && userLocation?.isLiveGps ? '#16A34A' : '#F59E0B' }]} />
           <Text style={styles.autoGpsText} numberOfLines={1}>
-            {userLocation?.isLiveGps
-              ? `📍 Real GPS: ${userLocation.city}, ${userLocation.state} (${userLocation.latitude.toFixed(3)}°N, ${userLocation.longitude.toFixed(3)}°E)`
+            {userLocation?.isApproximate
+              ? `Approximate location: ${userLocation.city}. Tap to request precise device location.`
+              : userLocation?.isLiveGps
+              ? `Device GPS: ${userLocation.city}, ${userLocation.state}`
               : isLiveGpsMode
-              ? '📡 Acquiring Live Device GPS Coordinates...'
-              : `🏔️ Hilly Ward: ${activeVillageWard || activeDistrict} (Tap for Real GPS)`}
+              ? 'Requesting precise device location…'
+              : `Selected area: ${activeVillageWard || activeDistrict} (tap to use device location)`}
           </Text>
           <WeatherIcon name="compass" size={12} color="#8C5338" />
         </TouchableOpacity>
@@ -402,16 +406,16 @@ export const DashboardScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        {/* OFFICIAL LIVE SATELLITE & SENSOR FEEDS (NASA, ISRO, IMD, GSI, CWC, WMO) */}
-        <View style={styles.designerFeedsRow}>
-          <TelemetryLogos
-            compact
-            onPressAgency={(agency) => {
-              setSelectedAgency(agency as any);
-              setTelemetryModalVisible(true);
-            }}
-          />
-        </View>
+        <TouchableOpacity
+          style={styles.designerFeedsRow}
+          onPress={() => setTelemetryModalVisible(true)}
+          accessibilityRole="button"
+        >
+          <WeatherIcon name="alert" size={16} color="#8C5338" />
+          <Text style={{ color: '#5B4636', fontSize: 12, fontWeight: '700', marginLeft: 8 }}>
+            Weather model may be available · official agency feeds are not connected
+          </Text>
+        </TouchableOpacity>
 
         {/* SHAKE-TO-SOS SENSOR STATUS CARD */}
         <View style={styles.designerShakeCard}>
@@ -435,16 +439,16 @@ export const DashboardScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
 
-        {/* BACKGROUND NOTIFICATION WATCHDOG STATUS CARD */}
+        {/* Foreground haptics demo status */}
         <View style={styles.designerWatchdogCard}>
           <View style={styles.designerWatchdogLeft}>
             <View style={styles.designerWatchdogPulseDot} />
             <View style={styles.designerShakeTextCol}>
               <Text style={styles.designerWatchdogTitle}>
-                Background Alert Watchdog Active
+                Local vibration demo
               </Text>
               <Text style={styles.designerWatchdogSub} numberOfLines={1}>
-                Notifies you with sound & vibration even when app is closed
+                Foreground vibration demo only · background push is not configured
               </Text>
             </View>
           </View>
@@ -453,28 +457,23 @@ export const DashboardScreen: React.FC = () => {
             onPress={() => emergencyNotificationService.triggerTestBackgroundAlert()}
             activeOpacity={0.8}
           >
-            <Text style={styles.designerWatchdogTestBtnText}>Test Alert</Text>
+            <Text style={styles.designerWatchdogTestBtnText}>Test vibration</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Dark Hero Promo Banner (Ref: "Up to 40% Discount!" -> "35 Mins Lead-Time") */}
         <View style={styles.designerDarkHero}>
           <View style={styles.designerDarkHeroLeft}>
-            <Text style={styles.designerDarkHeroTag}>
-              {isCritical ? strings.criticalEvacWindow : strings.liveSatelliteWatch}
-            </Text>
-            <Text style={styles.designerDarkHeroTitle}>
-              {formatCountdown(countdownSeconds).replace(/^00:/, '')} {strings.minutesRemaining}
-            </Text>
-            <Text style={styles.designerDarkHeroSub} numberOfLines={2}>
-              {strings.surgeAdvisory}
+            <Text style={styles.designerDarkHeroTag}>NO VERIFIED LEAD-TIME FEED</Text>
+            <Text style={styles.designerDarkHeroTitle}>Check official alerts</Text>
+            <Text style={styles.designerDarkHeroSub} numberOfLines={3}>
+              OraMet does not have an operational river-gauge or evacuation forecast feed. Do not use a countdown for safety decisions.
             </Text>
             <TouchableOpacity
               style={styles.designerWhitePillBtn}
               onPress={() => navigation.navigate('SafeHaven')}
               activeOpacity={0.9}
             >
-              <Text style={styles.designerWhitePillBtnText}>{strings.viewSafeHavens}</Text>
+              <Text style={styles.designerWhitePillBtnText}>Explore mapped places</Text>
             </TouchableOpacity>
           </View>
 
@@ -515,7 +514,7 @@ export const DashboardScreen: React.FC = () => {
             onPress={handleOpenPrecipDetail}
             activeOpacity={0.8}
           >
-            <Text style={styles.designerFilterChipText}>{strings.rainfallChip} ({precip}mm)</Text>
+            <Text style={styles.designerFilterChipText}>{strings.rainfallChip} ({weatherAvailable ? `${precip}mm` : '—'})</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -523,7 +522,7 @@ export const DashboardScreen: React.FC = () => {
             onPress={handleOpenHumidityDetail}
             activeOpacity={0.8}
           >
-            <Text style={styles.designerFilterChipText}>{strings.soilChip} ({multiSource.soil.surfaceSaturationPercent}%)</Text>
+            <Text style={styles.designerFilterChipText}>Soil moisture (not connected)</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -534,7 +533,7 @@ export const DashboardScreen: React.FC = () => {
             }}
             activeOpacity={0.8}
           >
-            <Text style={styles.designerFilterChipText}>{strings.hillSlopeChip} ({strings.stableSlope})</Text>
+            <Text style={styles.designerFilterChipText}>GSI slope feed (not connected)</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -545,7 +544,7 @@ export const DashboardScreen: React.FC = () => {
             }}
             activeOpacity={0.8}
           >
-            <Text style={styles.designerFilterChipText}>{strings.riverStageChip} ({strings.safeRiverFlow})</Text>
+            <Text style={styles.designerFilterChipText}>CWC gauge (not connected)</Text>
           </TouchableOpacity>
         </ScrollView>
 
@@ -561,12 +560,12 @@ export const DashboardScreen: React.FC = () => {
               <WeatherIcon name="rain" size={36} color="#8C5338" />
             </View>
             <View style={styles.designerCardFooter}>
-              <Text style={styles.designerCardCategory}>{strings.imdRadarCategory}</Text>
-              <Text style={styles.designerCardTitle}>{strings.rainfallChip}: {precip} mm/hr</Text>
+              <Text style={styles.designerCardCategory}>Open-Meteo weather model</Text>
+              <Text style={styles.designerCardTitle}>{strings.rainfallChip}: {weatherAvailable ? `${precip} mm` : '—'}</Text>
               <View style={styles.designerCardActionRow}>
                 <View style={styles.designerCardTag}>
                   <Text style={styles.designerCardTagText}>
-                    {precip > 20 ? strings.heavyRain : precip > 0 ? strings.lightRain : strings.dryClear}
+                    {!weatherAvailable ? 'No live data' : precip > 20 ? strings.heavyRain : precip > 0 ? strings.lightRain : 'Below app threshold'}
                   </Text>
                 </View>
                 <View style={styles.designerCardInspectBtn}>
@@ -586,12 +585,12 @@ export const DashboardScreen: React.FC = () => {
               <WeatherIcon name="cloud" size={36} color="#8C5338" />
             </View>
             <View style={styles.designerCardFooter}>
-              <Text style={styles.designerCardCategory}>{strings.nasaCategory}</Text>
-              <Text style={styles.designerCardTitle}>{strings.soilChip}: {multiSource.soil.surfaceSaturationPercent}%</Text>
+              <Text style={styles.designerCardCategory}>NASA feed · not connected</Text>
+              <Text style={styles.designerCardTitle}>{strings.soilChip}: —</Text>
               <View style={styles.designerCardActionRow}>
                 <View style={styles.designerCardTag}>
                   <Text style={styles.designerCardTagText}>
-                    {multiSource.soil.surfaceSaturationPercent > 75 ? strings.saturatedSoil : strings.safeMoisture}
+                    No verified data
                   </Text>
                 </View>
                 <View style={styles.designerCardInspectBtn}>
@@ -614,12 +613,12 @@ export const DashboardScreen: React.FC = () => {
               <WeatherIcon name="mountain" size={36} color="#8C5338" />
             </View>
             <View style={styles.designerCardFooter}>
-              <Text style={styles.designerCardCategory}>{strings.gsiCategory}</Text>
-              <Text style={styles.designerCardTitle}>{strings.hillSlopeChip}: {multiSource.slope.demSlopeAngleDeg}°</Text>
+              <Text style={styles.designerCardCategory}>GSI feed · not connected</Text>
+              <Text style={styles.designerCardTitle}>{strings.hillSlopeChip}: —</Text>
               <View style={styles.designerCardActionRow}>
                 <View style={styles.designerCardTag}>
                   <Text style={styles.designerCardTagText}>
-                    {multiSource.slope.factorOfSafety < 1.1 ? strings.heavyRain : strings.stableSlope}
+                    No verified data
                   </Text>
                 </View>
                 <View style={styles.designerCardInspectBtn}>
@@ -643,14 +642,10 @@ export const DashboardScreen: React.FC = () => {
             </View>
             <View style={styles.designerCardFooter}>
               <Text style={styles.designerCardCategory}>{strings.cwcCategory}</Text>
-              <Text style={styles.designerCardTitle}>
-                {strings.riverStageChip}: {multiSource.cwcLive?.currentWaterLevelMeters ?? 1150.2} m
-              </Text>
+              <Text style={styles.designerCardTitle}>Official river gauge feed unavailable</Text>
               <View style={styles.designerCardActionRow}>
                 <View style={styles.designerCardTag}>
-                  <Text style={styles.designerCardTagText}>
-                    {multiSource.cwcLive?.isAboveDanger ? strings.heavyRain : strings.safeRiverFlow}
-                  </Text>
+                  <Text style={styles.designerCardTagText}>No live gauge</Text>
                 </View>
                 <View style={styles.designerCardInspectBtn}>
                   <WeatherIcon name="arrow-right" size={12} color="#FFFFFF" />
@@ -700,7 +695,7 @@ export const DashboardScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* Mountain Catchment Hydrological Telemetry Matrix */}
+        {/* Current weather observations, when available */}
         <View style={styles.metricsHeaderRow}>
           <Text style={styles.sectionHeader}>{strings.currentWeatherDetails}</Text>
           <Text style={styles.tapToInspectHint}>{strings.tapToInspectHint}</Text>
@@ -713,47 +708,26 @@ export const DashboardScreen: React.FC = () => {
             activeOpacity={0.7}
           >
             <Text style={styles.metricCardLabel}>{strings.precipitationLabel}</Text>
-            <Text style={styles.metricCardValue}>{precip} mm</Text>
-            <Text style={styles.metricCardFoot}>NASA GPM Doppler ›</Text>
+            <Text style={styles.metricCardValue}>{weatherAvailable ? `${precip} mm` : 'Unavailable'}</Text>
+            <Text style={styles.metricCardFoot}>Open-Meteo weather model ›</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.metricCard}
-            onPress={() => {
-              setSelectedAgency('CWC');
-              setTelemetryModalVisible(true);
-            }}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.metricCardLabel}>{strings.upstreamDischargeLabel || 'DISCHARGE'}</Text>
-            <Text style={styles.metricCardValue}>420 m³/s</Text>
-            <Text style={styles.metricCardFoot}>CWC Hydro Buoy ›</Text>
+          <TouchableOpacity style={styles.metricCard} onPress={handleOpenHumidityDetail} activeOpacity={0.7}>
+            <Text style={styles.metricCardLabel}>RELATIVE HUMIDITY</Text>
+            <Text style={styles.metricCardValue}>{weatherAvailable ? `${humidity}%` : 'Unavailable'}</Text>
+            <Text style={styles.metricCardFoot}>Open-Meteo model ›</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.metricCard}
-            onPress={() => {
-              setSelectedAgency('CWC');
-              setTelemetryModalVisible(true);
-            }}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.metricCardLabel}>{strings.riverVelocityLabel || 'RIVER VELOCITY'}</Text>
-            <Text style={styles.metricCardValue}>1.8 m/s</Text>
-            <Text style={styles.metricCardFoot}>Doppler Acoustic ›</Text>
+          <TouchableOpacity style={styles.metricCard} onPress={handleOpenWindDetail} activeOpacity={0.7}>
+            <Text style={styles.metricCardLabel}>WIND SPEED</Text>
+            <Text style={styles.metricCardValue}>{weatherAvailable ? `${wind} km/h` : 'Unavailable'}</Text>
+            <Text style={styles.metricCardFoot}>Open-Meteo model ›</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.metricCard}
-            onPress={() => {
-              setSelectedAgency('GSI');
-              setTelemetryModalVisible(true);
-            }}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.metricCardLabel}>{strings.hillSlopeChip}</Text>
-            <Text style={styles.metricCardValue}>Fs 1.48</Text>
-            <Text style={styles.metricCardFoot}>GSI 30m LiDAR ›</Text>
+          <TouchableOpacity style={styles.metricCard} onPress={handleOpenPressureDetail} activeOpacity={0.7}>
+            <Text style={styles.metricCardLabel}>SURFACE PRESSURE</Text>
+            <Text style={styles.metricCardValue}>{weatherAvailable ? `${pressure} hPa` : 'Unavailable'}</Text>
+            <Text style={styles.metricCardFoot}>Open-Meteo model ›</Text>
           </TouchableOpacity>
         </View>
 
@@ -774,8 +748,8 @@ export const DashboardScreen: React.FC = () => {
             <View style={styles.stepCard}>
               <View style={styles.stepNumberBadge}><Text style={styles.stepNumberText}>1</Text></View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.stepTitle}>{strings.step1Title || '1. Monitor Evacuation Lead-Time'}</Text>
-                <Text style={styles.stepDesc}>{strings.step1Desc || 'Keep your eyes on the surge countdown clock. Do not wait for water to enter roads.'}</Text>
+                <Text style={styles.stepTitle}>{strings.step1Title || '1. Check official alerts'}</Text>
+                <Text style={styles.stepDesc}>{strings.step1Desc || 'No validated emergency warning feed is connected. Follow official local advisories.'}</Text>
               </View>
             </View>
 
@@ -787,8 +761,8 @@ export const DashboardScreen: React.FC = () => {
             >
               <View style={[styles.stepNumberBadge, { backgroundColor: '#8C5338' }]}><Text style={styles.stepNumberText}>2</Text></View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.stepTitle}>{strings.step2Title || '2. Move Uphill to Bedrock Shelter'}</Text>
-                <Text style={styles.stepDesc}>{strings.step2Desc || 'Follow green dashed route to Joshimath Community Hall (>240m elevation above riverbed).'}</Text>
+                <Text style={styles.stepTitle}>{strings.step2Title || '2. Avoid floodwater and closed roads'}</Text>
+                <Text style={styles.stepDesc}>{strings.step2Desc || 'Do not walk or drive through floodwater. Follow local responder instructions.'}</Text>
               </View>
               <WeatherIcon name="arrow-right" size={14} color="#8C5338" />
             </TouchableOpacity>
@@ -796,13 +770,13 @@ export const DashboardScreen: React.FC = () => {
             {/* Step 3 */}
             <TouchableOpacity
               style={styles.stepCard}
-              onPress={() => shakeService.triggerEmergencyShake()}
+              onPress={handleCall112}
               activeOpacity={0.8}
             >
               <View style={[styles.stepNumberBadge, { backgroundColor: '#1F1A17' }]}><Text style={styles.stepNumberText}>3</Text></View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.stepTitle}>{strings.step3Title || '3. Shake Phone 3 Times if Trapped'}</Text>
-                <Text style={styles.stepDesc}>{strings.step3Desc || 'Automatic accelerometer trigger dispatches your GPS coordinates to 112 via offline SMS.'}</Text>
+                <Text style={styles.stepTitle}>{strings.step3Title || '3. Contact emergency services'}</Text>
+                <Text style={styles.stepDesc}>{strings.step3Desc || 'Call 112 in India. OraMet does not automatically detect shaking or send your location.'}</Text>
               </View>
               <WeatherIcon name="arrow-right" size={14} color="#1F1A17" />
             </TouchableOpacity>
@@ -815,16 +789,19 @@ export const DashboardScreen: React.FC = () => {
             >
               <View style={[styles.stepNumberBadge, { backgroundColor: '#B45309' }]}><Text style={styles.stepNumberText}>4</Text></View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.stepTitle}>{strings.step4Title || '4. Sound 3.5 kHz Acoustic Rescue Whistle'}</Text>
-                <Text style={styles.stepDesc}>{strings.step4Desc || 'High-frequency pulse penetrates mountain fog and rain so NDRF rescue teams can locate you.'}</Text>
+                <Text style={styles.stepTitle}>{strings.step4Title || '4. Use a whistle or call out'}</Text>
+                <Text style={styles.stepDesc}>{strings.step4Desc || 'A whistle may help nearby people notice you. OraMet cannot alert rescue teams.'}</Text>
               </View>
               <WeatherIcon name="arrow-right" size={14} color="#B45309" />
             </TouchableOpacity>
           </View>
         </View>
 
-        {/* Official Scientific Data Sources (NASA, IMD, ISRO, Open-Meteo, CWC) */}
-        <ScientificDataAttribution />
+        <View style={{ marginTop: 18, padding: 14, borderRadius: 14, backgroundColor: '#F3EEE8' }}>
+          <Text style={{ color: '#5B4636', fontSize: 12, lineHeight: 18 }}>
+            OraMet currently receives no official IMD, CWC, GSI, NHAI, ISRO/MOSDAC, or WMO hazard feed. Open-Meteo weather estimates, when available, are not official warnings or flood forecasts.
+          </Text>
+        </View>
 
         {/* Citizen Reporting Card */}
         <View style={styles.reportCard}>
@@ -899,6 +876,7 @@ export const DashboardScreen: React.FC = () => {
         onClose={() => setTelemetryModalVisible(false)}
         telemetry={multiSource}
         initialAgency={selectedAgency}
+        weatherAvailable={weatherAvailable}
         onForceRefresh={async () => {
           await fetchRiskData();
         }}

@@ -168,7 +168,7 @@ export const WelcomeScreen: React.FC = () => {
         <Animated.View style={[styles.liveStatusRow, { opacity: fadeAnim }]}>
           <View style={styles.livePulseDot} />
           <Text style={styles.liveStatusText} numberOfLines={1}>
-            REAL-TIME SATELLITE RADAR & CWC HYDROLOGY ONLINE
+            PROTOTYPE · OFFICIAL AGENCY FEEDS NOT CONNECTED
           </Text>
         </Animated.View>
 
@@ -188,21 +188,19 @@ export const WelcomeScreen: React.FC = () => {
 
           <View style={styles.titleSection}>
             <View style={styles.govTag}>
-              <Text style={styles.govTagText}>MINISTRY OF HOME AFFAIRS · NDRF · SIH 2026</Text>
+              <Text style={styles.govTagText}>SIH 2026 CONCEPT · NOT AN OFFICIAL GOVERNMENT APP</Text>
             </View>
             <Text style={styles.appName}>OraMet</Text>
             <Text style={styles.appSubtitle}>
               {strings.appSubtitle || 'Early Warning & Evacuation Intelligence'}
             </Text>
             <Text style={styles.appDescription}>
-              {strings.liveWatchHeader
-                ? `${strings.liveWatchHeader} - Autonomous multi-source telemetry calculating flash flood crests and slope instability across Indian hilly regions.`
-                : 'Autonomous multi-source telemetry system calculating flash flood peak crests and slope instability across Indian hilly regions.'}
+              Local weather context, mapped nearby places, and emergency contact tools. Official hazard feeds, shelter verification, and background alert delivery are not configured.
             </Text>
           </View>
         </Animated.View>
 
-        {/* Official Live Telemetry Badges (NASA, ISRO, IMD, GSI, CWC, WMO, NDRF) */}
+        {/* Data availability summary */}
         <Animated.View style={[styles.telemetrySection, { opacity: fadeAnim }]}>
           <TelemetryLogos />
         </Animated.View>

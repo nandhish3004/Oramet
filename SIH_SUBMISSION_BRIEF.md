@@ -1,5 +1,3 @@
-> SIH project-details alias for the current OraMet prototype. Confirm the name matches your registered SIH project before submission.
-
 # OraMet — SIH submission brief (prototype status)
 
 > **This brief is the source of truth for the current prototype.** PDF exports are provided alongside it. Replace the bracketed team details and confirm that the project/app name matches your SIH registration before submitting.

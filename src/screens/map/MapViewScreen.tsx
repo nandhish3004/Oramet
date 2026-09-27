@@ -18,6 +18,7 @@ import { GoogleMapsLiveView } from '../../components/GoogleMapsLiveView';
 import { Colors, FontSize, Spacing, BorderRadius } from '../../theme/colors';
 import { RootStackParamList } from '../../Navigation';
 import { useRiskStore } from '../../state/useRiskStore';
+import { useNearbyShelters } from '../../hooks/useNearbyShelters';
 
 const { width } = Dimensions.get('window');
 const MAP_HEIGHT = 340;
@@ -30,25 +31,37 @@ export const MapViewScreen: React.FC = () => {
 
   const userCity = isLiveGpsMode && userLocation ? userLocation.city : activeDistrict || 'Local Area';
   const userState = isLiveGpsMode && userLocation ? userLocation.state : 'India';
-  const lat = userLocation?.latitude ?? 28.6139;
-  const lng = userLocation?.longitude ?? 77.2090;
+  const lat = userLocation?.latitude;
+  const lng = userLocation?.longitude;
+  const hasUsableLocation = Boolean(userLocation && !userLocation.isApproximate);
+  const { shelters: allShelters, isLoading: isLoadingShelters, error: shelterError } =
+    useNearbyShelters(lat, lng, hasUsableLocation);
 
-  const [activeFilter, setActiveFilter] = useState<'all' | 'high_ground' | 'medical'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'emergency'>('all');
+  const filteredShelters = activeFilter === 'emergency'
+    ? allShelters.filter((s) => s.isEmergencyTagged)
+    : allShelters;
 
-  const allShelters = evacuationService.getDynamicNearbyShelters(lat, lng, userCity);
-  const filteredShelters = allShelters.filter((s) => {
-    if (activeFilter === 'high_ground') return s.isHighGround;
-    if (activeFilter === 'medical') {
-      return s.facilities.some((f) => f.toLowerCase().includes('medical') || f.toLowerCase().includes('aid') || f.toLowerCase().includes('doctor'));
-    }
-    return true;
-  });
+  const handlePlaceDirections = (place: SafeShelter) => {
+    Alert.alert(
+      'Map place is not safety-verified',
+      `${place.name} is mapped in OpenStreetMap, but OraMet cannot confirm it is open or safe. Walking directions are not checked for flooding, closures, or terrain hazards.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Open map directions', onPress: () => evacuationService.navigateToSafeShelter(lat, lng, place) },
+      ]
+    );
+  };
 
   const handleShareMap = async () => {
+    if (!hasUsableLocation || lat === undefined || lng === undefined) {
+      Alert.alert('Precise location unavailable', 'Enable GPS or choose a precise location before sharing coordinates.');
+      return;
+    }
     try {
       await Share.share({
-        title: `Live Safety Map - ${userCity}`,
-        message: `Live Emergency Coordinates (${userCity}, ${userState}):\nLocation: https://maps.google.com/?q=${lat.toFixed(4)},${lng.toFixed(4)}\nDesignated Safe Haven: ${allShelters[0].name}`,
+        title: `Map location - ${userCity}`,
+        message: `Location (${userCity}, ${userState}):\nhttps://maps.google.com/?q=${lat.toFixed(5)},${lng.toFixed(5)}\nNearby mapped places are not authority-verified as safe shelters.`,
       });
     } catch {}
   };
@@ -63,13 +76,15 @@ export const MapViewScreen: React.FC = () => {
           </View>
           <View>
             <View style={styles.brandRow}>
-              <Text style={styles.brandName}>Live Safety Map</Text>
+              <Text style={styles.brandName}>Map explorer</Text>
               <View style={styles.locationBadge}>
-                <View style={styles.livePulseDot} />
+                <View style={[styles.livePulseDot, !hasUsableLocation && { backgroundColor: '#94A3B8' }]} />
                 <Text style={styles.locationBadgeText}>{userCity}</Text>
               </View>
             </View>
-            <Text style={styles.headerSub}>{userState} · Live Coordinates</Text>
+            <Text style={styles.headerSub}>
+              {userState} · {hasUsableLocation ? 'Selected location' : 'Precise location unavailable'}
+            </Text>
           </View>
         </View>
 
@@ -83,7 +98,13 @@ export const MapViewScreen: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerActionBtn}
-            onPress={() => evacuationService.navigateToSafeShelter(lat, lng)}
+            onPress={() => {
+              if (!hasUsableLocation) {
+                Alert.alert('Precise location unavailable', 'Enable GPS before searching the map around your location.');
+                return;
+              }
+              evacuationService.navigateToSafeShelter(lat, lng);
+            }}
             accessibilityLabel="Google Maps"
           >
             <WeatherIcon name="compass" size={18} color="#005BBF" />
@@ -94,46 +115,50 @@ export const MapViewScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         {/* Interactive Live Map View */}
         <View style={styles.mapContainer}>
-          <GoogleMapsLiveView
-            height={MAP_HEIGHT}
-            latitude={lat}
-            longitude={lng}
-            shelterName={allShelters[0].name}
-          />
-          <View style={styles.mapStatusPill}>
-            <View style={styles.greenDot} />
-            <Text style={styles.mapStatusText}>
-              {lat.toFixed(4)}° N, {lng.toFixed(4)}° E
-            </Text>
-          </View>
+          {hasUsableLocation && lat !== undefined && lng !== undefined ? (
+            <>
+              <GoogleMapsLiveView
+                height={MAP_HEIGHT}
+                latitude={lat}
+                longitude={lng}
+                shelters={allShelters}
+              />
+              <View style={styles.mapStatusPill}>
+                <View style={styles.greenDot} />
+                <Text style={styles.mapStatusText}>{lat.toFixed(4)}°, {lng.toFixed(4)}°</Text>
+              </View>
+            </>
+          ) : (
+            <View style={styles.mapUnavailable}>
+              <WeatherIcon name="map" size={30} color="#64748B" />
+              <Text style={styles.mapUnavailableTitle}>Precise location required</Text>
+              <Text style={styles.mapUnavailableText}>Enable GPS or select a precise location. Approximate IP locations are hidden for safety.</Text>
+            </View>
+          )}
         </View>
 
-        {/* Shelter Filter Tabs */}
+        <View style={styles.unverifiedNotice}>
+          <Text style={styles.unverifiedNoticeText}>
+            Places come from OpenStreetMap and are not verified by emergency authorities. Always follow local official instructions.
+          </Text>
+        </View>
+
+        {/* Mapped place filters */}
         <View style={styles.filterRow}>
           <TouchableOpacity
             style={[styles.filterChip, activeFilter === 'all' && styles.filterChipActive]}
             onPress={() => setActiveFilter('all')}
           >
             <Text style={[styles.filterChipText, activeFilter === 'all' && styles.filterChipTextActive]}>
-              All Shelters ({allShelters.length})
+              All mapped ({allShelters.length})
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
-            style={[styles.filterChip, activeFilter === 'high_ground' && styles.filterChipActive]}
-            onPress={() => setActiveFilter('high_ground')}
+            style={[styles.filterChip, activeFilter === 'emergency' && styles.filterChipActive]}
+            onPress={() => setActiveFilter('emergency')}
           >
-            <Text style={[styles.filterChipText, activeFilter === 'high_ground' && styles.filterChipTextActive]}>
-              High Ground
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.filterChip, activeFilter === 'medical' && styles.filterChipActive]}
-            onPress={() => setActiveFilter('medical')}
-          >
-            <Text style={[styles.filterChipText, activeFilter === 'medical' && styles.filterChipTextActive]}>
-              Medical & First Aid
+            <Text style={[styles.filterChipText, activeFilter === 'emergency' && styles.filterChipTextActive]}>
+              Emergency tagged
             </Text>
           </TouchableOpacity>
         </View>
@@ -143,7 +168,7 @@ export const MapViewScreen: React.FC = () => {
           <View style={{ flex: 1 }}>
             <Text style={styles.evacBannerTitle}>Need to Evacuate?</Text>
             <Text style={styles.evacBannerSub}>
-              View turn-by-turn walking route and official NDMA safety instructions.
+              Practical precautions and map data. No live road closures or verified evacuation routes.
             </Text>
           </View>
           <TouchableOpacity
@@ -157,9 +182,15 @@ export const MapViewScreen: React.FC = () => {
 
         {/* Nearby Relief Havens List */}
         <View style={styles.sheltersHeaderRow}>
-          <Text style={styles.sheltersTitle}>Nearby Relief Havens</Text>
-          <Text style={styles.sheltersCount}>{filteredShelters.length} Available</Text>
+          <Text style={styles.sheltersTitle}>Nearby mapped places</Text>
+          <Text style={styles.sheltersCount}>{filteredShelters.length} found</Text>
         </View>
+
+        {isLoadingShelters ? <Text style={styles.mapUnavailableText}>Searching OpenStreetMap…</Text> : null}
+        {shelterError ? <Text style={styles.mapUnavailableText}>{shelterError}</Text> : null}
+        {!isLoadingShelters && !shelterError && filteredShelters.length === 0 ? (
+          <Text style={styles.mapUnavailableText}>No mapped shelters or assembly points were found nearby. This does not mean that no official shelter exists.</Text>
+        ) : null}
 
         {filteredShelters.map((shelter: SafeShelter, idx: number) => (
           <View key={shelter.id} style={styles.shelterCard}>
@@ -170,9 +201,9 @@ export const MapViewScreen: React.FC = () => {
               <View style={{ flex: 1 }}>
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <View style={styles.shelterMetaRow}>
-                  <Text style={styles.shelterDistance}>~{shelter.distanceKm} km walking</Text>
+                  <Text style={styles.shelterDistance}>{shelter.distanceKm.toFixed(1)} km straight-line</Text>
                   <Text style={styles.shelterDot}>•</Text>
-                  <Text style={styles.shelterStatus}>Capacity: {shelter.capacity}</Text>
+                  <Text style={styles.shelterStatus}>{shelter.placeType.replace(/_/g, ' ')}</Text>
                 </View>
               </View>
             </View>
@@ -188,19 +219,21 @@ export const MapViewScreen: React.FC = () => {
             <View style={styles.cardActionsRow}>
               <TouchableOpacity
                 style={styles.directionsBtn}
-                onPress={() => evacuationService.navigateToSafeShelter(lat, lng, shelter)}
+                onPress={() => handlePlaceDirections(shelter)}
               >
                 <WeatherIcon name="compass" size={16} color="#FFFFFF" />
                 <Text style={styles.directionsBtnText}>Directions in Google Maps</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.callBtn}
-                onPress={() => Linking.openURL(`tel:${shelter.contactNumber}`)}
-                accessibilityLabel="Call"
-              >
-                <WeatherIcon name="phone" size={16} color="#0F172A" />
-              </TouchableOpacity>
+              {shelter.contactNumber ? (
+                <TouchableOpacity
+                  style={styles.callBtn}
+                  onPress={() => Linking.openURL(`tel:${shelter.contactNumber}`)}
+                  accessibilityLabel="Call mapped place contact"
+                >
+                  <WeatherIcon name="phone" size={16} color="#0F172A" />
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
         ))}
@@ -320,6 +353,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#E2E8F0',
     position: 'relative',
   },
+  mapUnavailable: {
+    height: MAP_HEIGHT,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: Spacing.xl,
+    backgroundColor: '#EEF2F7',
+    gap: Spacing.sm,
+  },
+  mapUnavailableTitle: { fontSize: FontSize.md, fontWeight: '800', color: '#334155', textAlign: 'center' },
+  mapUnavailableText: { fontSize: FontSize.sm, color: '#64748B', textAlign: 'center', lineHeight: 20 },
+  unverifiedNotice: {
+    padding: Spacing.md,
+    marginBottom: Spacing.md,
+    borderRadius: BorderRadius.md,
+    backgroundColor: '#FFF7ED',
+    borderWidth: 1,
+    borderColor: '#FED7AA',
+  },
+  unverifiedNoticeText: { color: '#9A3412', fontSize: FontSize.xs, lineHeight: 18, fontWeight: '600' },
   mapStatusPill: {
     position: 'absolute',
     top: 10,

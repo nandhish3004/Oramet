@@ -68,6 +68,14 @@ def enableProguardInReleaseBuilds = false
  * this variant is about 6MiB larger per architecture than default.
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
+def releaseStoreFile = System.getenv('ORAMET_RELEASE_STORE_FILE')
+def releaseStorePassword = System.getenv('ORAMET_RELEASE_STORE_PASSWORD')
+def releaseKeyAlias = System.getenv('ORAMET_RELEASE_KEY_ALIAS')
+def releaseKeyPassword = System.getenv('ORAMET_RELEASE_KEY_PASSWORD')
+def releaseSigningConfigured = [releaseStoreFile, releaseStorePassword, releaseKeyAlias, releaseKeyPassword]
+        .every { value -> value != null && !value.trim().isEmpty() }
+        && releaseStoreFile != null
+        && file(releaseStoreFile).isFile()
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -90,12 +98,15 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('oramet-release-key.keystore')
-            storePassword 'oramet2026'
-            keyAlias 'oramet-key-alias'
-            keyPassword 'oramet2026'
-            v1SigningEnabled true
-            v2SigningEnabled true
+            // Release credentials are supplied through the environment, never stored in source.
+            if (releaseSigningConfigured) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
         }
     }
     buildTypes {
@@ -103,9 +114,19 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.release
+            if (releaseSigningConfigured) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        // A bundled-JavaScript, debug-key-signed APK for demos and device testing only.
+        staging {
+            initWith release
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ["release"]
         }
     }
 }
@@ -122,3 +143,19 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+tasks.register("validateReleaseSigning") {
+    doLast {
+        if (!releaseSigningConfigured) {
+            throw new GradleException(
+                "Release signing is not configured. Set ORAMET_RELEASE_STORE_FILE, " +
+                "ORAMET_RELEASE_STORE_PASSWORD, ORAMET_RELEASE_KEY_ALIAS, and " +
+                "ORAMET_RELEASE_KEY_PASSWORD. Use the staging APK for local demos."
+            )
+        }
+    }
+}
+
+tasks.named("assembleRelease").configure {
+    dependsOn("validateReleaseSigning")
+}

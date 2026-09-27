@@ -11,42 +11,52 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { WeatherIcon } from '../../components/WeatherIcon';
-import { smsService } from '../../services/sms/smsService';
 import { evacuationService, SafeShelter } from '../../services/evacuation/evacuationService';
+import { useNearbyShelters } from '../../hooks/useNearbyShelters';
 import { Colors, FontSize, Spacing, BorderRadius } from '../../theme/colors';
-import { useAuthStore } from '../../state/useAuthStore';
 import { useRiskStore } from '../../state/useRiskStore';
 
 export const SafeHavenScreen: React.FC = () => {
   const navigation = useNavigation();
-  const user = useAuthStore((state) => state.user);
-  const { userLocation, activeDistrict, isLiveGpsMode } = useRiskStore();
+  const { userLocation, activeDistrict, activeState } = useRiskStore();
 
-  const userCity = isLiveGpsMode && userLocation ? userLocation.city : activeDistrict || 'Local Area';
-  const userState = isLiveGpsMode && userLocation ? userLocation.state : 'India';
-  const lat = userLocation?.latitude ?? 28.6139;
-  const lng = userLocation?.longitude ?? 77.2090;
-
-  const shelters = evacuationService.getDynamicNearbyShelters(lat, lng, userCity);
-  const primaryShelter = shelters[0];
-
-  const [broadcastSent, setBroadcastSent] = useState(false);
+  const userCity = userLocation?.city || activeDistrict || 'Selected area';
+  const userState = userLocation?.state || activeState || 'India';
+  const lat = userLocation?.latitude;
+  const lng = userLocation?.longitude;
+  const hasPreciseLocation = Boolean(userLocation && !userLocation.isApproximate);
+  const { shelters, isLoading: isLoadingShelters, error: shelterError } =
+    useNearbyShelters(lat, lng, hasPreciseLocation);
 
   const handleSendSafeSMS = async () => {
-    setBroadcastSent(true);
-    const msg = `I am safe and checked in at ${primaryShelter.name} (${userCity}). My location: https://maps.google.com/?q=${lat.toFixed(4)},${lng.toFixed(4)}`;
-    await smsService.sendEmergencySMS(primaryShelter.name, msg);
+    if (lat === undefined || lng === undefined || userLocation?.isApproximate) {
+      Alert.alert('Precise location unavailable', 'Select a precise location before creating a check-in message. No approximate location will be shared.');
+      return;
+    }
+    const msg = `I am checking in as safe near ${userCity}. Please confirm receipt. My location: https://maps.google.com/?q=${lat.toFixed(5)},${lng.toFixed(5)}`;
+    try {
+      await Share.share({ title: 'Safety check-in', message: msg });
+    } catch {
+      Alert.alert('Could not open sharing', 'Use your messaging app to contact family and share your location.');
+    }
+  };
+
+  const handleShelterDirections = (shelter: SafeShelter) => {
     Alert.alert(
-      'SMS Prepared',
-      'Safety confirmation message created with your exact Google Maps location link.'
+      'Map place is not safety-verified',
+      `${shelter.name} is listed in OpenStreetMap. OraMet cannot confirm it is open, staffed, or safe. Directions are not checked for flooding or road closures.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Open directions', onPress: () => evacuationService.navigateToSafeShelter(lat, lng, shelter) },
+      ]
     );
   };
 
   const handleShareShelter = async (shelter: SafeShelter) => {
     try {
       await Share.share({
-        title: `Designated Shelter: ${shelter.name}`,
-        message: `Designated Relief Center: ${shelter.name}\nLocation: ${userCity}, ${userState}\nGoogle Maps: https://maps.google.com/?q=${shelter.latitude.toFixed(4)},${shelter.longitude.toFixed(4)}`,
+        title: `Mapped place: ${shelter.name}`,
+        message: `OpenStreetMap place (not authority-verified as an emergency shelter): ${shelter.name}\nArea: ${userCity}, ${userState}\nMap: https://maps.google.com/?q=${shelter.latitude.toFixed(5)},${shelter.longitude.toFixed(5)}`,
       });
     } catch {}
   };
@@ -98,44 +108,45 @@ export const SafeHavenScreen: React.FC = () => {
             <View style={{ flex: 1 }}>
               <Text style={styles.checkinTitle}>Family Safety Check-In</Text>
               <Text style={styles.checkinSub}>
-                Let family and loved ones know you are safe with your live location link.
+                Share a check-in message yourself. OraMet cannot confirm that anyone received it.
               </Text>
             </View>
           </View>
 
           <View style={styles.previewBox}>
-            <Text style={styles.previewLabel}>PRE-FILLED SMS MESSAGE</Text>
+            <Text style={styles.previewLabel}>CHECK-IN MESSAGE PREVIEW</Text>
             <Text style={styles.previewContent}>
-              "I am safe and checked in at {primaryShelter.name} ({userCity}). My location: https://maps.google.com/?q={lat.toFixed(4)},{lng.toFixed(4)}"
+              {hasPreciseLocation && lat !== undefined && lng !== undefined
+                ? `I am checking in near ${userCity}. Map: https://maps.google.com/?q=${lat.toFixed(5)},${lng.toFixed(5)}`
+                : 'Precise location unavailable. No location will be included.'}
             </Text>
           </View>
 
-          <TouchableOpacity
-            style={[styles.smsBtn, broadcastSent && styles.smsBtnSent]}
-            onPress={handleSendSafeSMS}
-          >
-            <WeatherIcon
-              name={broadcastSent ? 'check' : 'phone'}
-              size={18}
-              color="#FFFFFF"
-            />
-            <Text style={styles.smsBtnText}>
-              {broadcastSent ? 'Safety SMS Delivered' : 'Send "I Am Safe" SMS to Family'}
-            </Text>
+          <TouchableOpacity style={styles.smsBtn} onPress={handleSendSafeSMS}>
+            <WeatherIcon name="share" size={18} color="#FFFFFF" />
+            <Text style={styles.smsBtnText}>Share check-in message</Text>
           </TouchableOpacity>
         </View>
 
         {/* Nearby Designated Shelters Section */}
         <View style={styles.sectionHeaderRow}>
           <View>
-            <Text style={styles.sectionTitle}>Designated Relief Shelters</Text>
-            <Text style={styles.sectionSub}>Official emergency safe zones near {userCity}</Text>
+            <Text style={styles.sectionTitle}>Nearby mapped places</Text>
+            <Text style={styles.sectionSub}>OpenStreetMap results near {userCity} · not authority-verified</Text>
           </View>
           <View style={styles.verifiedCountBadge}>
-            <Text style={styles.verifiedCountText}>{shelters.length} Verified</Text>
+            <Text style={styles.verifiedCountText}>{shelters.length} mapped</Text>
           </View>
         </View>
 
+        {isLoadingShelters ? <Text style={styles.sectionSub}>Searching OpenStreetMap…</Text> : null}
+        {shelterError ? <Text style={styles.sectionSub}>{shelterError}</Text> : null}
+        {!isLoadingShelters && !shelterError && shelters.length === 0 ? (
+          <View style={styles.shelterCard}>
+            <Text style={styles.shelterName}>No mapped places found nearby</Text>
+            <Text style={styles.sectionSub}>This does not mean an official shelter is unavailable. Call 112 in an emergency.</Text>
+          </View>
+        ) : null}
         {shelters.map((shelter, idx) => (
           <View key={shelter.id} style={styles.shelterCard}>
             <View style={styles.shelterCardHeader}>
@@ -145,9 +156,9 @@ export const SafeHavenScreen: React.FC = () => {
               <View style={{ flex: 1 }}>
                 <Text style={styles.shelterName}>{shelter.name}</Text>
                 <View style={styles.shelterMetaRow}>
-                  <Text style={styles.shelterDistance}>~{shelter.distanceKm} km away</Text>
+                  <Text style={styles.shelterDistance}>{shelter.distanceKm.toFixed(1)} km straight-line</Text>
                   <Text style={styles.shelterDot}>•</Text>
-                  <Text style={styles.shelterHighGround}>High-Ground Zone</Text>
+                  <Text style={styles.shelterHighGround}>{shelter.placeType.replace(/_/g, ' ')}</Text>
                 </View>
               </View>
             </View>
@@ -165,7 +176,7 @@ export const SafeHavenScreen: React.FC = () => {
             <View style={styles.shelterActionsRow}>
               <TouchableOpacity
                 style={styles.navigateBtn}
-                onPress={() => evacuationService.navigateToSafeShelter(lat, lng, shelter)}
+                onPress={() => handleShelterDirections(shelter)}
               >
                 <WeatherIcon name="compass" size={16} color="#FFFFFF" />
                 <Text style={styles.navigateBtnText}>Navigate in Google Maps</Text>

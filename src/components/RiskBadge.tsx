@@ -9,6 +9,7 @@ interface RiskBadgeProps {
 }
 
 const SEVERITY_STYLES: Record<SeverityBand, { bg: string; text: string }> = {
+  UNKNOWN: { bg: '#E2E8F0', text: '#475569' },
   LOW: { bg: Colors.severity.low.bg, text: Colors.severity.low.text },
   MODERATE: { bg: Colors.severity.moderate.bg, text: Colors.severity.moderate.text },
   HIGH: { bg: Colors.severity.high.bg, text: Colors.severity.high.text },
@@ -21,7 +22,7 @@ export const RiskBadge: React.FC<RiskBadgeProps> = ({ severity, size = 'medium' 
   return (
     <View style={[styles.badge, { backgroundColor: config.bg }, styles[size]]}>
       <Text style={[styles.text, { color: config.text }, styles[`${size}Text`]]}>
-        {severity} RISK
+        {severity === 'UNKNOWN' ? 'DATA UNAVAILABLE' : `${severity} RISK`}
       </Text>
     </View>
   );
