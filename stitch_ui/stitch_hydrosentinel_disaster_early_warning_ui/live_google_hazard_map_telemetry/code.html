@@ -1,0 +1,320 @@
+<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error-container": "#93000a", "error": "#ba1a1a", "error-container": "#ffdad6", "on-error": "#ffffff", "secondary-container": "#86f2e4", "tertiary": "#845300", "surface-container-lowest": "#ffffff", "on-background": "#181c20", "on-secondary": "#ffffff", "tertiary-container": "#a66900", "on-tertiary": "#ffffff", "primary-fixed-dim": "#adc7ff", "on-secondary-fixed-variant": "#005049", "surface-container-highest": "#dfe3e8", "surface-container-high": "#e5e8ee", "on-secondary-container": "#006f66", "primary": "#005bbf", "on-primary": "#ffffff", "surface-dim": "#d7dae0", "inverse-surface": "#2d3135", "on-tertiary-container": "#ffffff", "secondary-fixed": "#89f5e7", "surface-tint": "#005bc0", "inverse-on-surface": "#eef1f7", "primary-container": "#1a73e8", "surface-container": "#ebeef4", "outline": "#727785", "tertiary-fixed": "#ffddb8", "on-surface": "#181c20", "primary-fixed": "#d8e2ff", "surface-bright": "#f7f9ff", "on-primary-fixed": "#001a41", "tertiary-fixed-dim": "#ffb95f", "on-tertiary-fixed": "#2a1700", "surface-container-low": "#f1f4fa", "on-surface-variant": "#414754", "on-tertiary-fixed-variant": "#653e00", "surface-variant": "#dfe3e8", "on-primary-fixed-variant": "#004493", "on-primary-container": "#ffffff", "background": "#f7f9ff", "on-secondary-fixed": "#00201d", "surface": "#f7f9ff", "inverse-primary": "#adc7ff", "secondary": "#006a61", "secondary-fixed-dim": "#6bd8cb", "outline-variant": "#c1c6d6" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "gutter-tablet": "1.5rem", "margin-tablet": "2rem", "gutter-desktop": "2rem", "space-lg": "1.5rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "margin": "1rem", "gutter": "1rem", "space-xs": "0.25rem", "space-md": "1rem", "space-xl": "2.5rem" }, "fontFamily": { "headline-lg": ["Plus Jakarta Sans"], "label-sm": ["Inter"], "display-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "body-lg": ["Inter"], "label-lg": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "body-md": ["Inter"], "label-md": ["Inter"] }, "fontSize": { "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "600" }], "display-lg-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><div class="flex items-center shrink-0"><img alt="HydroSentinel Modern Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSpcANFOl2Gz4PGxOTjIC8cjBSLwShkwDPXnezlSAml6TCGKmk9qDtyLrLyhMjb8WI6LYboZTLU8iOl1HPZgMHmi4MfOjzN-Vb_KXDin3H5avu05zlfKN3fbuwU8s4PiFI9x4hPElHWg9qzp6dP6DdO2IiWtT8WI_xELV0F_3CxxmppZfRmmDEg8kw9nzk0VT5yEcpRSrmBH-1Boh9Ooy33HPoU1gkDsm8s-lcj_vFcS5WGV09cjsg"></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-1.5"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">HydroSentinel</span><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm shrink-0"><span class="w-1.5 h-1.5 rounded-full bg-secondary mr-1 animate-pulse"></span>Chamoli, UK</span></div><span class="font-label-sm text-label-sm text-on-surface-variant/80 -mt-0.5 truncate">Live Map</span></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Notifications" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high/60 transition-colors"><span class="material-symbols-outlined text-[22px]">notifications_none</span></button><button aria-label="User Profile" class="p-0.5 rounded-full ring-2 ring-primary/20 hover:ring-primary transition-all ml-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1UZGi-XFgHT8k4xSdAjP_UvXuyftpKRzJ0_vsCx2ltMNJb9uBEjyOm1gqtMk3cx0LhjneTZaDZgEh7szKWkvLdzASA-75cEmPvFdPip6xBtJnIKqKieTHeF_WCh--e8V2P6qa4JYyqssahlI2n9X5-iVeuC_-yNK1oc6X7m1agaJWETssMjDjc-VSKpXxG-96VR5xM_Z_6Y3Fo05DoUNU_slUZCXlAq8Th0Ky5J6fcld7XRxdqDkFdYlmg"></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full pb-8">
+<div class="sticky top-0 z-30 pt-3 pb-2 px-margin bg-surface-bright/80 backdrop-blur-md">
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+<button class="chip-item shrink-0 px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md shadow-sm transition-all duration-200 flex items-center gap-1.5" data-active="true" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[16px]">layers</span>
+<span class="">All Zones</span>
+</button>
+<button class="chip-item shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm transition-all duration-200 flex items-center gap-1.5" data-active="false" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[16px] text-primary">water</span>
+<span class="">Inundation Layer</span>
+</button>
+<button class="chip-item shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm transition-all duration-200 flex items-center gap-1.5" data-active="false" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[16px] text-secondary">alt_route</span>
+<span class="">Evacuation Trail</span>
+</button>
+<button class="chip-item shrink-0 px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md shadow-sm transition-all duration-200 flex items-center gap-1.5" data-active="false" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[16px] text-tertiary">night_shelter</span>
+<span class="">Shelters</span>
+</button>
+</div>
+</div>
+<div class="px-margin pt-2 flex flex-col gap-4"><!-- LIVE INTERNET DATA FEED BANNER -->
+<div class="flex flex-col gap-2">
+<div class="w-full bg-surface-container-lowest border border-secondary/20 rounded-DEFAULT p-2.5 shadow-sm flex items-center justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<span class="relative flex h-2.5 w-2.5 shrink-0">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-secondary"></span>
+</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider">Live Internet Data Feed</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.2 rounded bg-secondary-container/40 text-on-secondary-container font-semibold">38ms latency</span>
+</div>
+<span class="font-body-sm text-[11px] text-on-surface-variant truncate">Connected to IMD Doppler Radar, ISRO MOSDAC &amp; CWC Realtime Stream</span>
+</div>
+</div>
+<button aria-label="Refresh Feed" class="flex items-center gap-1 px-2 py-1 rounded-full bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-[11px] font-semibold shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[14px] animate-spin" style="animation-duration: 6s;">sync</span>
+<span class="">4s ago</span>
+</button>
+</div>
+<!-- Live Data Sources Badges Bar -->
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-label-sm text-[11px] shrink-0 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-medium">Cloud Doppler:</span>
+<span class="text-secondary font-semibold">IMD Dehradun Live</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-label-sm text-[11px] shrink-0 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-medium">Satellite:</span>
+<span class="text-secondary font-semibold">ISRO MOSDAC / NASA</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-label-sm text-[11px] shrink-0 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-medium">River Sonar:</span>
+<span class="text-tertiary font-semibold">CWC Ghat-04 nominal</span>
+</div>
+</div>
+</div>
+<!-- GOOGLE MAPS STYLE CONTAINER -->
+<div class="relative w-full h-[400px] rounded-lg overflow-hidden border border-outline-variant/30 shadow-md bg-[#e5e3df]">
+<!-- Topographic Map Canvas SVG -->
+<svg class="w-full h-full object-cover" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient cx="30%" cy="80%" id="gmapFlood" r="70%">
+<stop offset="0%" stop-color="#1a73e8" stop-opacity="0.7"></stop>
+<stop offset="40%" stop-color="#005bbf" stop-opacity="0.45"></stop>
+<stop offset="70%" stop-color="#ba1a1a" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#e5e8ee" stop-opacity="0"></stop>
+</radialGradient>
+<linearGradient id="waterFlow" x1="0%" x2="100%" y1="100%" y2="75%">
+<stop offset="0%" stop-color="#9ec5fe"></stop>
+<stop offset="50%" stop-color="#6ea8fe"></stop>
+<stop offset="100%" stop-color="#3d8bfd"></stop>
+</linearGradient>
+<filter height="140%" id="dropGmapPin" width="140%" x="-20%" y="-20%">
+<feDropShadow dx="0" dy="3" flood-color="#001a41" flood-opacity="0.3" stdDeviation="3"></feDropShadow>
+</filter>
+</defs>
+<!-- Terrain / Hillshade base -->
+<rect fill="#f4f3f0" height="400" width="400"></rect>
+<!-- Mountain Topography Contours (Google Maps style) -->
+<path d="M-20,120 Q80,80 180,100 T380,60 L420,60 L420,420 L-20,420 Z" fill="#eae7df"></path>
+<path d="M-20,190 Q90,140 220,170 T420,130 L420,420 L-20,420 Z" fill="#e1ddd2"></path>
+<path d="M-20,260 Q100,210 230,240 T420,210 L420,420 L-20,420 Z" fill="#d7d2c3"></path>
+<path d="M-20,320 Q120,280 250,300 T420,280 L420,420 L-20,420 Z" fill="#cdc6b3"></path>
+<!-- Contour Lines (Google Terrain Style) -->
+<path d="M-10,70 Q110,35 220,55 T420,40" fill="none" opacity="0.6" stroke="#b5b09f" stroke-dasharray="2 3" stroke-width="0.8"></path>
+<path d="M-10,130 Q120,95 240,115 T420,90" fill="none" opacity="0.7" stroke="#b5b09f" stroke-width="0.8"></path>
+<path d="M-10,200 Q130,165 250,185 T420,160" fill="none" opacity="0.7" stroke="#a5a08e" stroke-width="1"></path>
+<path d="M-10,270 Q140,235 260,255 T420,230" fill="none" opacity="0.7" stroke="#a5a08e" stroke-width="1"></path>
+<!-- Alaknanda River / Flood surge polygon -->
+<path d="M-10,360 Q90,320 180,340 T340,320 T420,300 L420,410 L-10,410 Z" fill="url(#waterFlow)" opacity="0.75"></path>
+<path d="M-10,310 Q100,270 210,290 T370,270 T420,260 L420,410 L-10,410 Z" fill="url(#gmapFlood)"></path>
+<!-- Street Grid / Highway overlay -->
+<!-- Secondary Roads -->
+<path d="M30,390 L120,270 L160,240 L190,190 L240,140 L310,65" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"></path>
+<path d="M30,390 L120,270 L160,240 L190,190 L240,140 L310,65" fill="none" stroke="#f8be43" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<!-- Connecting Mountain Tracks -->
+<path d="M70,290 L150,330 L220,320" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="3"></path>
+<path d="M70,290 L150,330 L220,320" fill="none" stroke="#cfcbbd" stroke-linecap="round" stroke-width="2"></path>
+<path d="M160,240 L80,210 L30,220" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="3"></path>
+<path d="M160,240 L80,210 L30,220" fill="none" stroke="#cfcbbd" stroke-linecap="round" stroke-width="2"></path>
+<path d="M240,140 L360,160 L410,130" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="4"></path>
+<path d="M240,140 L360,160 L410,130" fill="none" stroke="#fadb8b" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Street Labels (Google Maps Font & Styling) -->
+<text fill="#615b50" font-family="Roboto, Inter, sans-serif" font-size="9" font-weight="600" letter-spacing="0.5" x="300" y="150">NH-58 BADRINATH HWY</text>
+<text fill="#756f62" font-family="Roboto, Inter, sans-serif" font-size="8.5" font-weight="500" x="50" y="205">Gopeshwar Path</text>
+<text fill="#005bbf" font-family="Roboto, Inter, sans-serif" font-size="9" font-style="italic" font-weight="600" x="160" y="375">Alaknanda River Basin (Inundated)</text>
+<!-- Road Flooded Hazard Block marker -->
+<g transform="translate(152, 290)">
+<circle cx="0" cy="0" fill="#ba1a1a" r="10"></circle>
+<path d="M-4,-4 L4,4 M4,-4 L-4,4" stroke="#ffffff" stroke-linecap="round" stroke-width="2"></path>
+</g>
+<!-- Google Maps Walking Evacuation Route (Bright Blue/Cyan Navigation Trail with Dots) -->
+<!-- Glow casing -->
+<path d="M120,270 L140,245 L170,225 L190,185 L225,145 L260,105 L310,65" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"></path>
+<!-- Active Path -->
+<path d="M120,270 L140,245 L170,225 L190,185 L225,145 L260,105 L310,65" fill="none" stroke="#1a73e8" stroke-dasharray="1 9" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"></path>
+<!-- Turn Maneuver Dots -->
+<circle cx="140" cy="245" fill="#ffffff" r="3.5" stroke="#1a73e8" stroke-width="2"></circle>
+<circle cx="170" cy="225" fill="#ffffff" r="3.5" stroke="#1a73e8" stroke-width="2"></circle>
+<circle cx="190" cy="185" fill="#ffffff" r="3.5" stroke="#1a73e8" stroke-width="2"></circle>
+<circle cx="225" cy="145" fill="#ffffff" r="3.5" stroke="#1a73e8" stroke-width="2"></circle>
+<circle cx="260" cy="105" fill="#ffffff" r="3.5" stroke="#1a73e8" stroke-width="2"></circle>
+<!-- ETA Floating Chip along Path (Google Maps Style) -->
+<g transform="translate(195, 140)">
+<rect fill="#1a73e8" filter="url(#dropGmapPin)" height="20" rx="10" width="74" x="0" y="-12"></rect>
+<text fill="#ffffff" font-family="Roboto, Inter, sans-serif" font-size="9" font-weight="700" text-anchor="middle" x="37" y="1">22 min · 1.4 km</text>
+</g>
+<!-- Current Location: Google Maps Blue Puck with Heading Beam -->
+<g transform="translate(120, 270)">
+<polygon fill="#1a73e8" opacity="0.2" points="0,-28 -14,-6 14,-6"></polygon>
+<circle class="animate-ping" cx="0" cy="0" fill="#1a73e8" opacity="0.2" r="16"></circle>
+<circle cx="0" cy="0" fill="#ffffff" filter="url(#dropGmapPin)" r="10"></circle>
+<circle cx="0" cy="0" fill="#1a73e8" r="7"></circle>
+</g>
+<!-- Destination: Google Maps Red Pin with Shield & Camp Icon -->
+<g filter="url(#dropGmapPin)" transform="translate(310, 65)">
+<path d="M0,0 C-8,-14 -12,-18 -12,-28 A12,12 0 1,1 12,-28 C12,-18 8,-14 0,0 Z" fill="#006a61"></path>
+<circle cx="0" cy="-28" fill="#ffffff" r="6"></circle>
+<path d="M-2,-26 L0,-30 L2,-26 L2,-23 L-2,-23 Z" fill="#006a61"></path>
+</g>
+</svg>
+<!-- Google Maps Floating Search Bar -->
+<div class="absolute top-3 inset-x-3 z-10 flex items-center bg-surface-container-lowest rounded-full shadow-md px-3.5 py-2 gap-2 border border-outline-variant/30">
+<div class="w-5 h-5 flex items-center justify-center shrink-0">
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24">
+<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#EA4335"></path>
+<circle cx="12" cy="9" fill="#ffffff" r="2.5"></circle>
+</svg>
+</div>
+<input class="flex-1 bg-transparent text-[13px] font-medium text-on-surface focus:outline-none truncate" readonly="" type="text" value="Search Chamoli NDRF Safe Havens...">
+<div class="flex items-center gap-1.5 shrink-0 text-on-surface-variant">
+<button aria-label="Voice Search" class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+<div class="w-px h-4 bg-outline-variant/50"></div>
+<button aria-label="Search" class="p-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+</div>
+</div>
+<!-- Compass / North Bearing Dial -->
+<div class="absolute top-16 left-3.5 z-10">
+<button aria-label="North Up" class="w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-md border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="font-bold text-[10px] text-error flex flex-col items-center leading-none">
+<span class="material-symbols-outlined text-[14px] text-error -mb-0.5">navigation</span>
+        N
+      </span>
+</button>
+</div>
+<!-- Safe Haven Destination Pill Overlay -->
+<div class="absolute top-16 right-3 z-10 max-w-[170px] bg-surface-container-lowest/95 backdrop-blur-md p-2 rounded-lg border border-secondary/30 shadow-md flex items-start gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">verified</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[11px] font-bold text-on-surface truncate">NDRF Safe Haven #4</span>
+<span class="font-body-sm text-[10px] text-on-surface-variant leading-tight">North Ridge · 1,580m</span>
+<span class="font-label-sm text-[9px] text-secondary font-semibold mt-0.5">✓ Verified Dry Zone</span>
+</div>
+</div>
+<!-- Google Maps Circular Action FABs (Right Bottom stack) -->
+<div class="absolute bottom-14 right-3.5 z-10 flex flex-col gap-2.5">
+<button aria-label="Map Layers" class="w-10 h-10 rounded-full bg-surface-container-lowest text-on-surface shadow-md border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">layers</span>
+</button>
+<button aria-label="3D Contours" class="w-10 h-10 rounded-full bg-surface-container-lowest text-on-surface shadow-md border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">terrain</span>
+</button>
+<button aria-label="Locate Me" class="w-10 h-10 rounded-full bg-surface-container-lowest text-primary shadow-md border border-outline-variant/30 flex items-center justify-center hover:bg-surface-container transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[20px] text-primary">my_location</span>
+</button>
+</div>
+<!-- Google Attribution watermark & Current Elevation Tag -->
+<div class="absolute bottom-2 left-3 z-10 flex items-center gap-2">
+<div class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-sm border border-outline-variant/20 flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-[11px] text-on-surface font-medium">You: Ward 3 (1,120m)</span>
+</div>
+<span class="text-[9px] font-medium text-on-surface-variant/70 bg-surface-container-lowest/70 px-1 rounded">Google Maps Terrain</span>
+</div>
+</div>
+<!-- GOOGLE MAPS STYLE TURN-BY-TURN NAVIGATION BOTTOM CARD -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-md border border-outline-variant/30 shadow-md flex flex-col gap-3 relative overflow-hidden">
+<!-- Header info and fastest route badge -->
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[22px]">directions_walk</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Recommended Uphill Path</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-lg text-label-lg text-primary font-bold">22 min</span>
+<span class="text-outline text-[12px]">•</span>
+<span class="font-body-md text-body-md text-on-surface-variant">1.4 km · +460m ascent</span>
+</div>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1 shrink-0 font-semibold">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span class="">Fastest Safe Trail</span>
+</div>
+</div>
+<!-- Live Next Step Preview Strip (Google Maps Style) -->
+<div class="p-2.5 rounded-DEFAULT bg-surface-container-low border border-outline-variant/30 flex items-center justify-between gap-2.5">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">turn_right</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface truncate">In 150m, turn right onto Upper Bypass (NH-58)</span>
+<span class="font-body-sm text-[11px] text-secondary font-medium">Elevating away from flash runoff zone</span>
+</div>
+</div>
+<button aria-label="Toggle Voice Guidance" class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant flex items-center justify-center shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+</button>
+</div>
+<!-- Hazard Alert Ribbon -->
+<div class="flex items-center gap-2 px-3 py-2 rounded-full bg-error-container/60 text-on-error-container">
+<span class="material-symbols-outlined text-[18px] text-error shrink-0">warning</span>
+<span class="font-label-md text-label-md truncate font-medium">Avoid Lower Valley Bridge · Submerged (+0.8m)</span>
+</div>
+<!-- Turn-by-Turn Start Action Buttons -->
+<div class="pt-0.5 flex items-center gap-2"><button id="navStartBtn" onclick="toggleNavMode(this)" class="flex-1 py-3 px-5 rounded-full bg-primary text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-sm hover:brightness-105 active:scale-[0.98] transition-all"><span class="material-symbols-outlined text-[20px]">navigation</span><span id="navBtnText" class="">Start Turn-by-Turn Navigation</span></button><button aria-label="Route Steps" onclick="showRouteAlert('Steps: Follow Gopeshwar Path (650m) &gt; Upper Bypass NH-58 (750m) to NDRF Haven #4.')" class="w-12 h-12 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all shrink-0" title="List Steps"><span class="material-symbols-outlined text-[20px]">alt_route</span></button><button aria-label="Share Route" onclick="showRouteAlert('Live safe trail link copied to clipboard.')" class="w-12 h-12 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all shrink-0" title="Share Live Location"><span class="material-symbols-outlined text-[20px]">share</span></button></div>
+</div>
+<!-- ELEVATION HAZARD SPECTRUM CARDS -->
+<div class="flex flex-col gap-2.5 pt-1">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Elevation Hazard Spectrum</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">● Live Hydrology</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-lowest p-3 rounded-DEFAULT shadow-sm border border-outline-variant/30 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="w-2.5 h-2.5 rounded-full bg-error"></div>
+<span class="font-label-sm text-[10px] text-error font-bold">ZONE 1</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Critical Surge</span>
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">&lt;1,040m</span>
+<span class="font-body-sm text-[11px] text-error font-medium">Flash inundation</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-DEFAULT shadow-sm border border-outline-variant/30 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary-container"></div>
+<span class="font-label-sm text-[10px] text-tertiary font-bold">ZONE 2</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">High Runoff</span>
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">1,040-1,200m</span>
+<span class="font-body-sm text-[11px] text-tertiary font-medium">Rapid currents</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-DEFAULT shadow-sm border border-outline-variant/30 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+<span class="font-label-sm text-[10px] text-secondary font-bold">SAFE</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Safe Ridge</span>
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">&gt;1,450m</span>
+<span class="font-body-sm text-[11px] text-secondary font-medium">NDRF Shelters</span>
+</div>
+</div>
+</div>
+<!-- SENSOR MESH TELEMETRY STATUS -->
+<div class="bg-surface-container-low p-3.5 rounded-DEFAULT border border-outline-variant/30 flex items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0">
+<span class="material-symbols-outlined text-[20px]">sensors</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Chamoli Hydro Sensor Net</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">14/14 telemetry nodes reporting nominal</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold shrink-0">99.8% Online</span>
+</div></div>
+</div>
+<script>
+  function toggleChip(button) {
+    const isActive = button.getAttribute('data-active') === 'true';
+    if (isActive) {
+      button.setAttribute('data-active', 'false');
+      button.classList.remove('bg-primary-container', 'text-on-primary-container');
+      button.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+    } else {
+      button.setAttribute('data-active', 'true');
+      button.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+      button.classList.add('bg-primary-container', 'text-on-primary-container');
+    }
+  }
+</script><div id="prototypeToast" class="fixed top-20 inset-x-4 z-50 transition-all duration-300 opacity-0 pointer-events-none transform -translate-y-2 flex justify-center"><div class="bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full text-label-md font-label-md shadow-md flex items-center gap-2 max-w-sm"><span class="material-symbols-outlined text-secondary-fixed text-[18px]">info</span><span id="toastMsg" class="">Prototype action triggered</span></div></div><script>function showRouteAlert(msg) { const toast = document.getElementById('prototypeToast'); const toastMsg = document.getElementById('toastMsg'); if (!toast || !toastMsg) return; toastMsg.textContent = msg; toast.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2'); toast.classList.add('opacity-100', 'translate-y-0'); setTimeout(() => { toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2'); toast.classList.remove('opacity-100', 'translate-y-0'); }, 2600); } function toggleNavMode(btn) { const txt = document.getElementById('navBtnText'); const isNavigating = btn.classList.contains('bg-secondary'); if (isNavigating) { btn.classList.remove('bg-secondary'); btn.classList.add('bg-primary'); txt.textContent = 'Start Turn-by-Turn Navigation'; showRouteAlert('Turn-by-turn navigation paused.'); } else { btn.classList.remove('bg-primary'); btn.classList.add('bg-secondary'); txt.textContent = 'Navigating to NDRF Haven #4 (Active)'; showRouteAlert('Live GPS Navigation Active: In 150m, turn right onto Upper Bypass.'); } } function setActiveTab(clickedTab) { const nav = document.querySelector('nav.fixed'); const tabs = nav.querySelectorAll('a[data-path]'); tabs.forEach(tab => { tab.removeAttribute('aria-current'); tab.classList.remove('text-primary'); tab.classList.add('text-on-surface-variant'); const iconWrap = tab.querySelector('div'); if (iconWrap) { iconWrap.classList.remove('bg-primary-fixed', 'text-on-primary-fixed', 'shadow-sm'); } const label = tab.querySelector('span:last-child'); if (label) { label.classList.remove('font-bold', 'text-primary'); label.classList.add('font-medium'); } }); clickedTab.setAttribute('aria-current', 'page'); clickedTab.classList.remove('text-on-surface-variant'); clickedTab.classList.add('text-primary'); const curIconWrap = clickedTab.querySelector('div'); if (curIconWrap) { curIconWrap.classList.add('bg-primary-fixed', 'text-on-primary-fixed', 'shadow-sm'); } const curLabel = clickedTab.querySelector('span:last-child'); if (curLabel) { curLabel.classList.remove('font-medium'); curLabel.classList.add('font-bold', 'text-primary'); } const tabName = clickedTab.getAttribute('data-path'); showRouteAlert('Switched to ' + tabName.replace('-', ' ') + ' view'); }</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.06)] rounded-t-3xl" data-active-classes="text-primary font-label-md"><div class="flex items-center justify-around h-16 px-space-sm"><a class="flex-1 min-w-[44px] h-11 flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-all active:scale-95 group" data-path="overview" href="#" onclick="event.preventDefault(); setActiveTab(this);"><div class="px-3 py-0.5 rounded-full flex items-center justify-center group-hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[24px]">dashboard</span></div><span class="font-label-sm text-label-sm font-medium">Overview</span></a><a class="flex-1 min-w-[44px] h-11 flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-all active:scale-95 group" data-path="safety-and-sos" href="#" onclick="event.preventDefault(); setActiveTab(this);"><div class="px-3 py-0.5 rounded-full flex items-center justify-center group-hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[24px]">shield</span></div><span class="font-label-sm text-label-sm font-medium">Safety &amp; SOS</span></a><a aria-current="page" class="flex-1 min-w-[44px] h-11 flex flex-col items-center justify-center gap-0.5 text-primary transition-all active:scale-95 group" data-path="live-map" href="#" onclick="event.preventDefault(); setActiveTab(this);"><div class="px-3 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center transition-colors shadow-sm"><span class="material-symbols-outlined text-[24px] font-bold">explore</span></div><span class="font-label-sm text-label-sm font-bold text-primary">Live Map</span></a><a class="flex-1 min-w-[44px] h-11 flex flex-col items-center justify-center gap-0.5 text-on-surface-variant hover:text-primary transition-all active:scale-95 group" data-path="sensors" href="#" onclick="event.preventDefault(); setActiveTab(this);"><div class="px-3 py-0.5 rounded-full flex items-center justify-center group-hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[24px]">monitoring</span></div><span class="font-label-sm text-label-sm font-medium">Sensors</span></a></div></nav>
+
+</body></html>

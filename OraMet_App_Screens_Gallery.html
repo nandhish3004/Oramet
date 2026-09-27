@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OraMet - Official App Screens Gallery (SIH 2026 PS #26192)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #005BBF;
+      --primary-dark: #003F88;
+      --bg: #0B1325;
+      --surface: #1E293B;
+      --text: #F8FAFC;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 30px 20px;
+    }
+
+    .header-banner {
+      max-width: 1200px;
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 91, 191, 0.2);
+      border: 1px solid rgba(0, 91, 191, 0.4);
+      color: #38BDF8;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 10px #10B981;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #FFFFFF, #93C5FD);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub {
+      font-size: 14px;
+      color: #94A3B8;
+      margin-top: 6px;
+      font-family: 'Inter', sans-serif;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .screens-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+    }
+
+    .screen-card {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .screen-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .screen-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .screen-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .screen-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.15);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    .mockup-preview {
+      background: #000000;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 9 / 16;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .mockup-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .screen-details {
+      margin-top: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
+    .features-list {
+      margin-top: 8px;
+      list-style: none;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #CBD5E1;
+      font-size: 11.5px;
+      margin-bottom: 5px;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      color: #10B981;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-banner">
+    <div class="badge-pill">
+      <div class="pulse-dot"></div>
+      OraMet · Smart India Hackathon 2026 PS #26192
+    </div>
+    <h1>OraMet Visual Screen Showcase</h1>
+    <p class="sub">Complete end-to-end multi-source disaster early warning & evacuation system integrating NASA SMAP, ISRO MOSDAC, IMD AWS, GSI DEM, CWC River Telemetry, and NHAI RWIS IoT.</p>
+  </div>
+
+  <div class="screens-grid">
+    <!-- SCREEN SPECIAL: TERRACOTTA & WARM OYSTER CREAM LIVE SHOWCASE -->
+    <div class="screen-card" style="grid-column: 1 / -1; border-color: #8C5338; background: rgba(30, 24, 20, 0.85);">
+      <div class="screen-header">
+        <span class="screen-title" style="color: #F8F6F2; font-size: 18px;">★ Official OraMet App Screens (Terracotta & Oyster Cream Edition)</span>
+        <span class="screen-tag" style="background: rgba(140, 83, 56, 0.25); color: #D4A373;">Human-Crafted Minimalist UI</span>
+      </div>
+      <div class="mockup-preview" style="aspect-ratio: auto; height: 420px; border-color: #8C5338;">
+        <img src="screenshots/oramet_terracotta_live_screens.png" alt="OraMet Terracotta & Warm Oyster Mobile Screens" style="object-fit: contain;">
+      </div>
+      <div class="screen-details">
+        <strong>Minimalist Human-Centric UI Highlights:</strong>
+        <ul class="features-list">
+          <li>Exact warm palette: Terracotta (<code style="color: #D4A373;">#8C5338</code>), Oyster Cream (<code style="color: #D4A373;">#F8F6F2</code>), and Deep Charcoal (<code style="color: #D4A373;">#1F1A17</code>)</li>
+          <li>Top navigation with square-rounded grid menu, citizen avatar, and capsule search with slider filter button</li>
+          <li>Dark charcoal hero card with live 35-minute Alaknanda lead-time countdown and quick shelter action</li>
+          <li>Horizontal filter chips (All Feeds, Rain Radar, Soil Moisture, Hill Slope) and 2-column furniture telemetry cards</li>
+          <li>Floating pill bottom tab navigation with solid dark circular active tab indicator</li>
+          <li>Zero emojis across all screens - pure custom vector SVG iconography and crisp typography</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 0: COMMERCIAL REAL GOOGLE SIGN-IN -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">1. Real Google Sign-In (Official Sheet)</span>
+        <span class="screen-tag">Google Ecosystem</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/0_google_signin_commercial.jpg" alt="OraMet Google Sign In">
+      </div>
+      <div class="screen-details">
+        <strong>Commercial Identity Features:</strong>
+        <ul class="features-list">
+          <li>Official multi-color Google 'G' vector logo</li>
+          <li>Real Google account chooser (nandhish3004@gmail.com)</li>
+          <li>Zero emojis, authentic human-crafted product UI</li>
+          <li>Instamart-inspired vibrant orange primary button</li>
+          <li>Instant seamless citizen profile authorization</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 1: AUTHENTIC SWIGGY & INSTAMART COMMERCIAL DASHBOARD -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">2. Swiggy & Instamart Commercial Dashboard</span>
+        <span class="screen-tag">Swiggy Real Vibe</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/1_dashboard_swiggy_real.jpg" alt="OraMet Swiggy Real Vibe Dashboard">
+      </div>
+      <div class="screen-details">
+        <strong>Iconic Swiggy / Instamart Identity:</strong>
+        <ul class="features-list">
+          <li>"DELIVERING SAFETY TO" header with Ward GPS & Avatar</li>
+          <li>Swiggy iconic search pill with mic & compass actions</li>
+          <li>"What's on your mind?" circular story categories (Radar, Shelters, SOS, Satellites, River)</li>
+          <li>Delivery-style ETA tracking hero banner (35 MINS countdown & milestone checkpoints)</li>
+          <li>Instamart-style 2x2 telemetry grid (IMD, NASA, GSI, CWC) with orange INSPECT buttons</li>
+          <li>Iconic floating dark bottom pill: "1 Safe Haven Nearby · VIEW HAVEN ›"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: WMO 2025 AI DIGITAL TWIN & TELEMETRY HUB -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">3. WMO 2025 AI Digital Twin Hub (Background Engine)</span>
+        <span class="screen-tag">WMO MeteoWorld 2025</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/2_wmo_digital_twin.jpg" alt="OraMet WMO Digital Twin">
+      </div>
+      <div class="screen-details">
+        <strong>WMO June 2025 Scientific Architecture:</strong>
+        <ul class="features-list">
+          <li>Physics-informed LSTM river stage projection at 10-minute intervals</li>
+          <li>Storage Function Method: S = K · Q^0.6 hydrological routing</li>
+          <li>3D Hydrodynamic Digital Twin (Inundation 1.4m, Flow Velocity 2.6 m/s, Dam Inflow)</li>
+          <li>CAP v1.2 Cell Broadcasting Service (CBS) & SMS automated alerts</li>
+          <li>Real NASA SMAP, ISRO MOSDAC, IMD AWS, and CWC live telemetry streams</li>
+        </ul>
+      </div>
+    </div>
+        <ul class="features-list">
+          <li>NASA POWER & SMAP soil saturation (82%)</li>
+          <li>ISRO MOSDAC INSAT-3DR TIR cloudburst risk</li>
+          <li>IMD Mausam Automatic Weather Station (AWS) grid</li>
+          <li>GSI 30m DEM slope Factor of Safety (Fs 0.98)</li>
+          <li>Real API endpoint URL & live latency (184 ms)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: HYPER-LOCAL VILLAGE & WARD SELECTOR -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">3. Hyper-Local Village/Ward Selector</span>
+        <span class="screen-tag">PS #26192 Requirement</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/3_village_ward_selector.jpg" alt="OraMet Village Ward Selector">
+      </div>
+      <div class="screen-details">
+        <strong>Hyper-Local Granularity:</strong>
+        <ul class="features-list">
+          <li>Pre-configured high-risk hilly Himalayan & Ghats wards</li>
+          <li>Joshimath Ward 4, Dharali, Chooralmala, Old Manali, Singtam</li>
+          <li>Real elevation (1890m) & steep slope angles (34.8°)</li>
+          <li>GSI Bhukosh historical disaster inventory mapping</li>
+          <li>1-Tap "Auto-Detect My Panchayat via Live GPS"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 4: WELCOME SCREEN -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">4. Welcome & Onboarding Screen</span>
+        <span class="screen-tag">First Screen</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/4_welcome_onboarding.jpg" alt="OraMet Welcome Screen">
+      </div>
+      <div class="screen-details">
+        <strong>Aesthetic & User-Friendly:</strong>
+        <ul class="features-list">
+          <li>Live 1-min radar status pill at top</li>
+          <li>Official logos for IMD, ISRO, NASA, GSI, NHAI, CWC</li>
+          <li>1-Tap direct entry to Live Dashboard</li>
+          <li>Emergency Guest bypass button (No login needed)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 5: EVACUATION MAP -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">5. High-Ground Evacuation Navigation</span>
+        <span class="screen-tag">Safe Corridors</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/5_evacuation_map.jpg" alt="OraMet Evacuation Map">
+      </div>
+      <div class="screen-details">
+        <strong>Life-Saving Navigation:</strong>
+        <ul class="features-list">
+          <li>Red hazard perimeter along low-lying river valleys</li>
+          <li>Topographical contour elevation routing uphill</li>
+          <li>Walking directions to verified municipal safe centers</li>
+          <li>1-Tap launch in Google Maps walking directions mode</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SCREEN 6: EMERGENCY SOS & ZERO-NETWORK -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <span class="screen-title">6. Emergency SOS & Siren</span>
+        <span class="screen-tag">Zero-Network Fail-Safe</span>
+      </div>
+      <div class="mockup-preview">
+        <img src="screenshots/6_emergency_sos.jpg" alt="OraMet SOS Screen">
+      </div>
+      <div class="screen-details">
+        <strong>Resilient Fail-Safe Protocol:</strong>
+        <ul class="features-list">
+          <li>Giant glowing one-tap SOS trigger button</li>
+          <li>Shake-to-SOS for freezing or wet hands</li>
+          <li>Automatic native SMS to 112 with exact GPS pin</li>
+          <li>3.5 kHz audio pulse rescue whistle for search dogs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

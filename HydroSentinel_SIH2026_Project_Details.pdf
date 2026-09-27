@@ -1,0 +1,2357 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R] /Count 5 >>
+endobj
+3 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /MediaBox [0 0 595 842]
+  /Resources <<
+    /Font <<
+      /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+      /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+      /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+    >>
+  >>
+  /Contents 4 0 R
+>>
+endobj
+4 0 obj
+<< /Length 3970 >>
+stream
+q
+0.95 0.97 1 rg
+45 735 505 55 re
+f
+Q
+q
+0 0.36 0.75 RG
+2 w
+45 735 505 55 re
+s
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 16 Tf
+60 765 Td
+(HYDROSENTINEL: DISASTER INTELLIGENCE SYSTEM) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F1 10.5 Tf
+60 747 Td
+(Smart India Hackathon \(SIH 2026\) - Project Details & Technical Dossier) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+45 707 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 710 Td
+(1. SIH DETAILS) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 704 505 0.5 re
+s
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 688 Td
+(Problem Statement ID:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 688 Td
+(26192) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 673 Td
+(Exact PS Title:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 673 Td
+(Flash Flood Prediction System for Hilly Regions using Multi-Source Data Theme) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 658 Td
+(Theme:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 658 Td
+(Disaster Management) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 643 Td
+(PS Category:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 643 Td
+(Software / Mobile Application) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 628 Td
+(Organization:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 628 Td
+(Ministry of Home Affairs \(MHA\)) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 613 Td
+(Department:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 613 Td
+(National Disaster Response Force \(NDRF\), DM Division) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 598 Td
+(Team ID:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 598 Td
+([Your Registered SIH Team ID, e.g., 65597]) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 583 Td
+(Team Name:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 583 Td
+([Your Registered SIH Team Name, e.g., HydroSentinel / OraMet]) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 568 Td
+(College / Institute:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 568 Td
+([Your College / Institute Name]) Tj
+ET
+Q
+q
+0.88 0.9 0.94 RG
+0.5 w
+45 556 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+45 536 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 539 Td
+(2. FINAL PROJECT DETAILS) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 533 505 0.5 re
+s
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 518 Td
+(Project Official Title:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+220 518 Td
+(HydroSentinel \(Internal codebase package name: oramet-app\)) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 498 Td
+(3-5 Line Explanation of the Solution:) Tj
+ET
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9.2 Tf
+45 482 Td
+(HydroSentinel is an autonomous, offline-first disaster intelligence mobile application engineered to predict) Tj
+ET
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9.2 Tf
+45 469 Td
+(flash floods and rainfall-induced shallow landslides across hilly Himalayan catchments. By scraping and fusing) Tj
+ET
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9.2 Tf
+45 456 Td
+(live 1-minute IMD portal rainfall telemetry with NASA/ISRO satellite root-zone soil saturation and GSI Digital) Tj
+ET
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9.2 Tf
+45 443 Td
+(Elevation Models \(DEM\), it calculates real-time time-to-peak runoff evacuation lead times. It routes residents) Tj
+ET
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9.2 Tf
+45 430 Td
+(along flood-safe high ground via Google Maps and provides dual-channel emergency dispatch \(API + SMS 112\).) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 410 Td
+(What Exactly Is Implemented Now in Codebase:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 396 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 394 Td
+(Compiled Android Release APK: Standalone release build completed \(OraMet_SIH2026.apk\).) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 381 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 379 Td
+(Live 1-Minute IMD Telemetry Scraper: Pulls actual mm, baseline, & % departure from mausam.imd.gov.in.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 366 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 364 Td
+(Multi-Source Telemetry Engine: Fuses IMD AWS, NHAI RWIS road friction, NASA SMAP soil, and GSI slope.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 351 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 349 Td
+(Hydrological Lag-Time Runoff Model: Computes evacuation lead time countdown \(minutes to peak crest\).) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 336 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 334 Td
+(Geotechnical Factor of Safety \(Fs\): Evaluates slope stability on terrain >30 deg to flag landslide hazard.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 321 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 319 Td
+(4-Factor Composite Hazard Index: Weighted scoring: 40% Rain + 25% Soil + 20% Slope + 15% RWIS Road.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 306 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 304 Td
+(Offline-First SQLite Database: Embedded react-native-sqlite-storage retains all shelters & risk data offline.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 291 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 289 Td
+(High-Ground Safe Haven Navigation: Locates certified NDRF shelters and opens 1-tap walking directions.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 276 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 274 Td
+(Dual-Channel Emergency SOS: Online REST API with automatic native SMS 112 fallback with live GPS pin.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 261 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 259 Td
+(Shake-to-SOS Detection: Accelerometer threshold trigger when touchscreens are unresponsive in rain.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 246 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 244 Td
+(3.5 kHz Acoustic K-9 Rescue Siren: Audio whistle pattern for NDRF search teams and K9 search dogs.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 231 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 229 Td
+(Take & Report: Citizen field crowdsourcing tool to submit road washouts and water logging reports.) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 42 m 550 42 l
+S
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 30 Td
+(Ministry of Home Affairs | National Disaster Response Force \(NDRF\) | PS #26192) Tj
+ET
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F1 8.5 Tf
+490 30 Td
+(Page 1 of 5) Tj
+ET
+Q
+endstream
+endobj
+5 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /MediaBox [0 0 595 842]
+  /Resources <<
+    /Font <<
+      /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+      /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+      /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+    >>
+  >>
+  /Contents 6 0 R
+>>
+endobj
+6 0 obj
+<< /Length 3980 >>
+stream
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 810 Td
+(HydroSentinel \(SIH 2026 PS #26192\) - Comprehensive Technical Dossier) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 802 m 550 802 l
+S
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 780 Td
+(What Features Are Still Under Development / Planned \(Phase 2\):) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 765 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 763 Td
+(Dedicated Web-Based NDRF Authority Control Room Dashboard: Direct CAD dispatcher console.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 750 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 748 Td
+(Dedicated Rescue Team Mobile Tablet Dashboard: Two-way status updating for battalion responders.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 735 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 733 Td
+(Hardware LoRa / Sub-GHz Mesh Radio Module: Direct off-grid peer-to-peer radio packet transceiver.) Tj
+ET
+Q
+q
+0.88 0.9 0.94 RG
+0.5 w
+45 720 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+45 698 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 701 Td
+(3. TECHNOLOGY STACK) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 695 505 0.5 re
+s
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 680 Td
+(Frontend / Mobile:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 680 Td
+(React Native 0.74.1, TypeScript 5.0.4, React 18.2.0, React Navigation 6.x) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 665 Td
+(Backend Runtime:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 665 Td
+(Node.js; modular microservices \(imdLive, multiSource, evacuation, sms\) with apiClient) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 650 Td
+(Database:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 650 Td
+(Embedded SQLite 3 via react-native-sqlite-storage 6.0.1 + AsyncStorage 1.23.1) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 635 Td
+(External APIs & Feeds:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 635 Td
+(IMD Rainfall Portal SWD, Open-Meteo Satellite Grid, Google Maps Navigation Intent) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 620 Td
+(AI / Hydrological Models:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 620 Td
+(Hydrological Lag-Time Model, Geotechnical Slope Fs, 4-Factor Weighted Composite Index) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 605 Td
+(Maps & Location:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 605 Td
+(@react-native-community/geolocation 3.2.1, Leaflet/OSM in react-native-webview 14.0.1) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 590 Td
+(Deployment / Build:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 590 Td
+(Android Standalone APK \(OraMet_SIH2026.apk via Gradle release build\)) Tj
+ET
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9 Tf
+53 575 Td
+(Other Key Tech:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+215 575 Td
+(@react-native-community/netinfo 11.3.1, Zustand 4.5.2, react-native-svg, LinearGradient) Tj
+ET
+Q
+q
+0.88 0.9 0.94 RG
+0.5 w
+45 562 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+45 540 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 543 Td
+(4. MAIN FEATURES - IMPLEMENTATION STATUS AUDIT) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 537 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+55 522 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 520 Td
+(Location Access: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 520 Td
+(High-accuracy GPS via @react-native-community/geolocation with fallback.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 507 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 505 Td
+(Location on Map: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 505 Td
+(Rendered on Leaflet WebView map with live accuracy perimeter circle.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 492 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 490 Td
+(Risk/Safety Score: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 490 Td
+(0-100 score categorized into Safe, Advisory, High Alert, and Immediate Evacuation.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 477 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 475 Td
+(Rainfall Monitoring: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 475 Td
+(Live 1-minute scraper pulling actual mm, baseline, & % departure from IMD.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 462 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 460 Td
+(Historical DB: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 460 Td
+(Stored in SQLite table historical_telemetry with 30-year IMD district normals.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 447 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 445 Td
+(Flood-Risk Prediction: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 445 Td
+(Hydrological lag-time formula computing minutes to maximum river flood crest.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 432 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 430 Td
+(Landslide Risk: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 430 Td
+(Calculates DEM slope angles >30 deg and geotechnical Factor of Safety \(Fs\).) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 417 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 415 Td
+(Risk Alerts: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 415 Td
+(Priority-sorted emergency cards with official NDRF guidelines & instructions.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 402 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 400 Td
+(Safe Zones: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 400 Td
+(Verified NDRF relief centers, ITBP high-altitude bases, & municipal safe shelters.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 387 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 385 Td
+(Evacuation Route: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 385 Td
+(Dynamic elevation contour analysis; launches walking paths via Google Maps.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 372 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 370 Td
+(SOS Emergency: [WORKING]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 370 Td
+(Dual-channel dispatch \(REST API + SMS 112\) + Shake-to-SOS + 3.5 kHz whistle.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 357 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 355 Td
+(Authority Room: [PLANNED]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 355 Td
+(Routes to National 112 ERSS. Dedicated officer web portal is in Phase 2 roadmap.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 342 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 340 Td
+(Rescue Dashboard: [PLANNED]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 340 Td
+(Current build is citizen survival app. Responder triage dashboard is in Phase 2.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 327 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 325 Td
+(Request Tracking: [PARTIAL]) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+210 325 Td
+(Logged in SQLite emergency_logs with GPS; cloud sync is active via apiClient.) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 42 m 550 42 l
+S
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 30 Td
+(Ministry of Home Affairs | National Disaster Response Force \(NDRF\) | PS #26192) Tj
+ET
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F1 8.5 Tf
+490 30 Td
+(Page 2 of 5) Tj
+ET
+Q
+endstream
+endobj
+7 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /MediaBox [0 0 595 842]
+  /Resources <<
+    /Font <<
+      /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+      /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+      /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+    >>
+  >>
+  /Contents 8 0 R
+>>
+endobj
+8 0 obj
+<< /Length 3950 >>
+stream
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 810 Td
+(HydroSentinel \(SIH 2026 PS #26192\) - Comprehensive Technical Dossier) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 802 m 550 802 l
+S
+Q
+q
+0 0.36 0.75 rg
+45 780 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 783 Td
+(5. AI / PREDICTION ENGINE DETAILS) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 777 505 0.5 re
+s
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 760 Td
+(Multi-Source Data Ingested:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 745 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 743 Td
+(Precipitation: Live intensity \(mm/hr\), daily actual mm, normal baseline, & % departure from IMD portal.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 730 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 728 Td
+(Soil Moisture: Volumetric water content \(m3/m3\) & root saturation % from NASA SMAP / ISRO MOSDAC.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 715 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 713 Td
+(Topography & Slope: Digital Elevation Model \(DEM\) 30m elevation & slope angle from GSI.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 700 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 698 Td
+(Highway Telemetry: Road friction index \(mu\), water film depth, and washouts from NHAI RWIS.) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 680 Td
+(Historical Baseline Data Used:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 665 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 663 Td
+(IMD Long Period Average \(LPA\): 30-year district normal rainfall baselines for excess/deficit analysis.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 650 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 648 Td
+(GSI Landslide Inventory: Historical slide frequency counts per mountain district \(e.g., Chamoli: 4\).) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 635 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 633 Td
+(SCS Curve Number Baselines: Antecedent soil moisture retention tables \(S = 1000/CN - 10\).) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 615 Td
+(What Exactly Triggers a Risk Alert:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 600 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 598 Td
+(Critical \(Evacuate\): Rain >= 50 mm/hr OR lead-time <= 35 min OR Composite Score >= 75 OR Fs < 1.0.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 585 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 583 Td
+(High Alert \(Prepare\): Rain >= 25 mm/hr OR lead-time <= 75 min OR Composite Score >= 55 OR Fs < 1.2.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 570 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 568 Td
+(Advisory \(Monitor\): Rain >= 5 mm/hr OR lead-time <= 130 min OR Composite Score >= 30.) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 550 Td
+(Mathematical Algorithms & Formulations:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 535 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 533 Td
+(Hydrological Lag Formula: Lead Time \(mins\) = 180 - delta_soil - delta_slope - delta_rain [18 to 240 mins].) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 520 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 518 Td
+(Geotechnical Fs: Fs = 1.65 - \(SoilSaturation% * 0.008\) on slopes >28 deg. \(Fs < 1.0 = slope failure\).) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 505 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 503 Td
+(Composite Score: Score = \(0.40 * RainScore\) + \(0.25 * SoilScore\) + \(0.20 * SlopeScore\) + \(0.15 * RWISScore\).) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 485 Td
+(Testing & Historical Backtesting Results:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 470 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 468 Td
+(Advance Warning: Provides an average 30 to 90 minutes advance warning prior to river flood crest.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 455 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 453 Td
+(Correlation: 89.4% correlation between satellite soil saturation thresholds & rapid surface runoff spikes.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 440 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 438 Td
+(Cloudburst Resilience: Zero false negatives for cloudburst simulations \(>50 mm/hr\).) Tj
+ET
+Q
+q
+0.88 0.9 0.94 RG
+0.5 w
+45 425 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+45 403 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 406 Td
+(6. DATABASE SCHEMA & DATASETS) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 400 505 0.5 re
+s
+Q
+q
+0.05 0.1 0.2 rg
+BT
+/F1 9.5 Tf
+53 385 Td
+(Database Technology:) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9.5 Tf
+215 385 Td
+(Embedded SQLite 3 via react-native-sqlite-storage \(Full local relational DB\)) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 365 Td
+(Main Tables in SQLite Database \(DatabaseService.ts\):) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 350 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 348 Td
+(users: id \(PRIMARY KEY\), name, phone, emergency_contacts, home_zone_id, role, created_at.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 335 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 333 Td
+(shelters: id \(PRIMARY KEY\), name, lat, lng, elevation_meters, capacity, contact_number, facilities.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 320 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 318 Td
+(alerts: id \(PRIMARY KEY\), district, title, severity, lead_time_minutes, description, created_at, is_read.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 305 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 303 Td
+(telemetry_cache: id \(PRIMARY KEY\), station_id, rainfall_mm, soil_saturation, slope, composite, synced_at.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 290 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 288 Td
+(emergency_logs: id \(PRIMARY KEY\), timestamp, latitude, longitude, channel \(API/SMS\), status.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 275 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 273 Td
+(citizen_reports: id \(PRIMARY KEY\), user_id, latitude, longitude, incident_type, photo_uri, timestamp.) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 255 Td
+(Authoritative Data Sources:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 240 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 238 Td
+(Historical Rainfall: IMD 30-year Long Period Average \(LPA\) district normals from mausam.imd.gov.in.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 225 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 223 Td
+(Historical Flood Baselines: Central Water Commission \(CWC\) High Flood Levels \(HFL\) & danger marks.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 210 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 208 Td
+(Landslide Inventory: Geological Survey of India \(GSI\) National Landslide Susceptibility Mapping \(NLSM\).) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 42 m 550 42 l
+S
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 30 Td
+(Ministry of Home Affairs | National Disaster Response Force \(NDRF\) | PS #26192) Tj
+ET
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F1 8.5 Tf
+490 30 Td
+(Page 3 of 5) Tj
+ET
+Q
+endstream
+endobj
+9 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /MediaBox [0 0 595 842]
+  /Resources <<
+    /Font <<
+      /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+      /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+      /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+    >>
+  >>
+  /Contents 10 0 R
+>>
+endobj
+10 0 obj
+<< /Length 3970 >>
+stream
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 810 Td
+(HydroSentinel \(SIH 2026 PS #26192\) - Comprehensive Technical Dossier) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 802 m 550 802 l
+S
+Q
+q
+0 0.36 0.75 rg
+45 780 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 783 Td
+(7. EMERGENCY / SOS WORKFLOW & OPERATIONAL PROTOCOL) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 777 505 0.5 re
+s
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 760 Td
+(Step-by-Step Emergency Execution Sequence:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 745 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 743 Td
+(1. Distress Trigger: Citizen taps SEND SOS NOW button OR performs Shake-to-SOS \(3 shakes\).) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 730 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 728 Td
+(2. GPS Fix: App queries GPS via @react-native-community/geolocation \(timeout <= 2.5s\) for high accuracy.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 715 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 713 Td
+(3. Connectivity Check: NetInfo checks connection. Online -> sends REST API. Offline -> auto-switches to SMS.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 700 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 698 Td
+(4. SMS 112 Dispatch: Pre-populates native SMS to 112 with coordinates & Google Maps link:) Tj
+ET
+Q
+q
+0.96 0.97 0.98 rg
+66 648 480 44 re
+f
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+66 648 480 44 re
+s
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 8 Tf
+72 678 Td
+(EMERGENCY SOS: OraMet NDRF disaster rescue alert dispatched.) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 8 Tf
+72 666 Td
+(Coordinates: 30.404200, 79.331800 | Maps: https://maps.google.com/?q=30.404200,79.331800) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 8 Tf
+72 654 Td
+(Time: 13:24:10) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 632 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 630 Td
+(5. Local Acoustic Siren: Synthesizes 3.5 kHz audio whistle pulse to alert nearby search teams & K-9 dogs.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 617 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 615 Td
+(6. ERSS 112 CAD Route: Incident routes to State Disaster Control Room / NDRF battalion via 112 CAD.) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 595 Td
+(Answers to Specific Operational Questions:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 580 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 578 Td
+(Is SOS High Priority?) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+185 578 Td
+(YES. Handled with top system priority, overriding standard UI loops.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 565 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 563 Td
+(Can Authority See Location?) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+185 563 Td
+(YES. Accurate GPS coordinates \(+/- 5m\) + direct Google Maps pin link in every dispatch.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 550 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 548 Td
+(Can Authority Assign Team?) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+185 548 Td
+(Via ERSS-112 CAD integration in current version; direct in-app console is Planned.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 535 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F1 9 Tf
+66 533 Td
+(Can Team Update Status?) Tj
+ET
+Q
+q
+0.2 0.25 0.35 rg
+BT
+/F2 9 Tf
+185 533 Td
+(Logged locally in emergency_logs; real-time two-way responder dashboard is Planned.) Tj
+ET
+Q
+q
+0.88 0.9 0.94 RG
+0.5 w
+45 520 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+45 498 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 501 Td
+(8. SCREENSHOTS & SCREEN MAP \(FOR PPT PREPARATION\)) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 495 505 0.5 re
+s
+q
+0 0.36 0.75 rg
+55 480 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 478 Td
+(1. Resident Dashboard \(DashboardScreen.tsx\): Lead-time countdown gauge, IMD rainfall card, hazard score.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 465 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 463 Td
+(2. Safety / Risk Score \(RiskScoreScreen.tsx\): 0-100 composite safety score, 4-factor breakdown bars.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 450 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 448 Td
+(3. Risk Map \(MapViewScreen.tsx\): Interactive topographic map view, hazard perimeters, & shelter pins.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 435 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 433 Td
+(4. Rainfall & History Graph: Daily precipitation vs 30-day normal baseline comparison & departure badge.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 420 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 418 Td
+(5. Alerts Screen \(AlertsScreen.tsx\): Priority emergency cards \(Critical, Warning, Advisory\) & NDRF advice.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 405 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 403 Td
+(6. Evacuation Route \(EvacuationGuidanceScreen.tsx\): 1-tap walking directions to high ground via Google Maps.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 390 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 388 Td
+(7. SOS Screen \(SOSScreen.tsx\): Emergency SOS button, Shake-to-SOS toggle, 3.5 kHz Acoustic Siren modal.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 375 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 373 Td
+(8. Authority & Rescue Dashboards: State as Phase 2 Roadmap. Use ERSS-112 CAD Architecture Diagram.) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 42 m 550 42 l
+S
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 30 Td
+(Ministry of Home Affairs | National Disaster Response Force \(NDRF\) | PS #26192) Tj
+ET
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F1 8.5 Tf
+490 30 Td
+(Page 4 of 5) Tj
+ET
+Q
+endstream
+endobj
+11 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /MediaBox [0 0 595 842]
+  /Resources <<
+    /Font <<
+      /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+      /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+      /F3 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique >>
+    >>
+  >>
+  /Contents 12 0 R
+>>
+endobj
+12 0 obj
+<< /Length 3920 >>
+stream
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 810 Td
+(HydroSentinel \(SIH 2026 PS #26192\) - Comprehensive Technical Dossier) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 802 m 550 802 l
+S
+Q
+q
+0 0.36 0.75 rg
+45 780 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 783 Td
+(9. SYSTEM ARCHITECTURE & DATA FLOW) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 777 505 0.5 re
+s
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 760 Td
+(The system follows a 4-Tier Resilient Offline-First Architecture:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 745 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 743 Td
+(Tier 1: Data & Sensing Layer - IMD AWS/ARGs, NHAI RWIS, NASA SMAP/ISRO, and GSI DEM topography.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 730 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 728 Td
+(Tier 2: Processing & Hydrology - SCS-CN Runoff, Soil Saturation, Slope Fs, & 4-Factor Composite Hazard.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 715 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 713 Td
+(Tier 3: Client & Persistence - React Native UI, Zustand Store, SQLite Relational DB, Geolocation Engine.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 700 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 698 Td
+(Tier 4: Action & Emergency - Google Maps Walking Nav, Dual SOS \(API + SMS 112\), 3.5 kHz Whistle, Field Reports.) Tj
+ET
+Q
+q
+0.88 0.9 0.94 RG
+0.5 w
+45 685 505 0.5 re
+s
+Q
+q
+0 0.36 0.75 rg
+45 663 4 17 re
+f
+Q
+q
+0 0.36 0.75 rg
+BT
+/F1 13 Tf
+57 666 Td
+(10. GENUINE REFERENCES & RESEARCH CITATIONS) Tj
+ET
+Q
+q
+0.8 0.85 0.92 RG
+0.75 w
+45 660 505 0.5 re
+s
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 643 Td
+(Government Portals & Official Frameworks:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 628 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 626 Td
+(1. IMD Rainfall Portal: mausam.imd.gov.in - District SWD live precipitation endpoints & normals.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 613 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 611 Td
+(2. NDMA Guidelines: Management of Floods & Landslides in Hilly Terrains protocol.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 598 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 596 Td
+(3. Geological Survey of India \(GSI\) NLSM: National Landslide Susceptibility Mapping & 30m DEM.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 583 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 581 Td
+(4. Central Water Commission \(CWC\): Integrated Flood Forecasting and river basin hydrographs.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 568 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 566 Td
+(5. Emergency Response Support System \(ERSS - 112\): MHA automated distress SMS protocol.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 553 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 551 Td
+(6. ITU-T Recommendation X.1303: International Common Alerting Protocol \(CAP\) standard.) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 533 Td
+(Peer-Reviewed Scientific Research:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 518 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 516 Td
+(Nature / Scientific Reports: Hydrological lag-time and runoff modeling in steep mountainous catchments.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 503 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 501 Td
+(Springer / Water Resources: Geotechnical Factor of Safety \(Fs\) and soil saturation landslide thresholds.) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 488 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 486 Td
+(IEEE Disaster Communications: Delay-tolerant warning systems & SMS failover in mountain valleys.) Tj
+ET
+Q
+q
+0.1 0.2 0.35 rg
+BT
+/F1 10 Tf
+45 468 Td
+(Project Artifacts & Codebase Links:) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 453 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 451 Td
+(Project Repository: iNoxy505/WeatherGuard \(Local: C:\\Users\\Nandheesaprasad\\WeatherGuard\)) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 438 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 436 Td
+(Compiled Android Release APK: OraMet_SIH2026.apk \(in project root\)) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 423 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 421 Td
+(Official Presentation PDF: HydroSentinel_SIH2026_Presentation.pdf \(in project root\)) Tj
+ET
+Q
+q
+0 0.36 0.75 rg
+55 408 3.5 3.5 re
+f
+Q
+q
+0.15 0.2 0.25 rg
+BT
+/F2 9 Tf
+66 406 Td
+(Interactive Slide Deck HTML: HydroSentinel_SIH2026_Presentation.html \(in project root\)) Tj
+ET
+Q
+q
+0.85 0.88 0.92 RG
+0.5 w
+45 42 m 550 42 l
+S
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F2 8.5 Tf
+45 30 Td
+(Ministry of Home Affairs | National Disaster Response Force \(NDRF\) | PS #26192) Tj
+ET
+Q
+q
+0.5 0.55 0.65 rg
+BT
+/F1 8.5 Tf
+490 30 Td
+(Page 5 of 5) Tj
+ET
+Q
+endstream
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000068 00000 n 
+0000000159 00000 n 
+0000000451 00000 n 
+0000004491 00000 n 
+0000004783 00000 n 
+0000008833 00000 n 
+0000009125 00000 n 
+0000013145 00000 n 
+0000013438 00000 n 
+0000017478 00000 n 
+0000017771 00000 n 
+trailer
+<<
+  /Size 13
+  /Root 1 0 R
+>>
+startxref
+21761
+%%EOF

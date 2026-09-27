@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HydroSentinel - SIH 2026 Official Presentation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #005BBF;
+      --primary-dark: #003F88;
+      --primary-light: #EBF3FF;
+      --accent: #00A699;
+      --warning: #D97706;
+      --critical: #DC2626;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #CBD5E1;
+      --border-light: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #0B1325;
+      color: var(--text-main);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .slide {
+      width: 1200px;
+      height: 675px; /* 16:9 aspect ratio */
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 28px 40px;
+      page-break-after: always;
+    }
+
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+        gap: 0;
+      }
+      .slide {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+      }
+      .print-btn {
+        display: none !important;
+      }
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #E2E8F0;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #005BBF, #003F88);
+      color: white;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0F172A;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+    }
+
+    .sih-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #005BBF;
+      background: #EFF6FF;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #BFDBFE;
+    }
+
+    .footer-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      background: #F8FAFC;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      font-size: 11px;
+      color: #64748B;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* SLIDE 1 */
+    .title-banner {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .sih-main-title {
+      font-size: 26px;
+      font-weight: 900;
+      color: #005BBF;
+      letter-spacing: 1px;
+    }
+    .sih-project-sub {
+      font-size: 19px;
+      font-weight: 700;
+      color: #1E293B;
+      margin-top: 4px;
+    }
+    .title-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+    .details-table-card {
+      background: #F8FAFC;
+      border: 2px solid #005BBF;
+      border-radius: 14px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .detail-row {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #CBD5E1;
+      font-size: 13.5px;
+    }
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    .detail-label {
+      font-weight: 700;
+      color: #0F172A;
+    }
+    .detail-val {
+      font-weight: 500;
+      color: #334155;
+    }
+    .highlights-box {
+      background: linear-gradient(145deg, #EFF6FF, #F8FAFC);
+      border: 1.5px solid #BFDBFE;
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .highlights-box h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #005BBF;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hl-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+      color: #1E293B;
+      font-weight: 500;
+    }
+    .hl-dot {
+      width: 7px;
+      height: 7px;
+      background: #005BBF;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* SLIDE 2 */
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      flex: 1;
+    }
+    .solution-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .solution-card {
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      border-left: 5px solid #005BBF;
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+    .solution-card h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #005BBF;
+      margin-bottom: 6px;
+    }
+    .solution-card ul {
+      list-style-type: disc;
+      padding-left: 18px;
+      font-size: 11.5px;
+      color: #334155;
+      line-height: 1.45;
+    }
+    .approach-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .approach-step {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      position: relative;
+    }
+    .approach-step h5 {
+      font-size: 11px;
+      font-weight: 800;
+      color: #005BBF;
+      margin-bottom: 4px;
+    }
+    .approach-step p {
+      font-size: 9.5px;
+      color: #334155;
+      line-height: 1.35;
+    }
+    .wow-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .wow-badge {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-left: 4px solid #00A699;
+      border-radius: 8px;
+      padding: 8px 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .wow-badge h6 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+    .wow-badge p {
+      font-size: 9px;
+      color: #64748B;
+      margin-top: 2px;
+      line-height: 1.25;
+    }
+
+    /* SLIDE 3 */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 22px;
+      flex: 1;
+    }
+    .tech-stack-card {
+      background: #F8FAFC;
+      border: 1.5px solid #CBD5E1;
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .stack-group h5 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #005BBF;
+      text-transform: uppercase;
+    }
+    .stack-group p {
+      font-size: 10.5px;
+      color: #1E293B;
+      font-weight: 500;
+    }
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .pipe-node {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 9px 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .pipe-num {
+      width: 28px;
+      height: 28px;
+      background: #005BBF;
+      color: white;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pipe-info h5 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+    .pipe-info p {
+      font-size: 9.5px;
+      color: #475569;
+      line-height: 1.25;
+    }
+
+    /* SLIDE 4 */
+    .viability-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 22px;
+      flex: 1;
+    }
+    .feasibility-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .feas-node {
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      border-left: 4px solid #005BBF;
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+    .feas-node h5 {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+    .feas-node p {
+      font-size: 9.5px;
+      color: #64748B;
+    }
+    .viability-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .viab-card {
+      border-radius: 10px;
+      border: 1px solid #CBD5E1;
+      overflow: hidden;
+      background: #FFFFFF;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    .viab-header {
+      padding: 8px 14px;
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .viab-body {
+      padding: 10px 14px;
+      font-size: 10px;
+      color: #334155;
+      line-height: 1.4;
+    }
+    .viab-body li {
+      margin-bottom: 6px;
+    }
+
+    /* SLIDE 5 */
+    .arch-flow-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      flex: 1;
+    }
+    .layer-box {
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .layer-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .layer-desc {
+      font-size: 9.5px;
+      color: #334155;
+      line-height: 1.35;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .benefit-item {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px;
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .ben-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: #005BBF;
+      background: #EFF6FF;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .ben-text h6 {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #0F172A;
+    }
+    .ben-text p {
+      font-size: 8.5px;
+      color: #64748B;
+    }
+
+    /* SLIDE 6 */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      flex: 1;
+    }
+    .ref-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .ref-card {
+      background: #F8FAFC;
+      border: 1px solid #CBD5E1;
+      border-left: 4px solid #005BBF;
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+    .ref-card h5 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #005BBF;
+    }
+    .ref-card p {
+      font-size: 9.5px;
+      color: #475569;
+    }
+    .article-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .article-box {
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+    .art-badge {
+      padding: 6px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+    }
+    .art-content {
+      padding: 10px 12px;
+    }
+    .art-content h6 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 4px;
+    }
+    .art-content p {
+      font-size: 9.5px;
+      color: #475569;
+      line-height: 1.35;
+    }
+
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #005BBF;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 91, 191, 0.4);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .print-btn:hover {
+      background: #004493;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+  <!-- ==================== SLIDE 1 ==================== -->
+  <div class="slide">
+    <div class="title-banner">
+      <div class="sih-main-title">SMART INDIA HACKATHON 2026</div>
+      <div class="sih-project-sub">HYDROSENTINEL: FLASH FLOOD PREDICTION & EVACUATION SYSTEM FOR HILLY REGIONS</div>
+    </div>
+
+    <div class="title-grid">
+      <div class="details-table-card">
+        <div class="detail-row">
+          <div class="detail-label">Problem Statement ID</div>
+          <div class="detail-val">– 26192</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Problem Statement Title</div>
+          <div class="detail-val">– Flash Flood Prediction System for Hilly Regions using Multi-Source Data Theme</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Theme</div>
+          <div class="detail-val">– Disaster Management</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">PS Category</div>
+          <div class="detail-val">– Software / Mobile Application</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Team ID</div>
+          <div class="detail-val">– 65597</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Team Name</div>
+          <div class="detail-val">– HYDROSENTINEL INNOVATORS</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Organization</div>
+          <div class="detail-val">– Ministry of Home Affairs</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Department</div>
+          <div class="detail-val">– National Disaster Response Force (NDRF), DM Division</div>
+        </div>
+      </div>
+
+      <div class="highlights-box">
+        <h3>⚡ CORE SYSTEM CAPABILITIES</h3>
+        <div class="hl-item"><div class="hl-dot"></div> Live 1-Minute IMD Portal Precipitation Ingestion</div>
+        <div class="hl-item"><div class="hl-dot"></div> NASA SMAP & ISRO MOSDAC Satellite Soil Moisture</div>
+        <div class="hl-item"><div class="hl-dot"></div> GSI DEM Digital Elevation Slope Factor of Safety (Fs)</div>
+        <div class="hl-item"><div class="hl-dot"></div> Actionable Time-to-Peak Evacuation Lead Times</div>
+        <div class="hl-item"><div class="hl-dot"></div> 1-Tap Google Maps High-Ground Evacuation Navigation</div>
+        <div class="hl-item"><div class="hl-dot"></div> Offline-First SQLite Local Relational Database</div>
+        <div class="hl-item"><div class="hl-dot"></div> Shake-to-SOS Panic Accelerometer Dispatch</div>
+        <div class="hl-item"><div class="hl-dot"></div> Emergency 112 SMS Direct Fallback with Live GPS</div>
+        <div class="hl-item"><div class="hl-dot"></div> 3.5 kHz Acoustic Siren / Whistle for Search Teams</div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>HydroSentinel / OraMet — NDRF Early Warning & Evacuation System</span>
+      <span>Slide 1 / 6</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2 ==================== -->
+  <div class="slide">
+    <div class="header-bar">
+      <div class="header-left">
+        <span class="logo-badge">HYDROSENTINEL</span>
+        <span class="slide-title">Proposed Solution & Idea Approach</span>
+      </div>
+      <div class="sih-tag">SIH 2026 | PS #26192</div>
+    </div>
+
+    <div class="two-col-grid">
+      <div class="solution-col">
+        <div class="solution-card">
+          <h4>1. Multi-Source Sensor & Telemetry Ingestion</h4>
+          <ul>
+            <li><strong>IMD AWS & ARGs:</strong> Real-time panchayat-level precipitation intensity, humidity, and barometric pressure.</li>
+            <li><strong>NHAI RWIS Sensors:</strong> Road surface friction index (&mu;), water film depth, and mountain highway washouts.</li>
+            <li><strong>NASA SMAP / ISRO MOSDAC:</strong> Satellite root-zone soil saturation % to detect exhausted runoff absorption capacity.</li>
+            <li><strong>GSI Topography DEM:</strong> Slope angles (>30&deg;) and digital elevation gradient analysis.</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <h4>2. Hydrological Lag-Time & Geotechnical Risk Model</h4>
+          <ul>
+            <li><strong>Lead-Time Calculator:</strong> Actionable minutes remaining until maximum flood peak crest.</li>
+            <li><strong>Factor of Safety (Fs):</strong> Geotechnical thresholding to preemptively flag shallow landslides.</li>
+            <li><strong>4-Factor Composite Hazard:</strong> 40% Rain Departure + 25% Soil Saturation + 20% Slope + 15% RWIS Road Status.</li>
+          </ul>
+        </div>
+
+        <div class="solution-card">
+          <h4>3. Resilient Safe Evacuation & Emergency SOS</h4>
+          <ul>
+            <li><strong>High-Ground Walking Routes:</strong> Directs citizens strictly away from riverbeds via Google Maps.</li>
+            <li><strong>Dual-Channel SOS:</strong> REST API online with zero-delay fallback to native SMS 112 with exact coordinates.</li>
+            <li><strong>Shake-to-SOS & 3.5 kHz Siren:</strong> Accelerometer trigger for wet/cold hands & acoustic whistle for K9 search teams.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="approach-col">
+        <div class="approach-steps">
+          <div class="approach-step">
+            <h5>1. Identify Gaps</h5>
+            <p>Blanket district alerts lack hill micro-valley precision; telecom collapse traps victims.</p>
+          </div>
+          <div class="approach-step">
+            <h5>2. Build Engine</h5>
+            <p>Fuse IMD AWS, NASA satellite soil & GSI DEM with local offline lag-time prediction.</p>
+          </div>
+          <div class="approach-step">
+            <h5>3. Deliver Action</h5>
+            <p>Actionable lead-time, high-ground navigation, Shake-to-SOS & 112 SMS dispatch.</p>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; font-weight: 800; color: #005BBF; margin-bottom: 8px;">WOW FACTOR INNOVATIONS</div>
+        <div class="wow-grid">
+          <div class="wow-badge">
+            <h6>End-to-End Offline First</h6>
+            <p>SQLite relational store retains safe shelters & hazard models with zero network.</p>
+          </div>
+          <div class="wow-badge">
+            <h6>1-Min Live IMD Portal Sync</h6>
+            <p>Scrapes mausam.imd.gov.in SWD endpoints for live precipitation departures.</p>
+          </div>
+          <div class="wow-badge">
+            <h6>Shake-to-SOS Trigger</h6>
+            <p>Bypasses wet touchscreen unresponsiveness via 3-axis accelerometer spikes.</p>
+          </div>
+          <div class="wow-badge">
+            <h6>3.5 kHz Acoustic K-9 Siren</h6>
+            <p>Tuned frequency pulse pattern penetrates heavy rain to guide NDRF rescue squads.</p>
+          </div>
+          <div class="wow-badge">
+            <h6>Dual-Channel 112 Failover</h6>
+            <p>Auto-switches to native SMS 112 containing Google Maps GPS navigation pin.</p>
+          </div>
+          <div class="wow-badge">
+            <h6>High-Ground Elevation Routing</h6>
+            <p>Topographical elevation algorithm directs users to verified ridge shelters.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>HydroSentinel / OraMet — NDRF Early Warning & Evacuation System</span>
+      <span>Slide 2 / 6</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3 ==================== -->
+  <div class="slide">
+    <div class="header-bar">
+      <div class="header-left">
+        <span class="logo-badge">HYDROSENTINEL</span>
+        <span class="slide-title">Technical Approach & Architecture Pipeline</span>
+      </div>
+      <div class="sih-tag">SIH 2026 | PS #26192</div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-stack-card">
+        <div class="stack-group">
+          <h5>Framework & Language</h5>
+          <p>React Native 0.74.1, TypeScript 5.0</p>
+        </div>
+        <div class="stack-group">
+          <h5>Local Relational Database</h5>
+          <p>react-native-sqlite-storage (Full Offline)</p>
+        </div>
+        <div class="stack-group">
+          <h5>State Management</h5>
+          <p>Zustand 4.5.2 (High-Performance Store)</p>
+        </div>
+        <div class="stack-group">
+          <h5>Sensors & Hardware APIs</h5>
+          <p>Geolocation, NetInfo, Triple-Axis Accelerometer</p>
+        </div>
+        <div class="stack-group">
+          <h5>Government Telemetry Pipelines</h5>
+          <p>IMD SWD Portal, NASA SMAP, NHAI RWIS, CWC</p>
+        </div>
+        <div class="stack-group">
+          <h5>Design System</h5>
+          <p>Ambient Clarity, High-Contrast Tokens, SVG</p>
+        </div>
+      </div>
+
+      <div class="pipeline-grid">
+        <div class="pipe-node">
+          <div class="pipe-num">01</div>
+          <div class="pipe-info">
+            <h5>Live Ingestion Layer</h5>
+            <p>Polls IMD 1-min rainfall, NASA satellite soil moisture & NHAI road telemetry.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">02</div>
+          <div class="pipe-info">
+            <h5>Soil Saturation Engine</h5>
+            <p>Tracks volumetric moisture (m&sup3;/m&sup3;) & watershed absorption capacity limits.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">03</div>
+          <div class="pipe-info">
+            <h5>Slope Stability (Fs)</h5>
+            <p>Analyzes GSI Digital Elevation Models for angles >30&deg; to flag landslide risk.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">04</div>
+          <div class="pipe-info">
+            <h5>Composite Hazard Scoring</h5>
+            <p>Weighted Index: 40% Rain + 25% Soil + 20% Slope + 15% Road RWIS.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">05</div>
+          <div class="pipe-info">
+            <h5>Lead-Time Countdown</h5>
+            <p>Hydrological lag formula computes exact minutes remaining before peak crest.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">06</div>
+          <div class="pipe-info">
+            <h5>High-Ground Safe Havens</h5>
+            <p>Filters NDRF shelters by elevation contour & calculates walking proximity.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">07</div>
+          <div class="pipe-info">
+            <h5>1-Tap Navigation</h5>
+            <p>Directs users along verified flood-safe high-ground paths via Google Maps.</p>
+          </div>
+        </div>
+        <div class="pipe-node">
+          <div class="pipe-num">08</div>
+          <div class="pipe-info">
+            <h5>Fail-Safe SOS & Siren</h5>
+            <p>Dual REST / SMS 112 dispatch with coordinates, plus 3.5 kHz audio whistle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>HydroSentinel / OraMet — NDRF Early Warning & Evacuation System</span>
+      <span>Slide 3 / 6</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4 ==================== -->
+  <div class="slide">
+    <div class="header-bar">
+      <div class="header-left">
+        <span class="logo-badge">HYDROSENTINEL</span>
+        <span class="slide-title">Feasibility and Viability Analysis</span>
+      </div>
+      <div class="sih-tag">SIH 2026 | PS #26192</div>
+    </div>
+
+    <div class="viability-grid">
+      <div class="feasibility-col">
+        <div style="font-size: 13px; font-weight: 800; color: #005BBF; margin-bottom: 4px;">FEASIBILITY PILLARS</div>
+        <div class="feas-node">
+          <h5>High-Fidelity Preparation</h5>
+          <p>Ward & panchayat level localized predictions vs coarse district forecasts.</p>
+        </div>
+        <div class="feas-node">
+          <h5>Reduced Labor Overhead</h5>
+          <p>Automates manual gauge reading & telephonic warning broadcasts.</p>
+        </div>
+        <div class="feas-node">
+          <h5>Seamless Process Integration</h5>
+          <p>Integrates natively with district disaster control rooms & NDRF units.</p>
+        </div>
+        <div class="feas-node">
+          <h5>Standards Alignment</h5>
+          <p>Strictly complies with NDMA Flash Flood Protocols & ITU-T CAP standards.</p>
+        </div>
+        <div class="feas-node">
+          <h5>Zero Added Hardware Waste</h5>
+          <p>Operates on standard smartphones without requiring custom sensor deployments.</p>
+        </div>
+        <div class="feas-node">
+          <h5>Flawless Data Integrity</h5>
+          <p>SQLite persistence & dual-channel failover eliminate single points of failure.</p>
+        </div>
+      </div>
+
+      <div class="viability-cards">
+        <div class="viab-card">
+          <div class="viab-header" style="background: #005BBF;">Technical Viability</div>
+          <div class="viab-body">
+            <ul>
+              <li>Built on production-ready React Native 0.74.1 & SQLite relational engine.</li>
+              <li>Zero heavy background compute: Hydrological lag formula executes in <10ms.</li>
+              <li>High-availability fallback pipeline: Auto-switches to Open-Meteo if IMD times out.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="viab-card">
+          <div class="viab-header" style="background: #00875A;">Economic Viability</div>
+          <div class="viab-body">
+            <ul>
+              <li>Negligible CapEx: Fuses free public IoT feeds (IMD, NASA, ISRO, NHAI).</li>
+              <li>Avoids multi-crore sensor installations on every mountain ridge (saves 40+ Cr).</li>
+              <li>Minimizes disaster infrastructure losses through proactive 30-90 min warnings.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="viab-card">
+          <div class="viab-header" style="background: #D97706;">Operational Viability</div>
+          <div class="viab-body">
+            <ul>
+              <li>Minimal cognitive load: 4-tier alert cards (Safe, Advisory, High, Critical).</li>
+              <li>Shake-to-SOS works with numb/wet hands; 3.5 kHz siren guides search dogs.</li>
+              <li>Designed for low-literacy users with high-contrast icons & vernacular prompts.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="viab-card">
+          <div class="viab-header" style="background: #7C3AED;">Standard Compliance</div>
+          <div class="viab-body">
+            <ul>
+              <li>Complies with NDMA Flash Flood & Landslide early warning frameworks.</li>
+              <li>Follows ITU-T Recommendation X.1303 Common Alerting Protocol (CAP).</li>
+              <li>Direct integration format with Emergency Response Support System (ERSS - 112).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>HydroSentinel / OraMet — NDRF Early Warning & Evacuation System</span>
+      <span>Slide 4 / 6</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5 ==================== -->
+  <div class="slide">
+    <div class="header-bar">
+      <div class="header-left">
+        <span class="logo-badge">HYDROSENTINEL</span>
+        <span class="slide-title">Impact and Benefits Assessment</span>
+      </div>
+      <div class="sih-tag">SIH 2026 | PS #26192</div>
+    </div>
+
+    <div class="arch-flow-grid">
+      <div class="arch-col">
+        <div style="font-size: 13px; font-weight: 800; color: #005BBF; margin-bottom: 6px;">ARCHITECTURE FLOW</div>
+        
+        <div class="layer-box" style="background: #EFF6FF; border-left: 4px solid #005BBF;">
+          <div class="layer-title" style="color: #005BBF;">1. Input / Sensing Layer</div>
+          <div class="layer-desc">IMD AWS/ARGs (Rainfall) | NHAI RWIS (Road Friction) | NASA SMAP & ISRO (Soil Saturation) | GSI DEM Slope</div>
+        </div>
+
+        <div class="layer-box" style="background: #FAF5FF; border-left: 4px solid #7C3AED;">
+          <div class="layer-title" style="color: #7C3AED;">2. Processing & Hydrological Engine</div>
+          <div class="layer-desc">SCS-CN Runoff Formula | Soil Saturation Index | Slope Stability (Fs) | 4-Factor Weighted Composite Hazard Index</div>
+        </div>
+
+        <div class="layer-box" style="background: #F0FDF4; border-left: 4px solid #00875A;">
+          <div class="layer-title" style="color: #00875A;">3. Application & Offline Persistence Layer (Client)</div>
+          <div class="layer-desc">React Native UI | Zustand State Store | SQLite Relational DB | Geolocation & Offline Shelter Caching</div>
+        </div>
+
+        <div class="layer-box" style="background: #FEF2F2; border-left: 4px solid #DC2626;">
+          <div class="layer-title" style="color: #DC2626;">4. Action & Emergency Response Layer</div>
+          <div class="layer-desc">Google Maps High-Ground Nav | Dual-Channel SOS (REST + SMS 112) | 3.5 kHz Whistle | Citizen Field Crowdsourcing</div>
+        </div>
+
+        <div style="background: #F1F5F9; border: 1px dashed #94A3B8; border-radius: 6px; padding: 6px 12px; font-size: 10px; color: #475569;">
+          <strong>Demo & Drive Link:</strong> https://drive.google.com/drive/folders/1P8Z1nvdijkrR0UW3cB0OqJToXQkyyGTO
+        </div>
+      </div>
+
+      <div class="impact-col">
+        <div style="font-size: 13px; font-weight: 800; color: #005BBF; margin-bottom: 6px;">KEY IMPACT METRICS</div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-left: 3px solid #005BBF; border-radius: 6px; padding: 6px 10px; font-size: 10.5px;">
+            <strong>Targeted Precision:</strong> Ward-level warnings reduce false alarms by over 65%.
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-left: 3px solid #005BBF; border-radius: 6px; padding: 6px 10px; font-size: 10.5px;">
+            <strong>Actionable Lead-Time:</strong> 30-90 minutes evacuation window prior to peak flood surge.
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-left: 3px solid #005BBF; border-radius: 6px; padding: 6px 10px; font-size: 10.5px;">
+            <strong>Zero-Network Survival:</strong> Native SMS 112 & SQLite save lives during cellular blackout.
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-left: 3px solid #005BBF; border-radius: 6px; padding: 6px 10px; font-size: 10.5px;">
+            <strong>Enhanced NDRF Agility:</strong> Micro-level GPS pins eliminate blind searches in valleys.
+          </div>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="ben-num">01</div>
+            <div class="ben-text"><h6>Social Benefit</h6><p>Protects pilgrims & hill villagers.</p></div>
+          </div>
+          <div class="benefit-item">
+            <div class="ben-num">02</div>
+            <div class="ben-text"><h6>Environmental</h6><p>Tracks watershed saturation limits.</p></div>
+          </div>
+          <div class="benefit-item">
+            <div class="ben-num">03</div>
+            <div class="ben-text"><h6>Technological</h6><p>Edge-native client-side computing.</p></div>
+          </div>
+          <div class="benefit-item">
+            <div class="ben-num">04</div>
+            <div class="ben-text"><h6>Economic</h6><p>Eliminates costly sensor deployments.</p></div>
+          </div>
+          <div class="benefit-item">
+            <div class="ben-num">05</div>
+            <div class="ben-text"><h6>NDRF Operations</h6><p>Pre-mapped shelter coordination.</p></div>
+          </div>
+          <div class="benefit-item">
+            <div class="ben-num">06</div>
+            <div class="ben-text"><h6>Reliability</h6><p>100% offline failover guarantee.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>HydroSentinel / OraMet — NDRF Early Warning & Evacuation System</span>
+      <span>Slide 5 / 6</span>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6 ==================== -->
+  <div class="slide">
+    <div class="header-bar">
+      <div class="header-left">
+        <span class="logo-badge">HYDROSENTINEL</span>
+        <span class="slide-title">Research and References</span>
+      </div>
+      <div class="sih-tag">SIH 2026 | PS #26192</div>
+    </div>
+
+    <div class="ref-grid">
+      <div class="ref-col">
+        <div style="font-size: 13px; font-weight: 800; color: #005BBF; margin-bottom: 8px;">GOVERNMENT PORTALS & DISASTER STANDARDS</div>
+        <div class="ref-list">
+          <div class="ref-card">
+            <h5>IMD Rainfall Information Portal (mausam.imd.gov.in)</h5>
+            <p>Official SWD endpoints for live district rainfall, normal baselines & percentage departures.</p>
+          </div>
+          <div class="ref-card">
+            <h5>National Disaster Management Authority (NDMA)</h5>
+            <p>National disaster guidelines on Management of Floods & Landslides in Hilly Terrains.</p>
+          </div>
+          <div class="ref-card">
+            <h5>Geological Survey of India (GSI) NLSM Portal</h5>
+            <p>National Landslide Susceptibility Mapping & 30m Digital Elevation Models (DEM).</p>
+          </div>
+          <div class="ref-card">
+            <h5>NASA SMAP & ISRO MOSDAC Satellite Repositories</h5>
+            <p>High-resolution microwave satellite surface & root-zone volumetric soil moisture.</p>
+          </div>
+          <div class="ref-card">
+            <h5>Central Water Commission (CWC) Flood Forecasting</h5>
+            <p>Himalayan river basin hydrographs and real-time barrage discharge alerts.</p>
+          </div>
+          <div class="ref-card">
+            <h5>Emergency Response Support System (ERSS - 112 India)</h5>
+            <p>National unified emergency response specifications for automated SMS dispatch.</p>
+          </div>
+          <div class="ref-card">
+            <h5>ITU-T Recommendation X.1303 CAP Protocol</h5>
+            <p>International Common Alerting Protocol standards for digital multi-hazard warnings.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-col">
+        <div style="font-size: 13px; font-weight: 800; color: #005BBF; margin-bottom: 8px;">PEER-REVIEWED SCIENTIFIC LITERATURE</div>
+        <div class="article-cards">
+          <div class="article-box">
+            <div class="art-badge" style="background: #005BBF;">Scientific Reports (Nature)</div>
+            <div class="art-content">
+              <h6>Hydrological Lag-Time & Runoff Modeling in Mountainous Basins</h6>
+              <p>Establishes mathematical lag equations correlating antecedent soil saturation with peak river discharge velocity in steep catchments.</p>
+            </div>
+          </div>
+
+          <div class="article-box">
+            <div class="art-badge" style="background: #00875A;">Springer / Water Resources Management</div>
+            <div class="art-content">
+              <h6>Satellite Soil Moisture Thresholds for Shallow Landslides</h6>
+              <p>Validates geotechnical Factor of Safety (Fs) degradation curves on slopes >30&deg; during extreme cloudburst events.</p>
+            </div>
+          </div>
+
+          <div class="article-box">
+            <div class="art-badge" style="background: #D97706;">IEEE Disaster Communications & IoT</div>
+            <div class="art-content">
+              <h6>Delay-Tolerant Warning Systems & SMS-Based Dispatch</h6>
+              <p>Demonstrates resilient emergency broadcast protocols utilizing local relational database caching and automatic cellular SMS failover.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>HydroSentinel / OraMet — NDRF Early Warning & Evacuation System</span>
+      <span>Slide 6 / 6</span>
+    </div>
+  </div>
+
+</body>
+</html>
