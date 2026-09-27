@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OraMet - Multi-Source Sensor Telemetry Fusion</title>
+  <style>
+    
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --terracotta: #8C5338;
+    --terracotta-dark: #6E3B24;
+    --terracotta-light: #F5ECE6;
+    --cream: #F8F6F2;
+    --oyster: #EFECE6;
+    --charcoal: #1F1A17;
+    --charcoal-card: #28221E;
+    --muted: #7E7873;
+    --green: #16A34A;
+    --green-bg: #DCFCE7;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --red: #DC2626;
+    --red-bg: #FEE2E2;
+    --blue: #0284C7;
+    --border: #E5E0D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0B0F17;
+    color: var(--charcoal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .canvas-card {
+    background: #111827;
+    border: 1px solid #1F2937;
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  }
+
+  .banner-novelty-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(140, 83, 56, 0.25);
+    border: 1px solid rgba(140, 83, 56, 0.5);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .banner-tag {
+    color: #F87171;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .banner-title {
+    color: #F3F4F6;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .device-frame {
+    width: 390px;
+    height: 820px;
+    background: var(--cream);
+    border-radius: 46px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 10px #24201D, 0 0 0 12px #3D3733;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    height: 44px;
+    padding: 12px 26px 0 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--charcoal);
+    z-index: 20;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 105px;
+    height: 26px;
+    background: #000000;
+    border-radius: 18px;
+    z-index: 30;
+  }
+
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 18px 24px 18px;
+    position: relative;
+  }
+  .screen-body::-webkit-scrollbar { display: none; }
+
+  .floating-bottom-nav {
+    position: absolute;
+    bottom: 14px;
+    left: 20px;
+    right: 20px;
+    height: 52px;
+    background: rgba(31, 26, 23, 0.94);
+    backdrop-filter: blur(12px);
+    border-radius: 26px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 40;
+  }
+  .nav-item {
+    color: #9E9893;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item.active {
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    background: #8C5338;
+    color: #FFFFFF;
+  }
+
+    .hub-title { font-size: 19px; font-weight: 800; color: var(--charcoal); margin-top: 4px; }
+    .hub-sub { font-size: 10.5px; color: var(--muted); margin-bottom: 12px; }
+    .feed-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .feed-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .feed-body { flex: 1; }
+    .feed-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .feed-name { font-size: 13px; font-weight: 800; color: var(--charcoal); }
+    .feed-status { font-size: 9px; font-weight: 800; color: var(--green); background: var(--green-bg); padding: 2px 6px; border-radius: 6px; }
+    .feed-metric { font-size: 11px; font-weight: 700; color: var(--terracotta); }
+    .feed-details { font-size: 9.5px; color: var(--muted); margin-top: 1px; }
+  </style>
+</head>
+<body>
+  <div class="canvas-card">
+    <div class="banner-novelty-header">
+      <span class="banner-tag">★ NOVELTY #5</span>
+      <span class="banner-title">Multi-Source Satellite & Sensor Telemetry Fusion</span>
+    </div>
+    <div class="device-frame">
+      <div class="dynamic-island"></div>
+      <div class="status-bar"><span>09:30</span><span>100%</span></div>
+      <div class="screen-body">
+        <div class="hub-title">Multi-Source Telemetry Hub</div>
+        <div class="hub-sub">Transparent scientific data fusion from verified open global & national sources</div>
+
+        <!-- 1. NASA GPM / SMAP -->
+        <div class="feed-card">
+          <div class="feed-icon" style="background:#0B3D91;">
+            <span style="color:#fff; font-size:11px; font-weight:900;">NASA</span>
+          </div>
+          <div class="feed-body">
+            <div class="feed-name-row">
+              <span class="feed-name">NASA SMAP & GPM Satellite</span>
+              <span class="feed-status">LIVE · 142ms</span>
+            </div>
+            <div class="feed-metric">28% Volumetric Soil Moisture (Dry)</div>
+            <div class="feed-details">Open Data Source • NASA Earthdata Global 9km L4 Hydrology</div>
+          </div>
+        </div>
+
+        <!-- 2. ISRO MOSDAC -->
+        <div class="feed-card">
+          <div class="feed-icon" style="background:#FFFFFF; border:1px solid #E2E8F0;">
+            <span style="color:#F37021; font-size:11px; font-weight:900;">ISRO</span>
+          </div>
+          <div class="feed-body">
+            <div class="feed-name-row">
+              <span class="feed-name">ISRO MOSDAC / Bhuvan</span>
+              <span class="feed-status">LIVE · 189ms</span>
+            </div>
+            <div class="feed-metric">INSAT-3DR TIR Cloudburst Index: Low</div>
+            <div class="feed-details">Open Data Source • ISRO Space Applications Centre (SAC)</div>
+          </div>
+        </div>
+
+        <!-- 3. IMD AWS Radar -->
+        <div class="feed-card">
+          <div class="feed-icon" style="background:#002855;">
+            <span style="color:#E5A823; font-size:11px; font-weight:900;">IMD</span>
+          </div>
+          <div class="feed-body">
+            <div class="feed-name-row">
+              <span class="feed-name">IMD Doppler Radar & AWS</span>
+              <span class="feed-status">LIVE · 98ms</span>
+            </div>
+            <div class="feed-metric">0.0 mm/hr Precipitation (Clear)</div>
+            <div class="feed-details">Open Data Source • India Meteorological Department Mausam Grid</div>
+          </div>
+        </div>
+
+        <!-- 4. GSI Slope Stability -->
+        <div class="feed-card">
+          <div class="feed-icon" style="background:#14532D;">
+            <span style="color:#FDE047; font-size:11px; font-weight:900;">GSI</span>
+          </div>
+          <div class="feed-body">
+            <div class="feed-name-row">
+              <span class="feed-name">GSI Bhukosh 30m DEM</span>
+              <span class="feed-status">LIVE · 210ms</span>
+            </div>
+            <div class="feed-metric">Factor of Safety Fs 1.48 (Slope 34.8°)</div>
+            <div class="feed-details">Open Data Source • Geological Survey of India Landslide Risk</div>
+          </div>
+        </div>
+
+        <!-- 5. CWC River Gauge -->
+        <div class="feed-card">
+          <div class="feed-icon" style="background:#0284C7;">
+            <span style="color:#fff; font-size:11px; font-weight:900;">CWC</span>
+          </div>
+          <div class="feed-body">
+            <div class="feed-name-row">
+              <span class="feed-name">CWC FloodWatch India</span>
+              <span class="feed-status">LIVE · 165ms</span>
+            </div>
+            <div class="feed-metric">1,150.2m Water Level (1.8m Safe Buffer)</div>
+            <div class="feed-details">Open Data Source • Central Water Commission Hydro Posts</div>
+          </div>
+        </div>
+
+        <!-- 6. WMO Digital Twin -->
+        <div class="feed-card">
+          <div class="feed-icon" style="background:#1F1A17;">
+            <span style="color:#F87171; font-size:10px; font-weight:900;">WMO</span>
+          </div>
+          <div class="feed-body">
+            <div class="feed-name-row">
+              <span class="feed-name">WMO AI Hydrodynamic Twin</span>
+              <span class="feed-status">AI MODEL</span>
+            </div>
+            <div class="feed-metric">Physics-Informed LSTM: S = K · Q^0.6</div>
+            <div class="feed-details">Storage Function Hydrology Routing • Zero False Alarms</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

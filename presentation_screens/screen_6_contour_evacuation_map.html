@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OraMet - Contour-Aware High-Ground Evacuation</title>
+  <style>
+    
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --terracotta: #8C5338;
+    --terracotta-dark: #6E3B24;
+    --terracotta-light: #F5ECE6;
+    --cream: #F8F6F2;
+    --oyster: #EFECE6;
+    --charcoal: #1F1A17;
+    --charcoal-card: #28221E;
+    --muted: #7E7873;
+    --green: #16A34A;
+    --green-bg: #DCFCE7;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --red: #DC2626;
+    --red-bg: #FEE2E2;
+    --blue: #0284C7;
+    --border: #E5E0D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0B0F17;
+    color: var(--charcoal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .canvas-card {
+    background: #111827;
+    border: 1px solid #1F2937;
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  }
+
+  .banner-novelty-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(140, 83, 56, 0.25);
+    border: 1px solid rgba(140, 83, 56, 0.5);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .banner-tag {
+    color: #F87171;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .banner-title {
+    color: #F3F4F6;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .device-frame {
+    width: 390px;
+    height: 820px;
+    background: var(--cream);
+    border-radius: 46px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 10px #24201D, 0 0 0 12px #3D3733;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    height: 44px;
+    padding: 12px 26px 0 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--charcoal);
+    z-index: 20;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 105px;
+    height: 26px;
+    background: #000000;
+    border-radius: 18px;
+    z-index: 30;
+  }
+
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 18px 24px 18px;
+    position: relative;
+  }
+  .screen-body::-webkit-scrollbar { display: none; }
+
+  .floating-bottom-nav {
+    position: absolute;
+    bottom: 14px;
+    left: 20px;
+    right: 20px;
+    height: 52px;
+    background: rgba(31, 26, 23, 0.94);
+    backdrop-filter: blur(12px);
+    border-radius: 26px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 40;
+  }
+  .nav-item {
+    color: #9E9893;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item.active {
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    background: #8C5338;
+    color: #FFFFFF;
+  }
+
+    .map-box {
+      height: 230px;
+      background: #E2EDE0;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      margin-top: 4px;
+      margin-bottom: 14px;
+    }
+    .map-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+    .terrain-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--charcoal);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 9.5px;
+      font-weight: 800;
+    }
+    .haven-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .h-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .h-name { font-size: 16px; font-weight: 800; color: var(--charcoal); }
+    .h-dist { font-size: 18px; font-weight: 800; color: var(--terracotta); }
+    .h-elev { font-size: 11px; color: var(--green); font-weight: 700; margin-bottom: 10px; }
+    .route-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      background: var(--cream);
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .spec-item { text-align: center; }
+    .s-val { font-size: 13px; font-weight: 800; color: var(--charcoal); }
+    .s-lbl { font-size: 9px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+    .amenities-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .amenity-chip {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .map-btn {
+      width: 100%;
+      height: 46px;
+      background: var(--terracotta);
+      color: #fff;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12.5px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(140, 83, 56, 0.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas-card">
+    <div class="banner-novelty-header">
+      <span class="banner-tag">★ NOVELTY #6</span>
+      <span class="banner-title">Contour-Aware 3D Terrain High-Ground Evacuation</span>
+    </div>
+    <div class="device-frame">
+      <div class="dynamic-island"></div>
+      <div class="status-bar"><span>09:30</span><span>100%</span></div>
+      <div class="screen-body">
+        <div class="map-box">
+          <svg width="100%" height="100%" viewBox="0 0 340 230" style="background:#E2EDE0;">
+            <!-- Topographical Contours -->
+            <path d="M0 60 Q80 40 160 80 T340 50" fill="none" stroke="#C5DBC1" stroke-width="2"/>
+            <path d="M0 110 Q100 90 200 130 T340 100" fill="none" stroke="#C5DBC1" stroke-width="2"/>
+            <path d="M0 160 Q70 140 180 180 T340 150" fill="none" stroke="#C5DBC1" stroke-width="2"/>
+            <!-- Dangerous River Gorge Valley Floor (Blue) -->
+            <path d="M0 200 Q120 180 220 210 T340 190" fill="none" stroke="#60A5FA" stroke-width="14" opacity="0.6"/>
+            <!-- Safe Evacuation Route Polyline (Green Dashed Uphill) -->
+            <path d="M50 180 L110 135 L170 95 L250 50" fill="none" stroke="#16A34A" stroke-width="5" stroke-linecap="round" stroke-dasharray="7,5"/>
+            <!-- Live Citizen GPS Marker (Blue Dot) -->
+            <circle cx="50" cy="180" r="10" fill="#3B82F6" stroke="#FFFFFF" stroke-width="3"/>
+            <circle cx="50" cy="180" r="18" fill="none" stroke="#3B82F6" stroke-width="2" opacity="0.4"/>
+            <!-- High Ridge Safe Haven Marker (Terracotta) -->
+            <circle cx="250" cy="50" r="15" fill="#8C5338" stroke="#FFFFFF" stroke-width="3"/>
+            <path d="M246 48 l4 -4 l4 4 v4 c0 2 -2 4 -4 4 s-4 -2 -4 -4 z" fill="#FFFFFF"/>
+            <!-- Flag Badge below shelter pin -->
+            <rect x="145" y="72" width="140" height="22" rx="11" fill="#1F1A17"/>
+            <text x="215" y="87" fill="#FFFFFF" font-size="10" font-weight="800" text-anchor="middle">सुरक्षित थात (1.1 KM)</text>
+          </svg>
+          <div class="map-badge">📍 3D Contour Routing</div>
+          <div class="terrain-tag">Elevation: +220m</div>
+        </div>
+
+        <div class="haven-card">
+          <div class="h-title-row">
+            <div class="h-name">जोशीमठ कम्युनिटी हॉल</div>
+            <div class="h-dist">1.1 किमी</div>
+          </div>
+          <div class="h-elev">★ 4.9 प्रमाणित सुरक्षित केंद्र (ऊंचाई 1,940 मी - घाटी से 240मी ऊपर)</div>
+
+          <div class="route-specs">
+            <div class="spec-item"><div class="s-val">18 मिनट</div><div class="s-lbl">Walk Time</div></div>
+            <div class="spec-item"><div class="s-val">+220 मी</div><div class="s-lbl">Elev Gain</div></div>
+            <div class="spec-item"><div class="s-val">सुरक्षित</div><div class="s-lbl">Slope Fs 1.5</div></div>
+          </div>
+
+          <div style="font-size:11px; color:var(--muted); line-height:16px; margin-bottom:10px;">
+            नदी घाटी के फ्लड जोन और मलबे के बहाव वाले खड्डों को छोड़कर सुरक्षित पक्की चट्टानी रीज के रास्ते ऊपर चढ़ें।
+          </div>
+
+          <div class="amenities-row">
+            <span class="amenity-chip">⚡ सोलर बिजली</span>
+            <span class="amenity-chip">💧 पीने का पानी</span>
+            <span class="amenity-chip">📡 सेटेलाइट फोन</span>
+            <span class="amenity-chip">🏥 प्राथमिक चिकित्सा</span>
+          </div>
+
+          <div class="map-btn">
+            गूगल नक्शा मा बाटो लगावा (Start Google Maps Nav) ›
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

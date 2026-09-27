@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OraMet - Zero-Network 3-Shake SOS Beacon</title>
+  <style>
+    
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --terracotta: #8C5338;
+    --terracotta-dark: #6E3B24;
+    --terracotta-light: #F5ECE6;
+    --cream: #F8F6F2;
+    --oyster: #EFECE6;
+    --charcoal: #1F1A17;
+    --charcoal-card: #28221E;
+    --muted: #7E7873;
+    --green: #16A34A;
+    --green-bg: #DCFCE7;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --red: #DC2626;
+    --red-bg: #FEE2E2;
+    --blue: #0284C7;
+    --border: #E5E0D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0B0F17;
+    color: var(--charcoal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .canvas-card {
+    background: #111827;
+    border: 1px solid #1F2937;
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  }
+
+  .banner-novelty-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(140, 83, 56, 0.25);
+    border: 1px solid rgba(140, 83, 56, 0.5);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .banner-tag {
+    color: #F87171;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .banner-title {
+    color: #F3F4F6;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .device-frame {
+    width: 390px;
+    height: 820px;
+    background: var(--cream);
+    border-radius: 46px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 10px #24201D, 0 0 0 12px #3D3733;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    height: 44px;
+    padding: 12px 26px 0 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--charcoal);
+    z-index: 20;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 105px;
+    height: 26px;
+    background: #000000;
+    border-radius: 18px;
+    z-index: 30;
+  }
+
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 18px 24px 18px;
+    position: relative;
+  }
+  .screen-body::-webkit-scrollbar { display: none; }
+
+  .floating-bottom-nav {
+    position: absolute;
+    bottom: 14px;
+    left: 20px;
+    right: 20px;
+    height: 52px;
+    background: rgba(31, 26, 23, 0.94);
+    backdrop-filter: blur(12px);
+    border-radius: 26px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 40;
+  }
+  .nav-item {
+    color: #9E9893;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item.active {
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    background: #8C5338;
+    color: #FFFFFF;
+  }
+
+    .cbs-banner {
+      background: #FEF2F2;
+      border: 1.5px solid #FCA5A5;
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      margin-bottom: 14px;
+    }
+    .cbs-txt { font-size: 10.5px; color: #991B1B; line-height: 14px; }
+    
+    .shake-box {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .shake-left { display: flex; align-items: center; gap: 12px; }
+    .shake-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #FFF1F2;
+      border: 1.5px solid #F43F5E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shake-title { font-size: 13.5px; font-weight: 800; color: var(--charcoal); }
+    .shake-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+    .sos-giant-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 70px;
+      background: radial-gradient(circle, #EF4444 0%, #B91C1C 100%);
+      box-shadow: 0 0 0 12px rgba(239, 68, 68, 0.25), 0 0 0 24px rgba(239, 68, 68, 0.12), 0 15px 35px rgba(185, 28, 28, 0.4);
+      margin: 16px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+    }
+    .sos-txt { font-size: 30px; font-weight: 900; letter-spacing: 1px; }
+    .sos-subtxt { font-size: 9.5px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+
+    .sms-payload-box {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+    .sms-header { font-size: 12px; font-weight: 800; color: var(--charcoal); margin-bottom: 6px; }
+    .sms-code {
+      font-family: monospace;
+      font-size: 10px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--charcoal);
+      line-height: 15px;
+      margin-bottom: 8px;
+    }
+    .whistle-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas-card">
+    <div class="banner-novelty-header">
+      <span class="banner-tag">★ NOVELTY #7</span>
+      <span class="banner-title">Zero-Network 3-Shake Trigger & Encrypted SOS SMS</span>
+    </div>
+    <div class="device-frame">
+      <div class="dynamic-island"></div>
+      <div class="status-bar"><span>09:30</span><span>100%</span></div>
+      <div class="screen-body">
+        <div class="cbs-banner">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="cbs-txt">
+            <strong>टावर चेतावनी सक्रिय (Zero-Internet Fail-Safe):</strong> Works during complete mobile data outage via GSM control channels and offline mesh.
+          </div>
+        </div>
+
+        <div class="shake-box">
+          <div class="shake-left">
+            <div class="shake-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M1 9l2 3-2 3M23 9l-2 3 2 3"/></svg>
+            </div>
+            <div>
+              <div class="shake-title">फोन ३ बार हिलावा (3-Shake SOS)</div>
+              <div class="shake-sub">Hardware Accelerometer Armed · 2.2G Threshold</div>
+            </div>
+          </div>
+          <div style="background:#16A34A; color:#fff; font-size:9.5px; font-weight:800; padding:4px 8px; border-radius:8px;">ARMED</div>
+        </div>
+
+        <div class="sos-giant-circle">
+          <div class="sos-txt">SOS</div>
+          <div class="sos-subtxt">TAP OR SHAKE</div>
+        </div>
+
+        <div class="sms-payload-box">
+          <div class="sms-header">ऑटोमेटेड आपातकालीन एसएमएस (Encrypted SMS)</div>
+          <div class="sms-code">
+            [NDRF/SDMA RESCUE BEACON · OraMet CAP-v1.2]<br>
+            COORDINATES: 30.5564° N, 79.5630° E<br>
+            ELEVATION: 1,940m | BATTERY: 88%<br>
+            DISPATCH RECIPIENTS: 112 + 2 Family Emergency Contacts
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted);">
+            <span>Transmission: Direct SMS Daemon</span>
+            <span style="color:var(--green); font-weight:800;">READY TO DISPATCH</span>
+          </div>
+        </div>
+
+        <div class="whistle-bar">
+          <div>
+            <div style="font-size:12px; font-weight:800; color:var(--charcoal);">बचाव सीटी (3.5 kHz Sonic Siren)</div>
+            <div style="font-size:9.5px; color:var(--muted);">High-frequency acoustic audio pulse for NDRF canine teams</div>
+          </div>
+          <div style="background:var(--charcoal); color:#fff; font-size:10px; font-weight:800; padding:6px 12px; border-radius:8px;">ध्वनि चालू</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

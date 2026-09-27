@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OraMet - Indigenous Dialects Onboarding</title>
+  <style>
+    
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --terracotta: #8C5338;
+    --terracotta-dark: #6E3B24;
+    --terracotta-light: #F5ECE6;
+    --cream: #F8F6F2;
+    --oyster: #EFECE6;
+    --charcoal: #1F1A17;
+    --charcoal-card: #28221E;
+    --muted: #7E7873;
+    --green: #16A34A;
+    --green-bg: #DCFCE7;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --red: #DC2626;
+    --red-bg: #FEE2E2;
+    --blue: #0284C7;
+    --border: #E5E0D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0B0F17;
+    color: var(--charcoal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .canvas-card {
+    background: #111827;
+    border: 1px solid #1F2937;
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  }
+
+  .banner-novelty-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(140, 83, 56, 0.25);
+    border: 1px solid rgba(140, 83, 56, 0.5);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .banner-tag {
+    color: #F87171;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .banner-title {
+    color: #F3F4F6;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .device-frame {
+    width: 390px;
+    height: 820px;
+    background: var(--cream);
+    border-radius: 46px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 10px #24201D, 0 0 0 12px #3D3733;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    height: 44px;
+    padding: 12px 26px 0 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--charcoal);
+    z-index: 20;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 105px;
+    height: 26px;
+    background: #000000;
+    border-radius: 18px;
+    z-index: 30;
+  }
+
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 18px 24px 18px;
+    position: relative;
+  }
+  .screen-body::-webkit-scrollbar { display: none; }
+
+  .floating-bottom-nav {
+    position: absolute;
+    bottom: 14px;
+    left: 20px;
+    right: 20px;
+    height: 52px;
+    background: rgba(31, 26, 23, 0.94);
+    backdrop-filter: blur(12px);
+    border-radius: 26px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 40;
+  }
+  .nav-item {
+    color: #9E9893;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item.active {
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    background: #8C5338;
+    color: #FFFFFF;
+  }
+
+    .lang-top {
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 14px;
+    }
+    .lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--terracotta-light);
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--terracotta);
+      margin-bottom: 8px;
+    }
+    .lang-h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--charcoal);
+      line-height: 26px;
+    }
+    .lang-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 15px;
+    }
+    .lang-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+    .lang-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      position: relative;
+    }
+    .lang-card.selected {
+      border-color: var(--terracotta);
+      background: var(--terracotta-light);
+      box-shadow: 0 4px 12px rgba(140, 83, 56, 0.15);
+    }
+    .lang-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+    .lang-desc {
+      font-size: 9.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 13px;
+    }
+    .check-circle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      background: var(--terracotta);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lang-btn {
+      width: 100%;
+      height: 48px;
+      background: var(--terracotta);
+      color: #FFFFFF;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(140, 83, 56, 0.25);
+    }
+    .tribal-notice {
+      background: #FFFFFF;
+      border: 1px dashed var(--terracotta);
+      border-radius: 12px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 10px;
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas-card">
+    <div class="banner-novelty-header">
+      <span class="banner-tag">★ NOVELTY #1</span>
+      <span class="banner-title">Mandatory Pre-Login Mountain Dialects & Inclusivity</span>
+    </div>
+    <div class="device-frame">
+      <div class="dynamic-island"></div>
+      <div class="status-bar"><span>09:30</span><span>100%</span></div>
+      <div class="screen-body">
+        <div class="lang-top">
+          <div class="lang-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8C5338" stroke-width="2.2"><path d="M3 20L10 6L14 13L17 8L22 20H3Z"/></svg>
+            HIMALAYAN EARLY WARNING INITIATIVE
+          </div>
+          <div class="lang-h1">अपनी भाषा चुनें</div>
+          <div class="lang-sub">Zero-literacy barrier • Select native dialect before login for life-saving flood warnings</div>
+        </div>
+
+        <div class="tribal-notice">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C5338" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>पहाड़ी अर जनजाति समुदाय कु बिना अंग्रेजी सीधा स्थानीय भाषा मा सुरक्षा</span>
+        </div>
+
+        <div class="lang-grid">
+          <div class="lang-card selected">
+            <div class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="lang-title" style="color:var(--terracotta);">गढ़वाली</div>
+            <div class="lang-desc">Garhwali • चमोली, जोशीमठ, रुद्रप्रयाग, टिहरी</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">कुमाऊँनी</div>
+            <div class="lang-desc">Kumaoni • नैनीताल, अल्मोड़ा, पिथौरागढ़</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">हिमाचली</div>
+            <div class="lang-desc">Himachali • मंडी, कुल्लू, शिमला, कांगड़ा</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">डोगरी</div>
+            <div class="lang-desc">Dogri • जम्मू, रियासी, उधमपुर, डोडा</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">नेपाली</div>
+            <div class="lang-desc">Nepali • सिक्किम, दार्जिलिंग, कलिम्पोंग</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">हिन्दी</div>
+            <div class="lang-desc">Hindi • मानक देवनागरी चेतावनी</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">English</div>
+            <div class="lang-desc">English • Global Disaster Advisory</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">தமிழ் / മലയാളം</div>
+            <div class="lang-desc">South India • Nilgiris & Ghats Tribes</div>
+          </div>
+        </div>
+
+        <div class="lang-btn">
+          आगे बढ़ें (Continue to Live Protection) ›
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

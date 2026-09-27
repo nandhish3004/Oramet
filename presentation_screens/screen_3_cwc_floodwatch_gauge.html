@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OraMet - Central Water Commission FloodWatch India Integration</title>
+  <style>
+    
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  
+  :root {
+    --terracotta: #8C5338;
+    --terracotta-dark: #6E3B24;
+    --terracotta-light: #F5ECE6;
+    --cream: #F8F6F2;
+    --oyster: #EFECE6;
+    --charcoal: #1F1A17;
+    --charcoal-card: #28221E;
+    --muted: #7E7873;
+    --green: #16A34A;
+    --green-bg: #DCFCE7;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --red: #DC2626;
+    --red-bg: #FEE2E2;
+    --blue: #0284C7;
+    --border: #E5E0D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0B0F17;
+    color: var(--charcoal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .canvas-card {
+    background: #111827;
+    border: 1px solid #1F2937;
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  }
+
+  .banner-novelty-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(140, 83, 56, 0.25);
+    border: 1px solid rgba(140, 83, 56, 0.5);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .banner-tag {
+    color: #F87171;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+  .banner-title {
+    color: #F3F4F6;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .device-frame {
+    width: 390px;
+    height: 820px;
+    background: var(--cream);
+    border-radius: 46px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 10px #24201D, 0 0 0 12px #3D3733;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    height: 44px;
+    padding: 12px 26px 0 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--charcoal);
+    z-index: 20;
+  }
+
+  .dynamic-island {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 105px;
+    height: 26px;
+    background: #000000;
+    border-radius: 18px;
+    z-index: 30;
+  }
+
+  .screen-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 18px 24px 18px;
+    position: relative;
+  }
+  .screen-body::-webkit-scrollbar { display: none; }
+
+  .floating-bottom-nav {
+    position: absolute;
+    bottom: 14px;
+    left: 20px;
+    right: 20px;
+    height: 52px;
+    background: rgba(31, 26, 23, 0.94);
+    backdrop-filter: blur(12px);
+    border-radius: 26px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    z-index: 40;
+  }
+  .nav-item {
+    color: #9E9893;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-item.active {
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    background: #8C5338;
+    color: #FFFFFF;
+  }
+
+    .cwc-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      background: #FFFFFF;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1.5px solid var(--border);
+    }
+    .cwc-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+    .cwc-sub {
+      font-size: 10px;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .gauge-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .station-pill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .station-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+    .station-river {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .water-gauge-container {
+      height: 180px;
+      background: #F0F9FF;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #BAE6FD;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+    .water-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48%;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.6) 0%, rgba(2, 132, 199, 0.85) 100%);
+      border-top: 2px solid #0284C7;
+    }
+    .gauge-marker {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      font-weight: 800;
+      z-index: 10;
+    }
+    .hfl-marker { top: 12px; border-bottom: 1.5px dashed #DC2626; color: #DC2626; }
+    .danger-marker { top: 48px; border-bottom: 1.5px dashed #EA580C; color: #EA580C; }
+    .warning-marker { top: 84px; border-bottom: 1.5px dashed #D97706; color: #D97706; }
+    .current-marker { top: 108px; border-bottom: 2px solid #0284C7; color: #0369A1; }
+    
+    .cwc-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .cwc-metric-box {
+      background: #F8F6F2;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+    }
+    .m-lbl { font-size: 9.5px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+    .m-val { font-size: 16px; font-weight: 800; color: var(--charcoal); margin-top: 2px; }
+    .m-tag { font-size: 9.5px; font-weight: 800; color: var(--green); margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <div class="canvas-card">
+    <div class="banner-novelty-header">
+      <span class="banner-tag">★ NOVELTY #3</span>
+      <span class="banner-title">Central Water Commission (CWC) Gauge & Hydrology Model</span>
+    </div>
+    <div class="device-frame">
+      <div class="dynamic-island"></div>
+      <div class="status-bar"><span>09:30</span><span>100%</span></div>
+      <div class="screen-body">
+        <div class="cwc-header">
+          <svg width="32" height="32" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="48" fill="#0284C7" />
+            <path d="M22 66 C32 60 40 72 50 66 C60 60 68 72 78 66 M22 75 C32 69 40 81 50 75 C60 69 68 81 78 75" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" />
+            <text x="50" y="42" fill="#FFFFFF" font-size="20" font-weight="900" text-anchor="middle">CWC</text>
+          </svg>
+          <div>
+            <div class="cwc-title">केन्द्रीय जल आयोग (FloodWatch India)</div>
+            <div class="cwc-sub">Direct Telemetry · Ministry of Jal Shakti</div>
+          </div>
+        </div>
+
+        <div class="gauge-card">
+          <div class="station-pill">
+            <div>
+              <div class="station-name">Joshimath Hydro Post #01</div>
+              <div class="station-river">अलकनंदा नदी (Alaknanda Basin) • Uttarakhand</div>
+            </div>
+            <div style="background:#DCFCE7; color:#16A34A; font-size:10px; font-weight:800; padding:4px 8px; border-radius:8px;">NORMAL</div>
+          </div>
+
+          <div class="water-gauge-container">
+            <div class="gauge-marker hfl-marker"><span>HFL (2021): 1,156.8 m</span><span>RECORD HIGH</span></div>
+            <div class="gauge-marker danger-marker"><span>DANGER LEVEL: 1,154.5 m</span><span>RED ZONE</span></div>
+            <div class="gauge-marker warning-marker"><span>WARNING LEVEL: 1,152.0 m</span><span>BUFFER 1.8M</span></div>
+            <div class="gauge-marker current-marker"><span>CURRENT LEVEL: 1,150.2 m</span><span>STEADY FLOW</span></div>
+            <div class="water-fill"></div>
+          </div>
+
+          <div class="cwc-metrics-grid">
+            <div class="cwc-metric-box">
+              <div class="m-lbl">Discharge Rate</div>
+              <div class="m-val">620 m³/s</div>
+              <div class="m-tag">Nominal Cumecs</div>
+            </div>
+            <div class="cwc-metric-box">
+              <div class="m-lbl">Rise Rate (Trend)</div>
+              <div class="m-val">+0.0 cm/hr</div>
+              <div class="m-tag">Hydro Steady</div>
+            </div>
+            <div class="cwc-metric-box">
+              <div class="m-lbl">Rainfall Rate</div>
+              <div class="m-val">0.0 mm/hr</div>
+              <div class="m-tag">Catchment Dry</div>
+            </div>
+            <div class="cwc-metric-box">
+              <div class="m-lbl">Evacuation Surge Lead</div>
+              <div class="m-val" style="color:var(--green);">0 min (Safe)</div>
+              <div class="m-tag">No False Alarms</div>
+            </div>
+          </div>
+
+          <div style="background:#F0FDF4; border:1px solid #BBF7D0; border-radius:12px; padding:10px; font-size:10.5px; color:#166534; line-height:15px;">
+            <strong>Hydrology Verification:</strong> Rainfall is &lt; 5 mm/hr and river stage is 1.8m below warning level. False-alarm countdown suppressed per CWC flood guidelines.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

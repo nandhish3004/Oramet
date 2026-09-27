@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OraMet - Master Innovation Presentation Board</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #0B0F17;
+      color: #FFFFFF;
+      width: 1200px;
+      height: 675px;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .deck-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid #1F2937;
+      padding-bottom: 12px;
+    }
+    .deck-badge {
+      background: rgba(140, 83, 56, 0.25);
+      border: 1px solid #8C5338;
+      color: #F87171;
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+    }
+    .deck-h1 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #F9FAFB;
+      letter-spacing: -0.5px;
+    }
+    .deck-sub {
+      font-size: 12px;
+      color: #9CA3AF;
+      font-family: 'Inter', sans-serif;
+    }
+    .deck-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+      flex: 1;
+    }
+    .innov-card {
+      background: #111827;
+      border: 1px solid #1F2937;
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .innov-card.highlight {
+      border-color: #8C5338;
+      background: linear-gradient(145deg, #1C1512 0%, #111827 100%);
+    }
+    .card-num {
+      font-size: 10px;
+      font-weight: 900;
+      color: #F87171;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .card-body {
+      font-size: 11px;
+      color: #9CA3AF;
+      line-height: 15px;
+      font-family: 'Inter', sans-serif;
+    }
+    .card-tag-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .tag {
+      background: #1F2937;
+      color: #38BDF8;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .deck-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #1F2937;
+      padding-top: 10px;
+      font-size: 11px;
+      color: #6B7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-header">
+    <div>
+      <div class="deck-badge">SMART INDIA HACKATHON 2026 · PROBLEM STATEMENT #26192</div>
+      <div class="deck-h1">OraMet: Core Novelties & Innovation Matrix</div>
+      <div class="deck-sub">Flash Flood Early Warning System for Hilly Regions using Multi-Source Satellite & In-Situ Data</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:16px; font-weight:900; color:#8C5338;">v2.0.0 PRODUCTION</div>
+      <div style="font-size:10px; color:#9CA3AF;">Alaknanda & Himalayan Pilot</div>
+    </div>
+  </div>
+
+  <div class="deck-grid">
+    <!-- 1 -->
+    <div class="innov-card highlight">
+      <div>
+        <div class="card-num">NOVELTY #1</div>
+        <div class="card-title">Pre-Login Mountain Dialects</div>
+        <div class="card-body">Zero-literacy barrier. Mandatory first screen opens to native Himalayan dialects (Garhwali, Kumaoni, Himachali, Dogri, Nepali) before login, ensuring vulnerable mountain tribes are never excluded.</div>
+      </div>
+      <div class="card-tag-row">
+        <span class="tag">Tribal Inclusion</span>
+        <span class="tag">Zero-Barrier</span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="innov-card highlight">
+      <div>
+        <div class="card-num">NOVELTY #2</div>
+        <div class="card-title">Zero-Text Pictorial Guide & Audio TTS</div>
+        <div class="card-body">Complete visual communication matrix (🟢 Safe, 🟡 Alert, 🔴 Move Uphill, 🆘 3-Shake SOS) + Text-to-Speech audio broadcast. Non-literate villagers understand hazard level without reading a single word.</div>
+      </div>
+      <div class="card-tag-row">
+        <span class="tag">Visual Matrix</span>
+        <span class="tag">Audio TTS</span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="innov-card highlight">
+      <div>
+        <div class="card-num">NOVELTY #3</div>
+        <div class="card-title">CWC FloodWatch River Gauge Engine</div>
+        <div class="card-body">Integrated real-time Central Water Commission gauge hydrographs with Warning (1152m), Danger (1154.5m), and HFL (1156.8m) limits. Suppresses false alarms when rain &lt; 5mm/hr and rivers are calm.</div>
+      </div>
+      <div class="card-tag-row">
+        <span class="tag">CWC FloodWatch</span>
+        <span class="tag">Zero False Alarm</span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="innov-card">
+      <div>
+        <div class="card-num">NOVELTY #4</div>
+        <div class="card-title">10s Satellite GPS Lock & Swiggy UX</div>
+        <div class="card-body">Direct hardware GPS satellite lock displaying real live coordinates (30.5564° N, 79.5630° E) and micro-basin district name with Swiggy/Instamart-level consumer UX and dynamic evacuation countdown.</div>
+      </div>
+      <div class="card-tag-row">
+        <span class="tag">Hardware GPS</span>
+        <span class="tag">Swiggy Grade UX</span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="innov-card">
+      <div>
+        <div class="card-num">NOVELTY #5</div>
+        <div class="card-title">Multi-Source Sensor Telemetry Fusion</div>
+        <div class="card-body">Synchronous integration of NASA GPM precipitation, ISRO Bhuvan soil saturation, IMD Doppler Radar, GSI 30m DEM slope factor of safety (Fs), and WMO AI Digital Twin hydrodynamic routing.</div>
+      </div>
+      <div class="card-tag-row">
+        <span class="tag">NASA + ISRO</span>
+        <span class="tag">IMD + GSI + CWC</span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="innov-card">
+      <div>
+        <div class="card-num">NOVELTY #6</div>
+        <div class="card-title">Contour-Aware 3D High-Ground Escape</div>
+        <div class="card-body">Topographic contour routing uphill to certified disaster shelters (+220m elevation gain), strictly avoiding low-lying river gorges, flash flood channels, and steep active landslide scarps.</div>
+      </div>
+      <div class="card-tag-row">
+        <span class="tag">3D Contours</span>
+        <span class="tag">High-Ground Escape</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck-footer">
+    <span>★ Open Data Sources: NASA, ISRO, IMD, CWC, GSI (Scientific Open Telemetry Feeds)</span>
+    <span>Zero-Network 3-Shake Hardware Accelerometer SOS & Encrypted 112 SMS Fail-Safe Included</span>
+  </div>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OraMet - Novelty & Innovation App Screens (SIH 2026 PS #26192)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --terracotta: #8C5338;
+      --bg: #0B0F17;
+      --card-bg: #111827;
+      --card-border: #1F2937;
+      --text: #F9FAFB;
+      --muted: #9CA3AF;
+      --accent: #38BDF8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 30px 24px;
+    }
+
+    .header-banner {
+      max-width: 1200px;
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(140, 83, 56, 0.25);
+      border: 1px solid rgba(140, 83, 56, 0.5);
+      color: #F87171;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 0.6px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 10px #10B981;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #D1D5DB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-family: 'Inter', sans-serif;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .ppt-tip-box {
+      max-width: 1000px;
+      margin: 18px auto 30px auto;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px dashed #38BDF8;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .screens-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+    }
+
+    .screen-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .screen-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(140, 83, 56, 0.8);
+    }
+
+    .screen-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .screen-num {
+      font-size: 10.5px;
+      font-weight: 900;
+      color: #F87171;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .screen-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-top: 2px;
+    }
+
+    .download-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38BDF8;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 5px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .download-badge:hover {
+      background: #38BDF8;
+      color: #0B0F17;
+    }
+
+    .preview-box {
+      background: #0D1117;
+      border-radius: 16px;
+      border: 1px solid #1F2937;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .preview-box img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .novelty-callout {
+      margin-top: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid #8C5338;
+      padding: 10px 14px;
+      border-radius: 0 12px 12px 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .callout-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #F87171;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .callout-desc {
+      font-size: 12px;
+      color: #D1D5DB;
+      line-height: 1.5;
+    }
+
+    .footer {
+      max-width: 1200px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #6B7280;
+      border-top: 1px solid #1F2937;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-banner">
+    <div class="badge-pill">
+      <div class="pulse-dot"></div>
+      Smart India Hackathon 2026 · Problem Statement #26192
+    </div>
+    <h1>OraMet Novelty & Innovation Visual Showcase</h1>
+    <p class="sub">Ultra-high-definition PNG screenshots capturing the 7 core novelties of OraMet for evaluation presentations and technical review decks.</p>
+  </div>
+
+  <div class="ppt-tip-box">
+    <div>
+      <strong>Tip for your PPT:</strong> All screenshots are rendered in lossless PNG format in the <code>screenshots/</code> directory. You can drag and drop these directly onto PowerPoint slides.
+    </div>
+    <span style="font-size:11px; background:#10B981; color:#fff; padding:4px 10px; border-radius:12px; font-weight:800;">8 PNGs Ready</span>
+  </div>
+
+  <div class="screens-grid">
+
+    <!-- MASTER SLIDE BANNER -->
+    <div class="screen-card" style="grid-column: 1 / -1; border-color: #8C5338;">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">MASTER PRESENTATION SLIDE</div>
+          <div class="screen-title" style="font-size:20px;">8. OraMet Core Novelties & Innovation Matrix (16:9 Slide)</div>
+        </div>
+        <a href="screenshots/8_novelty_master_innovation_showcase_poster.png" download class="download-badge">
+          ⬇ Download PNG
+        </a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/8_novelty_master_innovation_showcase_poster.png" alt="OraMet Master Innovation Poster">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">PPT Placement Suggestion</div>
+        <div class="callout-desc">Drop this as your primary "Novelty & Uniqueness" slide in your presentation. It concisely contrasts all 6 core technical advantages in a single, high-impact panoramic layout.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 1 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #1</div>
+          <div class="screen-title">Pre-Login Mountain Dialects</div>
+        </div>
+        <a href="screenshots/1_novelty_indigenous_language_onboarding.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/1_novelty_indigenous_language_onboarding.png" alt="Pre-Login Dialect Selection">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">Tribal & Non-Literate Inclusion</div>
+        <div class="callout-desc">Mandatory first screen before login with Garhwali, Kumaoni, Himachali, Dogri, Nepali. Zero language barrier for remote Himalayan villagers.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 2 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #2</div>
+          <div class="screen-title">Zero-Text Pictorial Guide & TTS</div>
+        </div>
+        <a href="screenshots/2_novelty_tribal_visual_guide_voice_tts.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/2_novelty_tribal_visual_guide_voice_tts.png" alt="Zero-Text Pictorial Guide">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">Visual Action & Voice Broadcast</div>
+        <div class="callout-desc">Intuitive color matrix (🟢 Safe, 🟡 Alert, 🔴 Climb Uphill, 🆘 3-Shake) with native Text-to-Speech audio readout for illiterate mountain residents.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #3</div>
+          <div class="screen-title">CWC FloodWatch River Gauge</div>
+        </div>
+        <a href="screenshots/3_novelty_cwc_floodwatch_river_hydrograph.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/3_novelty_cwc_floodwatch_river_hydrograph.png" alt="CWC FloodWatch Gauge">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">Zero-False-Alarm Hydrology</div>
+        <div class="callout-desc">Live Central Water Commission river stage vs Warning/Danger/HFL thresholds. Suppresses false alarms (safe 0 min countdown) when rainfall is nominal.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 4 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #4</div>
+          <div class="screen-title">10s Satellite GPS & Swiggy UX</div>
+        </div>
+        <a href="screenshots/4_novelty_real_satellite_gps_hazard_dashboard.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/4_novelty_real_satellite_gps_hazard_dashboard.png" alt="Satellite GPS Dashboard">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">True Hardware Satellite Lock</div>
+        <div class="callout-desc">Real coordinates (30.5564° N, 79.5630° E) & village geocoding with consumer-grade delivery tracking UX and dynamic surge lead time.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 5 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #5</div>
+          <div class="screen-title">Multi-Source Telemetry Hub</div>
+        </div>
+        <a href="screenshots/5_novelty_multisource_sensor_fusion_telemetry.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/5_novelty_multisource_sensor_fusion_telemetry.png" alt="Multi-Source Telemetry">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">Multi-Agency Sensor Fusion</div>
+        <div class="callout-desc">Fuses NASA SMAP soil moisture, ISRO MOSDAC cloudburst runoff, IMD radar, GSI 30m DEM slope safety (Fs), and WMO AI Digital Twin.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 6 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #6</div>
+          <div class="screen-title">Contour-Aware 3D Evacuation</div>
+        </div>
+        <a href="screenshots/6_novelty_contour_aware_3d_evacuation_map.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/6_novelty_contour_aware_3d_evacuation_map.png" alt="Contour-Aware Evacuation">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">Topographic Uphill Routing</div>
+        <div class="callout-desc">Calculates climbing routes to high-elevation safe havens (+220m), strictly avoiding low-lying river gorges and active landslide slopes.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 7 -->
+    <div class="screen-card">
+      <div class="screen-header">
+        <div>
+          <div class="screen-num">NOVELTY #7</div>
+          <div class="screen-title">Zero-Network 3-Shake SOS Beacon</div>
+        </div>
+        <a href="screenshots/7_novelty_zero_network_3shake_sos_beacon.png" download class="download-badge">⬇ PNG</a>
+      </div>
+      <div class="preview-box">
+        <img src="screenshots/7_novelty_zero_network_3shake_sos_beacon.png" alt="Zero-Network SOS">
+      </div>
+      <div class="novelty-callout">
+        <div class="callout-title">Hardware Accelerometer Fail-Safe</div>
+        <div class="callout-desc">Works during total cellular tower blackout. 3 phone shakes trigger an encrypted SMS to 112/NDRF with GPS & sounds a 3.5 kHz canine rescue whistle.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    OraMet · Flash Flood Early Warning System for Hilly Regions · SIH 2026 PS #26192 · Production v2.0.0
+  </div>
+
+</body>
+</html>

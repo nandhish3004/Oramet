@@ -21,5 +21,7 @@ android/build/
 android/local.properties
 .gradle/
 scratch/
-screenshots/
+screenshots/*
+!screenshots/*.png
 *.keystore
+*.apk
