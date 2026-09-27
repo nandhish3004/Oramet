@@ -63,6 +63,20 @@ jobs:
           cd android
           ./gradlew assembleStaging --stacktrace --no-daemon 2>&1 | tee "$RUNNER_TEMP/oramet-gradle-build.log"
 
+      - name: Expose Gradle failure details in the check result
+        if: failure()
+        run: |
+          log="$RUNNER_TEMP/oramet-gradle-build.log"
+          if [ -f "$log" ]; then
+            details="$(grep -E -A 12 -B 2 'What went wrong|Execution failed for task|Could not|Caused by:' "$log" | tail -n 35 | tr '\n' ' ')"
+            if [ -n "$details" ]; then
+              details="${details//'%'/'%25'}"
+              details="${details//$'\r'/'%0D'}"
+              details="${details//$'\n'/'%0A'}"
+              echo "::error title=Gradle build failure::$details"
+            fi
+          fi
+
       - name: Add build diagnostics to the job summary
         if: always()
         run: |
