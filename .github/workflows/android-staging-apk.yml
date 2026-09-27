@@ -57,12 +57,29 @@ jobs:
           npm test -- --runInBand
 
       - name: Build bundled demo APK
-        run: npm run build:apk
+        id: build_apk
+        run: |
+          set -o pipefail
+          cd android
+          ./gradlew assembleStaging --stacktrace --no-daemon 2>&1 | tee "$RUNNER_TEMP/oramet-gradle-build.log"
 
-      - name: Upload staging APK
+      - name: Add build diagnostics to the job summary
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/oramet-gradle-build.log" ]; then
+            echo '### Android staging build output (last 100 lines)' >> "$GITHUB_STEP_SUMMARY"
+            echo '```text' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 100 "$RUNNER_TEMP/oramet-gradle-build.log" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload staging APK and build log
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: oramet-staging-apk
-          path: android/app/build/outputs/apk/staging/app-staging.apk
-          if-no-files-found: error
+          path: |
+            android/app/build/outputs/apk/staging/app-staging.apk
+            ${{ runner.temp }}/oramet-gradle-build.log
+          if-no-files-found: warn
           retention-days: 14
