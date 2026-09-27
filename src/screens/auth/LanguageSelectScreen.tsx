@@ -41,7 +41,7 @@ const CheckIcon = () => (
 export const LanguageSelectScreen: React.FC = () => {
   const navigation = useNavigation<any>();
   const { currentLanguage, setLanguage, strings } = useLanguageStore();
-  const [selectedCode, setSelectedCode] = useState(currentLanguage || 'hi');
+  const [selectedCode, setSelectedCode] = useState(currentLanguage || 'en');
 
   const handleSelectLanguage = async (code: string) => {
     setSelectedCode(code);

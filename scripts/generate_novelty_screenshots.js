@@ -274,19 +274,24 @@ const html1 = `<!DOCTYPE html>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8C5338" stroke-width="2.2"><path d="M3 20L10 6L14 13L17 8L22 20H3Z"/></svg>
             HIMALAYAN EARLY WARNING INITIATIVE
           </div>
-          <div class="lang-h1">अपनी भाषा चुनें</div>
-          <div class="lang-sub">Zero-literacy barrier • Select native dialect before login for life-saving flood warnings</div>
+          <div class="lang-h1">Select Your Language</div>
+          <div class="lang-sub">Zero-literacy barrier • Choose English or native mountain dialects for life-saving alerts</div>
         </div>
 
         <div class="tribal-notice">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C5338" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-          <span>पहाड़ी अर जनजाति समुदाय कु बिना अंग्रेजी सीधा स्थानीय भाषा मा सुरक्षा</span>
+          <span>Multi-lingual disaster warnings for mountain tribes and local communities</span>
         </div>
 
         <div class="lang-grid">
+          <!-- 1. English (SELECTED AS DEFAULT) -->
           <div class="lang-card selected">
             <div class="check-circle"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div class="lang-title" style="color:var(--terracotta);">गढ़वाली</div>
+            <div class="lang-title" style="color:var(--terracotta);">English</div>
+            <div class="lang-desc">English • Global Disaster Advisory Interface</div>
+          </div>
+          <div class="lang-card">
+            <div class="lang-title">गढ़वाली</div>
             <div class="lang-desc">Garhwali • चमोली, जोशीमठ, रुद्रप्रयाग, टिहरी</div>
           </div>
           <div class="lang-card">
@@ -310,17 +315,13 @@ const html1 = `<!DOCTYPE html>
             <div class="lang-desc">Hindi • मानक देवनागरी चेतावनी</div>
           </div>
           <div class="lang-card">
-            <div class="lang-title">English</div>
-            <div class="lang-desc">English • Global Disaster Advisory</div>
-          </div>
-          <div class="lang-card">
             <div class="lang-title">தமிழ் / മലയാളം</div>
             <div class="lang-desc">South India • Nilgiris & Ghats Tribes</div>
           </div>
         </div>
 
         <div class="lang-btn">
-          आगे बढ़ें (Continue to Live Protection) ›
+          Continue to Live Protection ›
         </div>
       </div>
     </div>
@@ -1155,9 +1156,9 @@ const html6 = `<!DOCTYPE html>
             <!-- High Ridge Safe Haven Marker (Terracotta) -->
             <circle cx="250" cy="50" r="15" fill="#8C5338" stroke="#FFFFFF" stroke-width="3"/>
             <path d="M246 48 l4 -4 l4 4 v4 c0 2 -2 4 -4 4 s-4 -2 -4 -4 z" fill="#FFFFFF"/>
-            <!-- Flag Badge -->
-            <rect x="180" y="16" width="135" height="22" rx="11" fill="#1F1A17"/>
-            <text x="247" y="31" fill="#FFFFFF" font-size="10" font-weight="800" text-anchor="middle">सुरक्षित थात (1.1 KM)</text>
+            <!-- Flag Badge below shelter pin -->
+            <rect x="145" y="72" width="140" height="22" rx="11" fill="#1F1A17"/>
+            <text x="215" y="87" fill="#FFFFFF" font-size="10" font-weight="800" text-anchor="middle">सुरक्षित थात (1.1 KM)</text>
           </svg>
           <div class="map-badge">📍 3D Contour Routing</div>
           <div class="terrain-tag">Elevation: +220m</div>
@@ -1658,4 +1659,27 @@ for (const t of targets) {
   }
 }
 
+console.log('Copying PNG images to local device folders for PPT...');
+
+const LOCAL_PPT_DIR = path.join(__dirname, '..', 'PPT_PNG_Screenshots');
+const DOWNLOADS_DIR = 'C:\\Users\\Nandheesaprasad\\Downloads\\OraMet_PPT_Screenshots_PNG';
+const BRAIN_DIR = 'C:\\Users\\Nandheesaprasad\\.gemini\\antigravity-ide\\brain\\48d735e7-c2c6-4a38-91db-b88edfc15e40';
+
+[LOCAL_PPT_DIR, DOWNLOADS_DIR, BRAIN_DIR].forEach(dir => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+});
+
+for (const t of targets) {
+  const src = path.join(OUTPUT_DIR, t.png);
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, path.join(LOCAL_PPT_DIR, t.png));
+    try { fs.copyFileSync(src, path.join(DOWNLOADS_DIR, t.png)); } catch(e) {}
+    try { fs.copyFileSync(src, path.join(BRAIN_DIR, t.png)); } catch(e) {}
+  }
+}
+
+console.log('✓ Successfully exported all 8 PNGs to:');
+console.log('  1. ' + OUTPUT_DIR);
+console.log('  2. ' + LOCAL_PPT_DIR);
+console.log('  3. ' + DOWNLOADS_DIR);
 console.log('All screenshots completed successfully!');
